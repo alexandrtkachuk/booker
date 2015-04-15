@@ -1,0 +1,13 @@
+<xml>
+    <database status="main" >
+        <dbname>user7</dbname>
+        <pass>tuser7</pass>
+        <host>localhost</host>
+        <dbuser>user7</dbuser>
+    </database>
+
+    <directory status="system" >
+        <coderoot>user7 </coderoot>
+        <library>.</library>
+    </directory>
+</xml>
