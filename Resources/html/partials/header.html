@@ -1,0 +1,28 @@
+<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header"  ng-controller="cLang as cL">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#/"  ng-bind="cL.lang.value.LANG_home.VALUE">Главная</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <div class="mycard navbar-right" ng-controller="cCart as cC">
+				<p><a href="#/cart">Количество товара: </a><span  ng-bind="cC.cart.count ">  </span></p>	
+          </div>
+          
+          
+          <div  ng-controller="cUser as cU" class="username">
+				<p > <a href="#/user"><span ng-bind="cU.text.value"></span></a> |   <a  href="{{cU.text.link}}"  ng-bind="cU.text.value2"></a>      </p>
+          </div>
+		  <div  ng-controller="cLang as cL">
+				
+				<button ng-click="cL.ru()">ru</button>
+				<button ng-click="cL.en()">en</button>
+			</div>
+        </div><!--/.navbar-collapse -->
+      </div>
+    </nav>

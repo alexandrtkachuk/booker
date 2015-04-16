@@ -32,4 +32,24 @@
         <KEY>LANG_warings2</KEY>
         <VALUE>Введен неверный логин или пароль</VALUE>
     </ISTRING>
+    <ISTRING>
+        <KEY>LANG_langs</KEY>
+        <VALUE>Язык</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_firstday</KEY>
+        <VALUE>первый день недели</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_sunday</KEY>
+        <VALUE>воскресенье</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_monday</KEY>
+        <VALUE>понедельник</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_timeformat</KEY>
+        <VALUE>фодмат времени</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>

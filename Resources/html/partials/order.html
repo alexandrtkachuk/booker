@@ -1,0 +1,7 @@
+<div>
+		
+		<div class="row"   ng-repeat="item in cO.temp.items">
+			<div class="col-md-2" > <a href="#/product/{{item.id}}"> <span ng-bind="item.title" ></span></a>	</div>
+			<div class="col-md-2" ng-bind="item.price | currency" >	</div>
+		</div>
+</div>

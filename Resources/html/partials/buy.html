@@ -1,0 +1,13 @@
+<div>
+	<h3>{{cB.sps}}</h3>
+	<form name="myForm">
+		
+		<p>Системы оплаты: <br />
+			<p ng-repeat="item in cB.arr.items">
+				<input type="radio" ng-model="cB.payment" value="{{item.id}}"> {{item.name}} 
+			</p>
+			
+		
+		<p><button ng-click="cB.send(myForm)">Отправить</button></p>
+		</form>
+</div>

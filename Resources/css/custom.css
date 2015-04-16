@@ -40,3 +40,14 @@ body {
      border-top-left-radius: 0;
      border-top-right-radius: 0;
    }
+
+
+#calendar {
+		max-width: 900px;
+		margin: 0 auto;
+		float:left;
+	}
+.right-bar
+{
+	float:right;
+}

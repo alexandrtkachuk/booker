@@ -20,4 +20,36 @@
         <KEY>LANG_home</KEY>
         <VALUE>Home</VALUE>
     </ISTRING>
+    <ISTRING>
+        <KEY>LANG_SignIn</KEY>
+        <VALUE>login</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_PleaseSignIn</KEY>
+        <VALUE>Please sing in</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_warings2</KEY>
+        <VALUE>no corect password or email</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_langs</KEY>
+        <VALUE>langs</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_firstday</KEY>
+        <VALUE>fearst day of weak</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_sunday</KEY>
+        <VALUE>sunday</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_monday</KEY>
+        <VALUE>mondey</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_timeformat</KEY>
+        <VALUE>time format</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>

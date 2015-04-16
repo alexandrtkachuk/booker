@@ -55,6 +55,15 @@ sub set
     {
         return 0;
     }
+    
+    my $temp = $self->{'lang'};
+    $self->{'lang'}=$value;
+    
+    unless($self->load())
+    {
+        $self->{'lang'}=$temp;
+        return 0;
+    }
 
     $session->setParam('lang',$value);
     $self->{'lang'}=$value;

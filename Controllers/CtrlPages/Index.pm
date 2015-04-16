@@ -3,7 +3,6 @@ package Controllers::CtrlPages::Index;
 use warnings;
 use strict;
 use System::Tools::Toolchain;
-use Models::Utilits::Sessionme;
 
 sub new
 {

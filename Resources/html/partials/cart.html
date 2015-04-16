@@ -1,0 +1,19 @@
+<div>
+	<h2>{{cC.name}}</h2>
+	
+	<ol>
+		<li ng-repeat="item in cC.items" >	
+			<span ng-bind="item.el.title"></span>
+			<b ng-bind="item.el.price"></b>
+			<input type="number" value="{{item.count}}" ng-model="item.count" min="1"  class="input-mini" required>
+		{{item.count}}<br />
+			<span >{{item.el.price * item.count}}</span>
+			<button ng-click="cC.remove($index)">delit</button>
+		</li>
+	</ol>
+	
+	<p> total:{{cC.total()}}   </p>
+	<p> Со скидкой:{{cC.totalsale()}}   </p>
+	<hr />
+	<a ui-sref="buy">Оформить заказ</a>
+</div>

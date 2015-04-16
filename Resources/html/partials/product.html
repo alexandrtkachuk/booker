@@ -1,0 +1,17 @@
+<div>
+	<!--{{cP.item.value}} -->
+	<p > <img ng-src="Resources/img/{{cP.item.value.image}}"></p>
+	<h2 ng-bind="cP.item.value.title"></h2>
+	<p class="small">Авторы: <span ng-bind="cP.item.value.authors"></span></p>
+    <p class="small">Жанры: <span ng-bind="cP.item.value.genres"></span></p>
+	<p ng-bind="cP.item.value.info">          </p>
+          <p>Цена: <span ng-bind="cP.item.value.price | currency"></span></p>
+          <p>
+			   <input type="number" ng-model="cP.value" min="1" class="input-mini" required>
+				<button type="button"  ng-click="cP.buy(cP.value)"  class="btn btn-danger">Купить</button>
+				
+				<a class="btn btn-default" href="#"  onclick="history.back();" role="button">Назад</a>  
+		  </p>
+	
+	
+</div>
