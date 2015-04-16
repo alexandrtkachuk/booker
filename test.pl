@@ -7,7 +7,6 @@ $|=1;
 
 use Data::Dumper;
 use File::Basename;;
-
 use constant TDIR=>dirname(__FILE__);
 
 use lib TDIR;
@@ -17,7 +16,8 @@ use Digest::MD5 qw(md5 md5_hex md5_base64) ;
 use System::Tools::Toolchain;
 my $tools = System::Tools::Toolchain->instance(TDIR);
 
-sub main
+use Models::Performers::User;
+sub test
 {
     print "Content-type: text/html; encoding='utf-8'\n\n";
     print "test";
@@ -60,16 +60,45 @@ print $p->get();
 
 }
 
-
-sub user
+sub funlang
 {
-    my $info = $tools->getConfigObject()->getDataBaseConfig();
-    print Dumper $info->dbname;
-    print "\n", 
-        md5_hex('admin'),
-        "\n";
+
+
 }
 
-user();
+sub userfun
+{
+    my $info = $tools->getConfigObject()->getDataBaseConfig();
+
+    $tools->getDebugObject()->logIt(
+            "db name=".$info->dbname     );
+
+   my  $user  = $tools->getObject('Models::Performers::User'); 
+   print "\n", 
+        md5_hex('admin'),
+        "\n";
+
+    if($user->login('admin@mail.ru','admin'))
+    {
+        print "\nis login\n";
+    }
+    else
+    {
+        print "\nno login\n";
+    }
+}
+
+
+sub main
+{
+
+    
+    userfun();
+    my $d=  $tools->getDebugObject()->getLog();
+    print Dumper $d;
+
+
+    print "\nTDIR=".TDIR."\n";
+}
 ###run to main
-#main();
+main();

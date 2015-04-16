@@ -19,13 +19,24 @@ sub main
 {    
     my $tools = System::Tools::Toolchain->instance(TDIR);
     $tools->getPoolObject()->setMaxPoolDepth(5);
-
+    my $ctrlPage;
     ####ControlsPage#### 
-    unless (Controllers::CommandCtrl::Router->new()->go()->go()) 
+    unless ($ctrlPage =  Controllers::CommandCtrl::Router->new()->go()) 
     {
         $tools->getCacheObject()->setCache('nextpage','Error');       
     }
-
+    else
+    {
+        eval 
+        { 
+            $ctrlPage->go();   
+        };
+        if($@) 
+        {  
+            $tools->getDebugObject()->logIt($@);
+            $tools->getCacheObject()->setCache('nextpage','Error');
+        }     
+    }
     ###VIEW######
     Views::View->new()->go();
 }

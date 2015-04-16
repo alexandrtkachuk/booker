@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<ISTRINGTABLE ID="bookshop" LANG="en">
+    <ISTRING>
+        <KEY>LANG_exit</KEY>
+        <VALUE>Exit</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_user</KEY>
+        <VALUE>User</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_buy</KEY>
+        <VALUE>Buy</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_more</KEY>
+        <VALUE>more info</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_home</KEY>
+        <VALUE>Home</VALUE>
+    </ISTRING>
+</ISTRINGTABLE>

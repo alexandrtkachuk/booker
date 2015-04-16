@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<ISTRINGTABLE ID="bookshop" LANG="ru">
+    <ISTRING>
+        <KEY>LANG_exit</KEY>
+        <VALUE>Выход</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_user</KEY>
+        <VALUE>Пользователь</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_buy</KEY>
+        <VALUE>Купить</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_more</KEY>
+        <VALUE>Подробнее</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_home</KEY>
+        <VALUE>Главная</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_SignIn</KEY>
+        <VALUE>Войти</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_PleaseSignIn</KEY>
+        <VALUE>Пожалуйста авторизируйтесь</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_warings2</KEY>
+        <VALUE>Введен неверный логин или пароль</VALUE>
+    </ISTRING>
+</ISTRINGTABLE>

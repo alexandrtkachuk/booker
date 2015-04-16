@@ -49,7 +49,10 @@ sub go()
     if($html)
     {
         print $cgi->header( -cookie=>$cookie, -charset=>'utf-8');
-        $self->{'pallett'}=$self->{'tools'}->makeNewObject('Views::Palletts::Index');    
+        $self->{'pallett'}=$self->{'tools'}->makeNewObject(
+            'Views::Palletts::'.
+            $self->{'tools'}->getCacheObject()->getCache('nextpage')
+        );    
         $html=$self->ReplaceH($html);
         $html=$self->ReplaceF($html);
         print $html; 

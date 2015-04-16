@@ -1,9 +1,8 @@
-package Controllers::CtrlPages::Index;
+package Controllers::Factory::CtrlPages;
 
 use warnings;
 use strict;
 use System::Tools::Toolchain;
-use Models::Utilits::Sessionme;
 
 sub new
 {
@@ -14,17 +13,19 @@ sub new
         },$class);
 }
 
-sub go
+sub isUser
 {
     my($self)=@_;
-    my $factory = $self->{'tools'}->makeNewObject('Controllers::Factory::CtrlPages');
+    
+    my  $user  = $self->{'tools'}->getObject('Models::Performers::User'); 
 
-    unless($factory->isUser())
+    unless($user->isLogin())
     {
+        $self->{'tools'}->getCacheObject()->setCache('redirect','login');
         return 0;
     }
-
-   return 1; 
+    
+    return 1; 
 }
 
 

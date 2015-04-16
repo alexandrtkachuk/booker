@@ -3,32 +3,33 @@ package Models::Performers::User;
 use warnings;
 use strict;
 
-
-
 use Data::Dumper;
 use Models::Interfaces::Sql;
-
+use System::Tools::Toolchain;
 use Digest::MD5 qw(md5 md5_hex md5_base64) ;
-use Models::Utilits::Sessionme;
-my $session =  Models::Utilits::Sessionme->new();
-my $tools = System::Tools::Toolchain->instance();
 
-
-#$debug->setMsg(md5('test'));
-
-
-my $self;
-
+my ($session,$tools, $self) ;
+my $tabName='booker_users';
 
 sub new
-{   
+{   $tools = System::Tools::Toolchain->instance();
     my $db = $tools->getConfigObject()->getDataBaseConfig();
     my $sql =  Models::Interfaces::Sql->new(
-        $db->dbuser;,
-        Config::Config::DBHOST,
-        Config::Config::DBNAME,
-        Config::Config::DBPASS);
-    $self || $sql->connect();
+        $db->dbuser,
+        $db->host,
+        $db->dbname,
+        $db->pass);
+    
+    unless($self) 
+    {
+        unless($sql->connect())
+        {
+            $tools->getDebugObject()->logIt($self->{'sql'}->getError());
+            return 0;
+        }
+       $session = $tools->getObject('Models::Utilits::Sessionme');
+    }
+    
     my $class = ref($_[0])||$_[0];
 
     $self||=bless(
@@ -42,7 +43,6 @@ sub new
         ,$class);
 
     return $self;
-
 }
 
 #add user
@@ -55,25 +55,25 @@ sub add
     my @arr= ( 'name' );
     $self->{'sql'}->select(\@arr);
 
-    $self->{'sql'}->setTable('shop_users');
+    $self->{'sql'}->setTable($tabName);
     $self->{'sql'}->where('email',$email);
 
 
     unless($self->{'sql'}->execute())
     {
-        $debug->setMsg( $self->{'sql'}->getError()); 
+        $tools->getDebugObject()->logIt(
+            $self->{'sql'}->getError()
+        );
         return 0;
     }
 
     if($self->{'sql'}->getRows())
     {
-        $data->{'warnings'}=3;
+        $tools->getCacheObject()->setCache('warings',3);
         return 0; #record exists 
     }
 
     ##########################################
-
-        
     my %hash=('name'=>$name, 
         'pass'=>md5_hex($pass),
         'email'=>$email,
@@ -84,8 +84,7 @@ sub add
     $self->{'sql'}->setTable('shop_users');
     
     unless($self->{'sql'}->execute())
-    {
-       # print $self->{'sql'}->getError(); 
+    { 
        return 0;
     }
     
@@ -102,37 +101,37 @@ sub login
     my @arr= ( 'name', 'id' ,'role', 'email' );
     $self->{'sql'}->select(\@arr);
 
-$self->{'sql'}->setTable('shop_users');
-$self->{'sql'}->where('email',$email);
-$self->{'sql'}->where('pass',md5_hex($pass));
+    $self->{'sql'}->setTable($tabName);
+    $self->{'sql'}->where('email',$email);
+    $self->{'sql'}->where('pass',md5_hex($pass));
 
-unless($self->{'sql'}->execute())
-{
-    $debug->setMsg( $self->{'sql'}->getError()); 
-    return 0;
-}
-my $res = $self->{'sql'}->getResult();
-#print 'good'; 
-unless($self->{'sql'}->getRows())
-{
-    return 0;
-}
+    unless($self->{'sql'}->execute())
+    { 
+        $tools->getDebugObject()->logIt($self->{'sql'}->getError() );
+        return 0;
+    }
+    my $res = $self->{'sql'}->getResult();
 
-$self->{'name'} = $res->[0]{'name'};
-$self->{'email'} = $res->[0]{'email'};
-$self->{'id'} = $res->[0]{'id'};
-$self->{'role'} = $res->[0]{'role'};
+    unless($self->{'sql'}->getRows())
+    {
+        return 0;
+    }
+
+    $self->{'name'} = $res->[0]{'name'};
+    $self->{'email'} = $res->[0]{'email'};
+    $self->{'id'} = $res->[0]{'id'};
+    $self->{'role'} = $res->[0]{'role'};
 
 ##save to sessin
-$session->setParam('email',$self->{'email'});
-$session->setParam('name',$self->{'name'});
-$session->setParam('id',$self->{'id'});
-$session->setParam('role',$self->{'role'});
+    $session->setParam('email',$self->{'email'});
+    $session->setParam('name',$self->{'name'});
+    $session->setParam('id',$self->{'id'});
+    $session->setParam('role',$self->{'role'});
 
 #print Dumper $self ;
 
 
-return 1;
+    return 1;
 }
 
 
@@ -158,8 +157,6 @@ sub isLogin
 
     return 0;
 }
-
-
 
 sub logout
 {

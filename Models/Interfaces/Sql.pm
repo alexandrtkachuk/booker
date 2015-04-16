@@ -5,10 +5,10 @@ use warnings;
 use strict;
 use DBI; 
 use Data::Dumper;
-use Models::Validators::Varibles;
 
-use Models::Utilits::Debug;
-my $debug = Models::Utilits::Debug->new();
+
+
+
 
 my($database, $host,$user, $pass,$dbh,$sth,$testmode );
 

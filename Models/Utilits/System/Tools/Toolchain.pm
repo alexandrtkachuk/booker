@@ -101,6 +101,16 @@ sub getDiskObject($)
 	return $disk;
 }
 
-
+sub getObject($$;$)
+{
+    my ($self, $objType, $objParameters) = @_;
+    my $temp = $self->getPoolObject()->getObjectFromPool($objType);
+    unless($temp)
+    {
+       $temp = $self->makeNewObject($objType, $objParameters);
+    }
+    
+    return $temp;
+}
 
 1;
