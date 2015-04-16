@@ -3,48 +3,39 @@ package Models::Utilits::Lang;
 use warnings;
 use strict;
 
-use Models::Utilits::Sessionme;
-my $session =  Models::Utilits::Sessionme->new();
-use Config::Config;
 use XML::Simple qw(:strict);
-use Models::Utilits::File;
-use Models::Utilits::Debug;
-my $debug = Models::Utilits::Debug->new();
-
-my $self;
-
+use System::Tools::Toolchain;
+my ($self, $session);
+sub getValue($$);
 
 sub new
 {   
 
-       my $class = ref($_[0])||$_[0];
-        my $lang;
+    my $class = ref($_[0])||$_[0];
+    my ($lang, $tools);
 
-        unless($self )
-        {
-            $lang='ru';
-        }
+    unless($self )
+    {
+        $lang='ru';
+        $tools = System::Tools::Toolchain->instance();
+        $session = $tools->getObject('Models::Utilits::Sessionme');
+    }
 
-        if($session->getParam('lang'))
-        {
-           $lang=$session->getParam('lang');
-            
-        }
-
-
+    if($session->getParam('lang'))
+    {
+        $lang=$session->getParam('lang'); 
+    }
 
     $self||=bless(
         {   
             'lang'=>$lang,
-            'value'=>undef
-            
+            'value'=>undef,
+            'tools'=> $tools
         }   
         ,$class);
 
     return $self;
-
 }
-
 
 sub get
 {
@@ -53,7 +44,6 @@ sub get
     {
         $self->load();
     }
-    #print  $self->{'lang'};
     return $self->{'value'};
 }
 
@@ -68,33 +58,35 @@ sub set
 
     $session->setParam('lang',$value);
     $self->{'lang'}=$value;
-    $debug->setMsg('session id = '.$session->getId());
+    $self->{'tools'}->getDebugObject()->logIt(
+        'session id = '.$session->getId()
+    );
     return $value;
 }
 
 
+sub getValue($$)
+{
+    my ($self,$value)=@_;
+    $self->get(); 
+    return $self->{'value'}->{'ISTRING'}{"LANG_$value"}{'VALUE'};
+}
+
 sub load
 {
     my ($self)=@_;
-    my $tdir = Config::Config->getDir();
-    my $fullpath= $tdir.'/Resources/langs/'.$self->{'lang'}.'.strings';
-    #print $fullpath; 
-    my $file = Models::Utilits::File->new();
-    my $xml = $file->getFile($fullpath); 
+    my $fullpath= 'Resources/langs/'.$self->{'lang'}.'.strings';
+    my $xml = $self->{'tools'}->getDiskObject()->loadFileAsString($fullpath );
 
-    #print $xml;
-    my $ref;
     if($xml)
     { 
-      $self->{'value'}=  XMLin($fullpath, forcearray => ['ISTRING'], keyattr => ['KEY'] );
+      $self->{'value'}=  XMLin(
+          $fullpath, 
+          forcearray => ['ISTRING'], keyattr => ['KEY'] );
       return 1;
     }
 
     return 0;
-    
-        
-
 }
-
 
 1;

@@ -24,13 +24,8 @@ sub go()
     my $html;
     my $cgi = CGI->new;
     
-    my $session = $self->{'tools'}->getPoolObject()->getObjectFromPool('Models::Utilits::Sessionme');
-    unless($session)
-    {
-        $session =  Models::Utilits::Sessionme->new();
-        $self->{'tools'}->getPoolObject()->addObjectInPool($session);
-    }
-    
+    my $session =$self->{'tools'}->getObject('Models::Utilits::Sessionme');
+        
     $self->{'tools'}->logIt(__LINE__, "test");
 
     my $cookie = $cgi->cookie(CGISESSID => $session->getId());
@@ -55,6 +50,7 @@ sub go()
         );    
         $html=$self->ReplaceH($html);
         $html=$self->ReplaceF($html);
+        $html=$self->ReplaceL($html);
         print $html; 
     }
     else
@@ -95,5 +91,17 @@ sub ReplaceF
     $text=~s/##(\w+)##/$self->{'pallett'}->$1()/ge;
     return $text;
 }
+#replace lang
+sub ReplaceL
+{
+    my($self,$text)=@_;
+    #$lang = Models::Utilits::Lang->new();
+    my $lang =$self->{'tools'}->getObject('Models::Utilits::Lang');
+    
+    $text=~s/%#(\w+)#%/$lang->getValue($1)/ge;
+    
+    return $text;
+}
+
 
 1;

@@ -15,7 +15,7 @@ use Digest::MD5 qw(md5 md5_hex md5_base64) ;
 
 use System::Tools::Toolchain;
 my $tools = System::Tools::Toolchain->instance(TDIR);
-
+use  Models::Utilits::Lang;
 use Models::Performers::User;
 sub test
 {
@@ -62,8 +62,11 @@ print $p->get();
 
 sub funlang
 {
-
-
+     my $lang = $tools->getObject('Models::Utilits::Lang');
+     my $ref =  $lang->get();
+     my $temp=$lang->getValue('more');  
+     #print Dumper $ref->{'ISTRING'}{"LANG_$temp"}{'VALUE'};
+        print $temp;
 }
 
 sub userfun
@@ -93,7 +96,10 @@ sub main
 {
 
     
-    userfun();
+    #userfun();
+    funlang();
+
+
     my $d=  $tools->getDebugObject()->getLog();
     print Dumper $d;
 
