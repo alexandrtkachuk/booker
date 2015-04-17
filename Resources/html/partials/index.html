@@ -2,20 +2,23 @@
 <div   >
 	<div id='calendar'></div>
 	<div class="right-bar">
+		<span ng-bind="cI.melang.value.LANG_langs.VALUE"></span>:<br />
 		<select 
 		ng-model="cI.mylang.value" 
 		ng-options="lang.name  for lang in cI.langs.items"
-		ng-change="cI.fun()">>
+		ng-change="cI.fun()">
     </select>
-		Язык<br />
+		<br />
+				<span ng-bind="cI.melang.value.LANG_timeformat.VALUE"></span>:<br />
 		<select 
 		ng-model="cI.mytime" 
-		ng-options="time.name  for time in cI.times"
 		ng-change="cI.fun2()">
+		<option  value="h(:mm)t">12</option>
+		<option  value="H(:mm)">24</option>
     </select>
-		формат времени
-		
 		<br />
+		
+		 <span ng-bind="cI.melang.value.LANG_firstday.VALUE"></span>:<br />
 		<select 
 		ng-model="cI.day" 
 		ng-change="cI.switchday()">
@@ -23,7 +26,7 @@
 		<option ng-bind="cI.melang.value.LANG_monday.VALUE" value="1"></option>
 		
     </select>
-    <span ng-bind="cI.melang.value.LANG_firstday.VALUE"></span>
+   <br />
 		
 	</div>
 </div>

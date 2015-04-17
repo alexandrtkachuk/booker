@@ -66,4 +66,24 @@ sub warings
     );
 
 }
+
+sub test
+{
+    #$ENV{'SCRIPT_NAME'};
+    my ($self)=@_;
+    #return $self->getJSON(/$ENV{'HTTP_COOKIE'});
+    print $ENV{'HTTP_COOKIE'};
+    return ''; 
+}
+
+
+sub getoreders
+{
+    return "";
+
+}
+
+
+
+
 1;

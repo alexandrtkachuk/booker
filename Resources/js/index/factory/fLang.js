@@ -30,6 +30,8 @@ App.factory('fLang', function($http) {
 	 }
 	 
 	 lang.set = function (lang) {
+			document.cookie = "tai-lang="+lang;
+		 /*
 			return $http.get('api/setlang/?set='+lang).success(
 				function(data, status, headers, config) {
 					console.log(data);
@@ -37,8 +39,7 @@ App.factory('fLang', function($http) {
 					//lang.get();
 				}
 			);	
-			
-			
+			*/	
 	 }
 	
   return lang;

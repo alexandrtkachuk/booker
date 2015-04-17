@@ -12,7 +12,7 @@ use constant TDIR=>dirname(__FILE__);
 use lib TDIR;
 use lib TDIR.'/Models/Utilits';
 use Digest::MD5 qw(md5 md5_hex md5_base64) ;
-
+use Time::Local;
 use System::Tools::Toolchain;
 my $tools = System::Tools::Toolchain->instance(TDIR);
 use  Models::Utilits::Lang;
@@ -69,6 +69,34 @@ sub funlang
         print $temp;
 }
 
+sub funroom
+{
+    my  $rooms  = $tools->getObject('Models::Performers::Rooms'); 
+    #if($rooms->addRoom('Зал 1'))
+    #{
+    #    print "good add";
+    #}
+    #else
+    #{
+    #    print "error add";
+    #}
+    
+
+
+    #print $rooms->addOrder(1,time(),time()+120,'text',1);
+    print Dumper $rooms->getRooms();
+    my $t=timelocal(0,0,0,1,3,115);
+
+    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($t);
+    #$year+=1900;
+        
+      print time()."\n";
+      print $year."\n";
+      print $mday."\n";#день месяца
+      print $mon."\n";  
+      #print  timelocal(0,0,0,1,0,115);
+}
+
 sub userfun
 {
     my $info = $tools->getConfigObject()->getDataBaseConfig();
@@ -97,8 +125,8 @@ sub main
 
     
     #userfun();
-    funlang();
-
+    #funlang();
+    funroom();
 
     my $d=  $tools->getDebugObject()->getLog();
     print Dumper $d;

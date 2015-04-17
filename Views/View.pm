@@ -26,10 +26,13 @@ sub go()
     
     my $session =$self->{'tools'}->getObject('Models::Utilits::Sessionme');
         
-    $self->{'tools'}->logIt(__LINE__, "test");
+    #$self->{'tools'}->logIt(__LINE__, "test");
+    
+    #$self->{'tools'}->getDebugObject()->logIt(__LINE__,'lang2='.$cgi->param('tai-lang'));
 
     my $cookie = $cgi->cookie(CGISESSID => $session->getId());
-
+    
+    
     if( $self->{'tools'}->getCacheObject()->getCache('redirect'))
     {
         print $cgi->redirect($self->{'tools'}->getCacheObject()->getCache('redirect'));
@@ -44,6 +47,12 @@ sub go()
     if($html)
     {
         print $cgi->header( -cookie=>$cookie, -charset=>'utf-8');
+        if($cgi->cookie('tai-lang'))
+        {
+            $self->{'tools'}->getObject('Models::Utilits::Lang')
+            ->set( $cgi->cookie('tai-lang'));
+        }
+
         $self->{'pallett'}=$self->{'tools'}->makeNewObject(
             'Views::Palletts::'.
             $self->{'tools'}->getCacheObject()->getCache('nextpage')
@@ -58,6 +67,8 @@ sub go()
         $self->{'tools'}->getCacheObject()->setCache('nextpage','Error');
         $self->go();
     }
+
+    return 1;    
 }
 
 sub ReplaceH

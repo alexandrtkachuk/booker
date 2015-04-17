@@ -19,13 +19,13 @@ sub new
         $lang='ru';
         $tools = System::Tools::Toolchain->instance();
         $session = $tools->getObject('Models::Utilits::Sessionme');
-    }
 
-    if($session->getParam('lang'))
-    {
-        $lang=$session->getParam('lang'); 
-    }
 
+        if($session->getParam('lang'))
+        {
+            $lang=$session->getParam('lang'); 
+        }
+    }
     $self||=bless(
         {   
             'lang'=>$lang,
