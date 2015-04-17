@@ -4,7 +4,7 @@ use warnings;
 use strict;
 
 use System::Tools::Toolchain;
-
+use Time::Local;
 
 my ($self) ;
 my $tabprefix = 'booker_';
@@ -56,17 +56,40 @@ sub getToMounth
         0,#hour
         1,#day
         $mon,$year);
-        
-    $self->{'sql'}->select(['id','name']);
-    
+     my $t2=timelocal(
+        0,#sec
+        0,#min
+        0,#hour
+        1,#day
+        $mon+1,$year);
+   
+    $self->{'sql'}->select([
+            'id',
+            'id_room',
+            'id_user',
+            'info',
+            'time_start',
+            'time_end',
+            'created'
+        ]);
+    #print "time=$t \n mon=$mon \n";
+    $self->{'sql'}->where('time_start',$t,'>');  
+    $self->{'sql'}->where('time_end',$t2,'<');
+    $self->{'sql'}->where('id_room',$idRoom);
     $self->{'sql'}->setTable($tabprefix.'orders');
     
     unless($self->{'sql'}->execute())
     { 
-       $self->{'tools'}->logIt(__LINE__, "error to add Orede");
+       $self->{'tools'}->logIt(__LINE__, 
+           "error to get Oredes".$self->{'sql'}->getError()
+           ."\n script=".$self->{'sql'}->getSql()
+       );
        return 0;
     }
 
+    my $res = $self->{'sql'}->getResult();
+    
+    return $res;
 }
 
 

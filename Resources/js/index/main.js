@@ -27,18 +27,17 @@ App.controller('cIndex',function( fLang ){
 						if(!getCookie('tai-ftime'))
 						{
 							 document.cookie = "tai-ftime=h(:mm)t";
+                             console.log('++');
 						}
 						this.mytime=getCookie('tai-ftime');
-						
+						var metime =this.mytime;
 						
 						if(!getCookie('tai-fday'))
 						{
-							window.localStorage.taibooker.fday=0;
 							document.cookie = "tai-fday=0";
 						}
 						this.day=getCookie('tai-fday');
-    
- 
+                        var meday= this.day;
 	
 	
 	fLang.get().then( function(data, status, headers, config)
@@ -60,7 +59,9 @@ App.controller('cIndex',function( fLang ){
 	function rendcalendar(lang)
 	{
 		$('#calendar').fullCalendar('destroy');
-					goCalendar(lang,this.mytime,this.day);	
+					goCalendar(lang,metime,meday);	
+                    //console.log(this.mytime);
+                    //console.log(this.day);
 	}
 	//lang
 	this.fun = function()
@@ -81,7 +82,7 @@ App.controller('cIndex',function( fLang ){
 	{
 		console.log('switch format time='+this.mytime);
 		$('#calendar').fullCalendar('destroy');
-		goCalendar(this.mylang.value.name,this.mytime);
+		goCalendar(this.mylang.value.name,this.mytime,this.day);
 		document.cookie = "tai-ftime="+this.mytime;
 	}
 	//firsday

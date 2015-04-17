@@ -77,10 +77,21 @@ sub test
 }
 
 
-sub getoreders
+sub getorders
 {
-    return "";
+my($self)=@_;
 
+
+    my $start= $self->{'tools'}->getCacheObject()->getCache('numpage');
+ 
+    my  $rooms  = $self->{'tools'}->getObject('Models::Performers::Rooms');
+    
+    my $res = $rooms->getToMounth(1,$start);
+
+
+    return 
+        $self->getJSON($res);
+   
 }
 
 

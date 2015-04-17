@@ -26,6 +26,11 @@ sub go
 
         return 0;
     }
+    if($in{'start'})
+    {
+        $self->{'tools'}->getCacheObject()->setCache('numpage',$in{'start'});
+    }
+
     if($in{'set'})
     {
         my $fun=$self->{'tools'}->getCacheObject()->getCache('pageparam');
