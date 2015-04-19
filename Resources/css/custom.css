@@ -51,3 +51,8 @@ body {
 {
 	float:right;
 }
+
+.disabled
+{
+	color:red;
+}

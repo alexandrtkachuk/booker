@@ -19,16 +19,24 @@ ReadParse();
 sub go
 {
     my($self)=@_;
-    my $factory = $self->{'tools'}->makeNewObject('Controllers::Factory::CtrlPages');
+    my $factory = $self->{'tools'}->makeNewObject(
+        'Controllers::Factory::CtrlPages');
 
     unless($factory->isUser())
     {
 
         return 0;
     }
-    if($in{'start'})
+    
+    if($in{'roomid'})
     {
-        $self->{'tools'}->getCacheObject()->setCache('numpage',$in{'start'});
+        $self->{'tools'}->getCacheObject()->setCache('roomid',$in{'roomid'});
+    }
+
+    if($in{'start'} &&  $in{'end'} )
+    {
+        $self->{'tools'}->getCacheObject()->setCache('start',$in{'start'});
+        $self->{'tools'}->getCacheObject()->setCache('end',$in{'end'});
     }
 
     if($in{'set'})

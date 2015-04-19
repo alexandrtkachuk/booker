@@ -52,4 +52,12 @@
         <KEY>LANG_timeformat</KEY>
         <VALUE>time format</VALUE>
     </ISTRING>
+    <ISTRING>
+        <KEY>LANG_bookit</KEY>
+        <VALUE>Book it</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_send</KEY>
+        <VALUE>Send</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>

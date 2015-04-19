@@ -29,13 +29,33 @@ sub go()
     #$self->{'tools'}->logIt(__LINE__, "test");
     
     #$self->{'tools'}->getDebugObject()->logIt(__LINE__,'lang2='.$cgi->param('tai-lang'));
-
-    my $cookie = $cgi->cookie(CGISESSID => $session->getId());
+    #$cgi->cookie(userid => '99');
+    my @cookies; 
+    push(@cookies, $cgi->cookie(CGISESSID => $session->getId()));
+   
+    my $user = $self->{'tools'}->getObject('Models::Performers::User');
+    
+    if($user->isLogin() )
+    {
+        push(@cookies, $cgi->cookie(
+                -name =>'tai-userid',
+                -value=>$user->getId()));
+        
+        push(@cookies, $cgi->cookie(
+                -name =>'tai-username',
+                -value=>$user->getName()));
+        push(@cookies, $cgi->cookie(
+                -name =>'tai-userrole',
+                -value=>$user->getRole()));
+        
+    }
+   
     
     
     if( $self->{'tools'}->getCacheObject()->getCache('redirect'))
     {
-        print $cgi->redirect($self->{'tools'}->getCacheObject()->getCache('redirect'));
+        print $cgi->redirect($self->{'tools'}->getCacheObject()
+            ->getCache('redirect'));
     } 
 
     my $templete='Resources/html/'.
@@ -46,7 +66,7 @@ sub go()
 
     if($html)
     {
-        print $cgi->header( -cookie=>$cookie, -charset=>'utf-8');
+        print $cgi->header( -cookie=> \@cookies, -charset=>'utf-8');
         if($cgi->cookie('tai-lang'))
         {
             $self->{'tools'}->getObject('Models::Utilits::Lang')

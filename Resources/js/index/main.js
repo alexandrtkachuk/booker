@@ -16,6 +16,9 @@ App.controller('cIndex',function( fLang ){
 	};
     
     
+    this.testme="adminmenu";
+    
+    
     this.langs=langs;
     
     this.mylang=langs;
@@ -24,14 +27,20 @@ App.controller('cIndex',function( fLang ){
     
     /**load config
 						 * */
+						 if(!getCookie('tai-roomid'))
+						 {
+							 document.cookie = "tai-roomid=1";
+						 }
+						 
 						if(!getCookie('tai-ftime'))
 						{
-							 document.cookie = "tai-ftime=h(:mm)t";
+							 document.cookie = "tai-ftime=h(:mm)t - h(:mm)t";
                              console.log('++');
 						}
 						this.mytime=getCookie('tai-ftime');
 						var metime =this.mytime;
 						
+						console.log(this.mytime);
 						if(!getCookie('tai-fday'))
 						{
 							document.cookie = "tai-fday=0";
@@ -59,7 +68,8 @@ App.controller('cIndex',function( fLang ){
 	function rendcalendar(lang)
 	{
 		$('#calendar').fullCalendar('destroy');
-					goCalendar(lang,metime,meday);	
+					goCalendar(lang,getCookie('tai-ftime'),
+					getCookie('tai-fday'));	
                     //console.log(this.mytime);
                     //console.log(this.day);
 	}
@@ -93,6 +103,7 @@ App.controller('cIndex',function( fLang ){
 			goCalendar(this.mylang.value.name,this.mytime,this.day);
 			//console.log(this.day);
 			document.cookie = "tai-fday="+this.day;
+			
 			
 	} 
 	

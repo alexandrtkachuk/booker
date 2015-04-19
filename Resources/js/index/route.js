@@ -2,6 +2,15 @@ App.config(function($stateProvider, $urlRouterProvider) {
 	  
 	  $urlRouterProvider.otherwise("/");
 	  
+	  $urlRouterProvider.when('/admin', [ function () {
+            
+            if(getCookie('tai-userrole')!=0)
+            {
+					return '/'; 
+			}
+            
+            return false;
+		}]);
 	
 	  
 	  
@@ -14,6 +23,17 @@ App.config(function($stateProvider, $urlRouterProvider) {
 		})
 	
 	
+		.state('bookit', {
+		  url: "/bookit",
+		   controller: "cBookit as cB",
+		  templateUrl: "Resources/html/partials/bookit.html"
+		})
 		
+		
+		.state('admin', {
+		  url: "/admin",
+		   controller: "cAdmin as cA",
+		  templateUrl: "Resources/html/partials/admin.html"
+		})
 
   });

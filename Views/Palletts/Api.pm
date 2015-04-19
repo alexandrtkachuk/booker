@@ -79,19 +79,13 @@ sub test
 
 sub getorders
 {
-my($self)=@_;
-
-
-    my $start= $self->{'tools'}->getCacheObject()->getCache('numpage');
- 
+    my($self)=@_;
+    my $start= $self->{'tools'}->getCacheObject()->getCache('start');
+    my $end= $self->{'tools'}->getCacheObject()->getCache('end'); 
     my  $rooms  = $self->{'tools'}->getObject('Models::Performers::Rooms');
-    
-    my $res = $rooms->getToMounth(1,$start);
-
-
-    return 
-        $self->getJSON($res);
-   
+    my $roomid= $self->{'tools'}->getCacheObject()->getCache('roomid');
+    my $res = $rooms->getToMounth($roomid,$start,$end);
+    return   $self->getJSON($res);
 }
 
 

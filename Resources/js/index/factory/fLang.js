@@ -15,6 +15,7 @@ App.factory('fLang', function($http) {
 					console.log(data);
 					lang.value = data.ISTRING;
 					console.log(lang.value);
+					lang.lang = data.LANG;
 				}
 			);	
   
@@ -24,6 +25,7 @@ App.factory('fLang', function($http) {
 				function(data, status, headers, config) {
 					console.log(data);
 					lang.value = data.ISTRING;
+					lang.lang = data.LANG;
 				}
 			);	
 	 

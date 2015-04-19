@@ -13,8 +13,8 @@
 		<select 
 		ng-model="cI.mytime" 
 		ng-change="cI.fun2()">
-		<option  value="h(:mm)t">12</option>
-		<option  value="H(:mm)">24</option>
+		<option  value="h(:mm)t - h(:mm)t">12</option>
+		<option  value="H(:mm) - H(:mm)">24</option>
     </select>
 		<br />
 		
@@ -27,6 +27,9 @@
 		
     </select>
    <br />
-		
+   <hr />
+   <a ui-sref="bookit"  ng-bind="cI.melang.value.LANG_bookit.VALUE" class="btn btn-primary"></a>
+	
+	<div  adminmenu  ></div>
 	</div>
 </div>

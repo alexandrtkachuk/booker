@@ -52,4 +52,12 @@
         <KEY>LANG_timeformat</KEY>
         <VALUE>фодмат времени</VALUE>
     </ISTRING>
+    <ISTRING>
+        <KEY>LANG_bookit</KEY>
+        <VALUE>Забронировать</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_send</KEY>
+        <VALUE>Отправить</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>

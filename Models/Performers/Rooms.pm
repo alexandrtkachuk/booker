@@ -42,27 +42,14 @@ sub new
 
 sub getToMounth
 {
-    my($self,$idRoom,$timeUnix)=@_;
+    my($self,$idRoom,$timeStart,$timeEnd)=@_;
     
-    unless($idRoom && $timeUnix)
+    unless($idRoom && $timeStart && $timeEnd)
     {
         return 0;
     }
-    my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($timeUnix);
-
-    my $t=timelocal(
-        0,#sec
-        0,#min
-        0,#hour
-        1,#day
-        $mon,$year);
-     my $t2=timelocal(
-        0,#sec
-        0,#min
-        0,#hour
-        1,#day
-        $mon+1,$year);
-   
+    #my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($timeUnix);
+       
     $self->{'sql'}->select([
             'id',
             'id_room',
@@ -73,8 +60,8 @@ sub getToMounth
             'created'
         ]);
     #print "time=$t \n mon=$mon \n";
-    $self->{'sql'}->where('time_start',$t,'>');  
-    $self->{'sql'}->where('time_end',$t2,'<');
+    $self->{'sql'}->where('time_start',$timeStart,'>');  
+    $self->{'sql'}->where('time_end',$timeEnd,'<');
     $self->{'sql'}->where('id_room',$idRoom);
     $self->{'sql'}->setTable($tabprefix.'orders');
     
