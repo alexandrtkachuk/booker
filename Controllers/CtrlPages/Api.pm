@@ -27,7 +27,7 @@ sub go
 
         return 0;
     }
-    
+
     if($in{'roomid'})
     {
         $self->{'tools'}->getCacheObject()->setCache('roomid',$in{'roomid'});
@@ -39,18 +39,55 @@ sub go
         $self->{'tools'}->getCacheObject()->setCache('end',$in{'end'});
     }
 
-    if($in{'set'})
+    
+
+    my $fun=$self->{'tools'}->getCacheObject()->getCache('pageparam');
+    #$self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
+    
+    unless($self->$fun())
     {
-        my $fun=$self->{'tools'}->getCacheObject()->getCache('pageparam');
-        $self->$fun();
-        $self->{'tools'}->getCacheObject()->setCache('pageparam','warings'); 
-    }
+        $self->{'tools'}->getCacheObject()->
+        setCache('pageparam','none');
+    } 
+
 
     return 1; 
 }
 
+sub adduser
+{
+    my($self)=@_;
+    
+    my $admin = $self->{'tools'}->getObject('Models::Performers::Admin');
+    $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
+    unless($admin->isAdmin())
+    {
+        return 0;
+    }
 
+    unless($in{'email'} && 
+        ( Email::Valid->address($in{'email'})  ) &&
+        ($in{'name'}))
+    { 
+        $self->{'tools'}->getCacheObject()->setCache('warings',2);
+        return 2;
+    }
 
+    my @chars = ("A".."Z", "a".."z", 0..9);
+    my $pass;
+    $pass .= $chars[rand @chars] for 1..8;
+    
+    unless($admin->add($in{'name'},$pass,$in{'email'}))
+    {
+        return 3;
+    }
+
+    $self->{'tools'}->getCacheObject()->setCache('pass',$pass);
+    $self->{'tools'}->getCacheObject()->setCache('warings',1);
+    $self->{'tools'}->getCacheObject()->setCache('pageparam','adduser');
+
+    return 1;
+}
 
 sub setlang
 {
@@ -65,6 +102,83 @@ sub setlang
         $self->{'tools'}->getCacheObject()->setCache('warings',4);
     }
 
+    return 1;
+}
+
+
+sub userlist
+{
+    my($self)=@_;
+
+    unless($self->{'tools'}->getObject('Models::Performers::Admin')->isAdmin())
+    {
+        return 0;
+    }
+
+    return 1;
+}
+
+sub updateuser
+{
+    my($self)=@_;
+    my $admin = $self->{'tools'}->getObject('Models::Performers::Admin');
+    
+    unless($admin->isAdmin())
+    {
+        return 0;
+    }
+
+    $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
+
+    unless($in{'email'} && $in{id} &&
+        ( Email::Valid->address($in{'email'})  ) &&
+        ($in{'name'}))
+    { 
+        $self->{'tools'}->getCacheObject()->setCache('warings',2);
+        return 2;
+    }
+    
+    unless($admin->update($in{id},$in{'name'},$in{'email'}))
+    {
+        $self->{'tools'}->getCacheObject()->setCache('warings',2);
+        return 3;
+    }
+
+    return 1;
+}
+
+
+sub deleteuser
+{
+    
+    my($self)=@_;
+    my $admin = $self->{'tools'}->getObject('Models::Performers::Admin');
+    
+    unless($admin->isAdmin())
+    {
+        return 0;
+    }
+
+    $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
+
+    unless($in{id} )
+    { 
+        $self->{'tools'}->getCacheObject()->setCache('warings',2);
+        return 2;
+    }
+    
+    unless($admin->delete($in{id}))
+    {
+        $self->{'tools'}->getCacheObject()->setCache('warings',2);
+        return 3;
+    }
+
+    return 1;
+}
+
+
+sub AUTOLOAD
+{
     return 1;
 }
 

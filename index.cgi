@@ -6,6 +6,7 @@ use strict;
 $|=1;
 
 use File::Basename;;
+use Data::Dumper;
 
 use constant TDIR=>dirname(__FILE__);
 
@@ -39,6 +40,15 @@ sub main
     }
     ###VIEW######
     Views::View->new()->go();
+    if($@) 
+        {  
+            $tools->getDebugObject()->logIt($@);
+            $tools->getCacheObject()->setCache('nextpage','Error');
+        }     
+
+    my $d=$tools->getDebugObject()->getLog();
+    #print  Dumper($d);
+
 }
 ###run to main
 main();

@@ -3,6 +3,19 @@
 		<a ui-sref="index"  ng-bind="cA.melang.value.LANG_home.VALUE"  class="btn btn-primary"></a>
 		<hr />
 	</div>
-	{{cA.test}}	
 	
-	<div>
+	<table>
+			<tr ng-repeat="user in cA.users.items">
+				<td ><a href="mailto:{{user.email}}" ng-bind="user.name"></a></td>
+				<td ><button ng-click="cA.deleteuser(user.id,user.name)" ng-bind="cA.melang.value.LANG_remove.VALUE" class="btn btn-danger" data-toggle="modal" data-target="#myModalDelete"></button></td>
+				<td ><button ng-click="cA.edit(user.id,user.name,user.email)"  data-toggle="modal" data-target="#myModalEdit" ng-bind="cA.melang.value.LANG_edit.VALUE" class="btn btn-success"></button></td>
+			</tr>
+	</table>
+	
+	
+	<div><button data-toggle="modal" data-target="#myModal" ng-bind="cA.melang.value.LANG_addemployee.VALUE"  class="btn btn-success"></button>  </div>
+	
+	<div modaluseradd></div>
+	<div modaluseredit></div>
+	<div modaluserdelete ></div>
+<div>

@@ -81,7 +81,7 @@ sub add
     );
     
     $self->{'sql'}->insert(\%hash);
-    $self->{'sql'}->setTable('shop_users');
+    $self->{'sql'}->setTable($tabName);
     
     unless($self->{'sql'}->execute())
     { 

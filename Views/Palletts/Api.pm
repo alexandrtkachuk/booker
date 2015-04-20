@@ -59,11 +59,15 @@ sub getJSON
 sub warings
 {
     my ($self)=@_;
-    return
-    $self->getJSON
-    (
-        {'warings'=>  $self->{'tools'}->getCacheObject()->getCache('warings')}
-    );
+
+    my  $w =$self->{'tools'}->getCacheObject()->getCache('warings');
+
+    unless($w)
+    {
+        $w='0';
+    }
+
+    return $self->getJSON  ( {'warings'=>  $w});
 
 }
 
@@ -89,6 +93,26 @@ sub getorders
 }
 
 
+sub adduser
+{
+    my($self)=@_;
+    return
+    $self->getJSON
+    ({
+            'warings'=>  $self->{'tools'}->getCacheObject()->getCache('warings'),
+            'pass'=>  $self->{'tools'}->getCacheObject()->getCache('pass')
+    });
+}
 
-
+sub userlist
+{
+    my($self)=@_;
+    my $res = $self->{'tools'}->getObject('Models::Performers::Admin')->userList();
+    unless($res)
+    {
+        return $self->warings();
+    }
+    
+    return   $self->getJSON($res);
+}
 1;

@@ -29,8 +29,16 @@
         <VALUE>Please sing in</VALUE>
     </ISTRING>
     <ISTRING>
+        <KEY>LANG_addemployee</KEY>
+        <VALUE>Add employee</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_employeelist</KEY>
+        <VALUE>employee list</VALUE>
+    </ISTRING>
+    <ISTRING>
         <KEY>LANG_warings2</KEY>
-        <VALUE>no corect password or email</VALUE>
+        <VALUE>no corect data or empry</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_langs</KEY>
@@ -59,5 +67,53 @@
     <ISTRING>
         <KEY>LANG_send</KEY>
         <VALUE>Send</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_edit</KEY>
+        <VALUE>edit</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_remove</KEY>
+        <VALUE>remove</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_close</KEY>
+        <VALUE>close</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_name</KEY>
+        <VALUE>name</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_email_address</KEY>
+        <VALUE>Email address</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_goodadd</KEY>
+        <VALUE>Add employee</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_passemployee</KEY>
+        <VALUE>pass employee</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_editemployee</KEY>
+        <VALUE>edit employee</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_goodedit</KEY>
+        <VALUE>good edit</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_removeemployee</KEY>
+        <VALUE>remove employee</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_yes</KEY>
+        <VALUE>yes</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_goodremove</KEY>
+        <VALUE>good remove</VALUE>
     </ISTRING>
 </ISTRINGTABLE>

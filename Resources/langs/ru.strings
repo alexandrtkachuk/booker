@@ -30,7 +30,7 @@
     </ISTRING>
     <ISTRING>
         <KEY>LANG_warings2</KEY>
-        <VALUE>Введен неверный логин или пароль</VALUE>
+        <VALUE>Не все поля заполнены верно</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_langs</KEY>
@@ -60,4 +60,61 @@
         <KEY>LANG_send</KEY>
         <VALUE>Отправить</VALUE>
     </ISTRING>
+    <ISTRING>
+        <KEY>LANG_addemployee</KEY>
+        <VALUE>Добавить сотрудника</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_employeelist</KEY>
+        <VALUE>список сотрудников</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_edit</KEY>
+        <VALUE>Править</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_remove</KEY>
+        <VALUE>удалить</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_close</KEY>
+        <VALUE>закрыть</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_name</KEY>
+        <VALUE>имя</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_email_address</KEY>
+        <VALUE>электронная почта</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_goodadd</KEY>
+        <VALUE>запись успешно добавлена</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_passemployee</KEY>
+        <VALUE>Пароль сотрудника</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_editemployee</KEY>
+        <VALUE>править сотрудника</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_goodedit</KEY>
+        <VALUE>Правка успешно прошла</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_removeemployee</KEY>
+        <VALUE>удалить сотрудника</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_yes</KEY>
+        <VALUE>да</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_goodremove</KEY>
+        <VALUE>запись успешно удаленна</VALUE>
+    </ISTRING>
+    
 </ISTRINGTABLE>

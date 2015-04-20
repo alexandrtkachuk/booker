@@ -1,0 +1,20 @@
+ <div class="modal fade" id="myModalEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="myModalLabel" ng-bind="cA.melang.value.LANG_editemployee.VALUE"></h4>
+                </div>
+                <div class="modal-body">
+                    <p id="messauthor"><b ng-bind="cA.error.mess" ></b></p>
+
+                   <p> <input type="name"  id="name"  ng-model="cA.name"  placeholder="{{cA.melang.value.LANG_name.VALUE}}"> </p>
+                    <p> <input type="email"  id="email"  ng-model="cA.email"  placeholder="{{cA.melang.value.LANG_email_address.VALUE}}"> </p>
+                    <button type="button" class="btn btn-default" ng-click="cA.sendedit()"  ng-bind="cA.melang.value.LANG_send.VALUE" ></button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal" ng-bind="cA.melang.value.LANG_close.VALUE" ></button>
+                </div>
+            </div>
+        </div>
+    </div>

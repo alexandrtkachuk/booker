@@ -17,6 +17,10 @@ use System::Tools::Toolchain;
 my $tools = System::Tools::Toolchain->instance(TDIR);
 use  Models::Utilits::Lang;
 use Models::Performers::User;
+require Mail::Send;
+use Digest::MD5 qw(md5 md5_hex md5_base64) ;
+
+
 sub test
 {
     print "Content-type: text/html; encoding='utf-8'\n\n";
@@ -90,7 +94,7 @@ sub funroom
     
     print Dumper $rooms->getToMounth(1,time());
 
-    my $t =timelocal(0,0,0,1,3,115);
+    $t = timelocal(0,0,0,1,3,115);
 
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($t);
     #$year+=1900;
@@ -124,6 +128,20 @@ sub userfun
     }
 }
 
+sub funSendMail
+{
+
+    
+}
+
+sub funrand
+{
+    my @chars = ("A".."Z", "a".."z", 0..9);
+    my $string;
+    $string .= $chars[rand @chars] for 1..8;
+    print $string;
+
+}
 
 sub main
 {
@@ -131,8 +149,9 @@ sub main
     
     #userfun();
     #funlang();
-    funroom();
-
+    #funroom();
+    #funSendMail();
+    funrand();
     my $d=  $tools->getDebugObject()->getLog();
     print Dumper $d;
 
