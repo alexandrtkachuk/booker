@@ -20,7 +20,8 @@ use Models::Performers::User;
 require Mail::Send;
 use Digest::MD5 qw(md5 md5_hex md5_base64) ;
 
-
+use Time::Seconds;
+use Time::Piece;
 sub test
 {
     print "Content-type: text/html; encoding='utf-8'\n\n";
@@ -85,33 +86,50 @@ sub funroom
     #    print "error add";
     #}
     
-    
-    my $t= time() - 100;
-    my $t2 = $t+1211;
-    if($rooms->addOrder(1,$t,$t2,'text',1))
+
+    my $t= time() + 500;
+    #$t =1429257779 -1212;
+    my $start =localtime($t);
+
+    print $start->_wday."\n";
+    #$t+= (ONE_DAY*2 );
+    print $t;
+    #1429257899
+    my $t2 = $t+121;
+
+    # print Dumper    $rooms->addOrder(1,$t,$t2,'text',1,3,2);
+
+    if(0)
     {
         print "good \n";
     }
     else
     {
-        print "bead\n";
+        #   print "bead\n";
     }
 
-    
+      $t = localtime;
+        print "\nday:", $t->mday," month:",$t->mon, " year:", $t->year,  "\n";
+        #$t->add_years(5); 
+        my $t2=$t->add_months(10); 
+        $t2 += (ONE_DAY *10); 
+       $t->mon('+1');
+      print $t2->epoch."\n"; 
+       print "\nday:", $t2->mday," month:",$t2->mon, " year:", $t2->year,  "\n"; 
 
-    print Dumper $rooms->getRooms();
+    #print Dumper $rooms->getRooms();
     
-    print Dumper $rooms->getToMounth(1,time());
+    print Dumper $rooms->getToMounth(1,1,14292577791);
 
     $t = timelocal(0,0,0,1,3,115);
 
     my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($t);
     #$year+=1900;
         
-      print time()."\n";
-      print $year."\n";
-      print $mday."\n";#день месяца
-      print $mon."\n";  
+    #print time()."\n";
+    #  print $year."\n";
+    #  print $mday."\n";#день месяца
+    #  print $mon."\n";  
       #print  timelocal(0,0,0,1,0,115);
 }
 

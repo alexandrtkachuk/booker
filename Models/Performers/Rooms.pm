@@ -5,6 +5,8 @@ use strict;
 
 use System::Tools::Toolchain;
 use Time::Local;
+use Time::Seconds;
+use Time::Piece;
 
 my ($self) ;
 my $tabprefix = 'booker_';
@@ -86,20 +88,42 @@ sub empryTime
     # t1=>t<=t2
     #
     #
+
+    my $start =localtime($timeStart);
+    my $end=localtime($timeEnd);
+
+    unless($start->year==$end->year && $start->mon==$end->mon &&
+        $start->mday==$end->mday )
+    {
+        return 0;
+    }
+    
+    if($start->_wday==0 || $start->_wday==6)
+    {
+        return 0;
+    }
+
     unless($idRoom && $timeStart && $timeEnd)
     {
         return 0;
     }
        
     $self->{'sql'}->select(['id']);
-    $self->{'sql'}->where('time_start',$timeStart,'>=');  
-    $self->{'sql'}->where('time_end',$timeStart,'<=');
-    $self->{'sql'}->where('time_end',$timeEnd,'<=','OR');
-    $self->{'sql'}->where('time_start',$timeEnd,'>=');
-    
-    $self->{'sql'}->where('time_start',$timeSatrt,'<=','OR');
 
-    $self->{'sql'}->where('id_room',$idRoom);
+    $self->{'sql'}->where('( time_start',$timeStart,'<=');  
+    $self->{'sql'}->where('time_end',$timeStart,'>=');
+
+    $self->{'sql'}->where(') OR  ( time_start',$timeEnd,'<=',' ');
+    $self->{'sql'}->where('time_end',$timeEnd,'>=');
+    
+    $self->{'sql'}->where(') OR ( time_start',$timeStart,'>=', ' ');  
+    $self->{'sql'}->where('time_start',$timeEnd,'<=');
+
+    $self->{'sql'}->where(') OR ( time_end',$timeStart,'>=',' ');
+    $self->{'sql'}->where('time_end',$timeEnd,'<=');
+    
+    $self->{'sql'}->where(') AND id_room',$idRoom,'=',' ');
+    
     $self->{'sql'}->setTable($tabprefix.'orders');
     
     unless($self->{'sql'}->execute())
@@ -110,9 +134,11 @@ sub empryTime
        );
        return 0;
     }
-
+    
+    #print $self->{'sql'}->getSql();
     if($self->{'sql'}->getRows())
     {
+        #return $self->{'sql'}->getResult();
         return 0;
     }
     
@@ -124,8 +150,17 @@ sub empryTime
 
 sub addOrder
 {
-    my($self,$idRoom,$timeStart,$timeEnd,$info,$idUser)=@_;
+    my($self,$idRoom,$timeStart,$timeEnd,$info,$idUser,$recurrence,$count)=@_;
+    #recurrence:
+    #1 = weekly
+    #2 = be-weekly 
+    #3 =mounthly
     
+    unless(!$recurrence || ( $count < 5 && $count > 0))
+    {
+        return 0;
+    }
+
     unless($idRoom && $timeStart && $timeEnd && $info && $idUser)
     {
         return 0;
@@ -148,10 +183,83 @@ sub addOrder
         $self->{'tools'}->logIt(__LINE__, "is time no empry");
         return 0;
     }
-
-    #my $res = $self->createOrder(\%hash);
     
-    #return $res;
+    my $start =localtime($timeStart);
+    my $end=localtime($timeEnd);
+
+    if($count)
+    {
+        $count--;
+    }
+    else
+    {
+        $count =0;
+    }
+ 
+    for(my $i=0;$i<$count;$i++)
+    {
+        if(1==$recurrence)
+        {
+            $start+=(ONE_DAY*7);
+            $end+=(ONE_DAY*7);
+        }
+        elsif(2==$recurrence)
+        {
+            $start+=(ONE_DAY*14);
+            $end+=(ONE_DAY*14);
+        }
+        elsif(3==$recurrence)
+        {
+            $start= $start->add_months(1);
+            $end=$end->add_months(1); 
+        }
+        else
+        {
+            return 0;
+        }
+        
+        unless($self->empryTime($idRoom,$start->epoch,$end->epoch))
+        {
+            $self->{'tools'}->logIt(__LINE__, "is time no empry");
+            return 0;
+        }
+    }
+   
+    unless($self->createOrder(\%hash))
+    {
+        return 0;
+    }
+    $start =localtime($timeStart);
+    $end=localtime($timeEnd);
+
+    for(my $i=0;$i<$count;$i++ )
+    {
+
+        if(1==$recurrence)
+        {
+            $start+=(ONE_DAY*7);
+            $end+=(ONE_DAY*7);
+        }
+        elsif(2==$recurrence)
+        {
+            $start+=(ONE_DAY*14);
+            $end+=(ONE_DAY*14);
+        }
+        elsif(3==$recurrence)
+        {
+            $start= $start->add_months(1);
+            $end=$end->add_months(1); 
+        }
+        
+        $hash{'time_start'}=$start->epoch;
+        $hash{'time_end'}=$end->epoch;
+    
+        unless($self->createOrder(\%hash))
+        {
+            return 0;
+        }
+    }
+
     return 1;
 }
 
