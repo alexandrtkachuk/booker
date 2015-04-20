@@ -85,9 +85,18 @@ sub funroom
     #    print "error add";
     #}
     
+    
+    my $t= time() - 100;
+    my $t2 = $t+1211;
+    if($rooms->addOrder(1,$t,$t2,'text',1))
+    {
+        print "good \n";
+    }
+    else
+    {
+        print "bead\n";
+    }
 
-    my $t= time() - 10000000;
-    #print $rooms->addOrder(1,$t,$t+1200,'text',1);
     
 
     print Dumper $rooms->getRooms();
@@ -149,9 +158,9 @@ sub main
     
     #userfun();
     #funlang();
-    #funroom();
+    funroom();
     #funSendMail();
-    funrand();
+    #funrand();
     my $d=  $tools->getDebugObject()->getLog();
     print Dumper $d;
 

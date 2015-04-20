@@ -34,7 +34,7 @@ App.controller('cIndex',function( fLang ){
 						 
 						if(!getCookie('tai-ftime'))
 						{
-							 document.cookie = "tai-ftime=h(:mm)t - h(:mm)t";
+							 document.cookie = "tai-ftime=h(:mm)t";
                              console.log('++');
 						}
 						this.mytime=getCookie('tai-ftime');

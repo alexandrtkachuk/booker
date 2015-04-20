@@ -7,7 +7,7 @@
 						 
 						if(!getCookie('tai-ftime'))
 						{
-							 document.cookie = "tai-ftime=h(:mm)t - h(:mm)t";
+							 document.cookie = "tai-ftime=h(:mm)t";
                             
 						}
 						
@@ -51,9 +51,10 @@ function goCalendar(melang, ftime,fday) {
 	
     if(!ftime)
     {
-        ftime='h(:mm)t - h(:mm)t';
+        ftime='h(:mm)t';
     }
     
+    //ftime= 'HH:mm { - HH:mm}';
     if(!fday)
     {
         fday=0;
@@ -70,6 +71,7 @@ function goCalendar(melang, ftime,fday) {
     defaultDate: metoday,
     editable: true,
     timeFormat: ftime,
+    displayEventEnd: true,
     eventLimit: true, // allow "more" link when too many events
     events: function(start, end, timezone, callback) {
 
@@ -98,7 +100,8 @@ function goCalendar(melang, ftime,fday) {
                 //console.log(calendar.moment(result[i].time_start *1000 ).format());
                     events.push({
                         title:result[i].info,
-                        editable:false,
+                        editable:false,    
+                        allDay: false,
                         start:calendar.moment(result[i].time_start *1000 ).format(),
                         end:calendar.moment(result[i].time_end *1000 ).format()
                     });

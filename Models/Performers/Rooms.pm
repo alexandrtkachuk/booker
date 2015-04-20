@@ -80,6 +80,48 @@ sub getToMounth
 }
 
 
+sub empryTime
+{
+    my($self,$idRoom,$timeStart,$timeEnd)=@_;
+    # t1=>t<=t2
+    #
+    #
+    unless($idRoom && $timeStart && $timeEnd)
+    {
+        return 0;
+    }
+       
+    $self->{'sql'}->select(['id']);
+    $self->{'sql'}->where('time_start',$timeStart,'>=');  
+    $self->{'sql'}->where('time_end',$timeStart,'<=');
+    $self->{'sql'}->where('time_end',$timeEnd,'<=','OR');
+    $self->{'sql'}->where('time_start',$timeEnd,'>=');
+    
+    $self->{'sql'}->where('time_start',$timeSatrt,'<=','OR');
+
+    $self->{'sql'}->where('id_room',$idRoom);
+    $self->{'sql'}->setTable($tabprefix.'orders');
+    
+    unless($self->{'sql'}->execute())
+    { 
+       $self->{'tools'}->logIt(__LINE__, 
+           "error to get Oredes".$self->{'sql'}->getError()
+           ."\n script=".$self->{'sql'}->getSql()
+       );
+       return 0;
+    }
+
+    if($self->{'sql'}->getRows())
+    {
+        return 0;
+    }
+    
+    return 1;
+
+
+}
+
+
 sub addOrder
 {
     my($self,$idRoom,$timeStart,$timeEnd,$info,$idUser)=@_;
@@ -88,15 +130,38 @@ sub addOrder
     {
         return 0;
     }
-
-    $self->{'sql'}->insert({ 
+    
+    my $time = time();
+    my %hash=( 
             'id_room'=>$idRoom,
             'time_start'=>$timeStart,
             'time_end'=>$timeEnd,
             'info'=>$info, 
             'id_user'=>$idUser,
-            'created'=>time()
-        });
+            'created'=>$time
+        );
+    
+    
+    
+    unless($self->empryTime($idRoom,$timeStart,$timeEnd))
+    {
+        $self->{'tools'}->logIt(__LINE__, "is time no empry");
+        return 0;
+    }
+
+    #my $res = $self->createOrder(\%hash);
+    
+    #return $res;
+    return 1;
+}
+
+
+
+sub createOrder
+{
+    my($self,$refHash)=@_;
+
+    $self->{'sql'}->insert($refHash);
 
     $self->{'sql'}->setTable($tabprefix.'orders');
     
@@ -109,7 +174,6 @@ sub addOrder
     $self->{'tools'}->logIt(__LINE__, "Order is add");
 
     return 1;
-
 }
 
 sub getRooms
