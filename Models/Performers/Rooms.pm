@@ -107,10 +107,11 @@ sub empryTime
     {
         return 0;
     }
+
        
     $self->{'sql'}->select(['id']);
 
-    $self->{'sql'}->where('( time_start',$timeStart,'<=');  
+    $self->{'sql'}->where('(( time_start',$timeStart,'<=');  
     $self->{'sql'}->where('time_end',$timeStart,'>=');
 
     $self->{'sql'}->where(') OR  ( time_start',$timeEnd,'<=',' ');
@@ -122,7 +123,7 @@ sub empryTime
     $self->{'sql'}->where(') OR ( time_end',$timeStart,'>=',' ');
     $self->{'sql'}->where('time_end',$timeEnd,'<=');
     
-    $self->{'sql'}->where(') AND id_room',$idRoom,'=',' ');
+    $self->{'sql'}->where(')) AND id_room',$idRoom,'=',' ');
     
     $self->{'sql'}->setTable($tabprefix.'orders');
     
@@ -134,7 +135,7 @@ sub empryTime
        );
        return 0;
     }
-    
+    $self->{'tools'}->logIt('???! start='.$timeStart.'id room = '.$idRoom); 
     #print $self->{'sql'}->getSql();
     if($self->{'sql'}->getRows())
     {
@@ -177,13 +178,13 @@ sub addOrder
         );
     
     
-    
+   
     unless($self->empryTime($idRoom,$timeStart,$timeEnd))
     {
         $self->{'tools'}->logIt(__LINE__, "is time no empry");
         return 0;
     }
-    
+    $self->{'tools'}->logIt('???');
     my $start =localtime($timeStart);
     my $end=localtime($timeEnd);
 

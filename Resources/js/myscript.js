@@ -98,12 +98,15 @@ function goCalendar(melang, ftime,fday) {
 
                 for (var i = 0; i < result.length; i++) {
                 //console.log(calendar.moment(result[i].time_start *1000 ).format());
+                    
+                    
+                var twohours = (60*60)*2000; 
                     events.push({
                         title:result[i].info,
                         editable:false,    
                         allDay: false,
-                        start:calendar.moment(result[i].time_start *1000 ).format(),
-                        end:calendar.moment(result[i].time_end *1000 ).format()
+                        start:calendar.moment( (result[i].time_start *1000)+twohours  ).format(),
+                        end:calendar.moment(result[i].time_end *1000+twohours).format()
                     });
                 }
                 
@@ -173,6 +176,18 @@ function datapickerRu(){
 }
 
 
+function am_pm_to_hours(time) {
+    console.log(time);
+    var hours = Number(time.match(/^(\d+)/)[1]);
+    var minutes = Number(time.match(/:(\d+)/)[1]);
+    var AMPM = time.match(/\s(.*)$/)[1];
+    if (AMPM == "PM" && hours < 12) hours = hours + 12;
+    if (AMPM == "AM" && hours == 12) hours = hours - 12;
+    var sHours = hours.toString();
+    var sMinutes = minutes.toString();
+    if (hours < 10) sHours = "0" + sHours;
+    if (minutes < 10) sMinutes = "0" + sMinutes;
+    return (sHours +':'+sMinutes);
+}
 
 
- 

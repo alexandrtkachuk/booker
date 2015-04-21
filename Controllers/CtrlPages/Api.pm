@@ -176,6 +176,31 @@ sub deleteuser
     return 1;
 }
 
+sub addorder
+{
+    my($self)=@_;
+    #$idRoom,$timeStart,$timeEnd,$info,$idUser,$recurrence,$count
+    my $room = $self->{'tools'}->getObject('Models::Performers::Rooms');
+    my $id ;
+    if($in{'id'}==-1 || !$in{'id'} )
+    {
+        $id=$self->{'tools'}->getObject('Models::Performers::User')->getId();
+    }
+
+    $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
+
+    unless( 
+        $room->addOrder($in{idroom},$in{start},$in{'end'},$in{'info'},
+            $in{'iduser'}, $in{'recurrence'},$in{'count'}))
+    {
+        $self->{'tools'}->getCacheObject()->setCache('warings',2);
+        return 2;    
+    }
+
+    $self->{'tools'}->getCacheObject()->setCache('warings',5);
+
+    return 1;
+}
 
 sub AUTOLOAD
 {

@@ -67,6 +67,8 @@ sub warings
         $w='0';
     }
 
+    my $d=$self->{'tools'}->getDebugObject()->getLog();
+
     return $self->getJSON  ( {'warings'=>  $w});
 
 }
