@@ -34,6 +34,16 @@ App.directive('modaluserdelete', function() {
   };
 });
 
+
+App.directive('userlist', function() {
+  return {
+      restrict: 'AE',
+      replace: 'true',
+      controller: "cAdmin as cA",
+      templateUrl: "Resources/html/partials/userlist.html"
+  };
+});
+
 App.directive('adminmenu', function() {
 		if(getCookie('tai-userrole')==0){
 		  return {

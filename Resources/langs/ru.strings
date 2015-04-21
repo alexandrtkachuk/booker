@@ -116,5 +116,37 @@
         <KEY>LANG_goodremove</KEY>
         <VALUE>запись успешно удаленна</VALUE>
     </ISTRING>
-    
+     <ISTRING>
+        <KEY>LANG_selectuser</KEY>
+        <VALUE>Выберите сотрудника</VALUE>
+    </ISTRING>  
+
+    <ISTRING>
+        <KEY>LANG_no</KEY>
+        <VALUE>нет</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_recurringevent</KEY>
+        <VALUE>повторять событие</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_weekly</KEY>
+        <VALUE>неденя</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_beweekly</KEY>
+        <VALUE>две недели</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_month</KEY>
+        <VALUE>месяц</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_duration</KEY>
+        <VALUE>повторения</VALUE>
+    </ISTRING>
+      <ISTRING>
+        <KEY>LANG_max</KEY>
+        <VALUE>максимум</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>

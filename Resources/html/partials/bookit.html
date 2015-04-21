@@ -2,23 +2,61 @@
 	<div>
 		<a ui-sref="index"  ng-bind="cB.melang.value.LANG_home.VALUE"  class="btn btn-primary"></a>
 		<hr />
+		
 		</div>
+		
+		<div><h3 ng-bind="cB.rooms.current"></h3></div>
 		<div>
 			<form  name="myForm">
+				
+				<div userlist ></div>
 					<p>
 						<input data-provide="datepicker"  class="datepicker" data-date-format="mm-dd-yyyy">
 					</p>
-		
-		 <div class="input-append bootstrap-timepicker">
-            <input id="timepicker1" type="text" class="input-small" data-minute-step="1"  
-            data-show-meridian="{{cB.meridian}}">
-            <span class="add-on"><i class="icon-time"></i></span>
+		<div class="row">
+			 <div class="input-append bootstrap-timepicker  col-md-2">
+				<input id="timepicker1" type="text" class="input-small" data-minute-step="1"  
+				data-show-meridian="{{cB.meridian}}">
+				<span class="add-on"><i class="icon-time"></i></span>
+			</div>  
+        
+			<div class="input-append bootstrap-timepicker  col-md-2">
+				<input id="timepicker2" type="text" class="input-small" data-minute-step="1"  
+				data-show-meridian="{{cB.meridian}}">
+				<span class="add-on"><i class="icon-time"></i></span>
+			</div>  
+			
         </div>
  
        
-
+		<textarea ng-model="cB.info" ></textarea>
+		
+		<p><b ng-bind="cB.melang.value.LANG_recurringevent.VALUE"></b>?</p>
+		<p><input name="recurrence" type="radio" ng-model="cB.recurrence"   value="none">
+		<span ng-bind="cB.melang.value.LANG_no.VALUE"></span> </p>
+		<p><input name="recurrence" type="radio" ng-model="cB.recurrence"  value="block" >
+		<span ng-bind="cB.melang.value.LANG_yes.VALUE"></span> </p>
+		
+		<div style="display:{{cB.recurrence}} ;" class="container-fluid">
+			<hr />
+			<p><input name="typerecurrence" type="radio" ng-model="cB.typerecurrence"   value="1">
+			<span ng-bind="cB.melang.value.LANG_weekly.VALUE"></span> </p>
+			<p><input name="typerecurrence" type="radio" ng-model="cB.typerecurrence"   value="2">
+			<span ng-bind="cB.melang.value.LANG_beweekly.VALUE"></span> </p>
+			<p><input name="typerecurrence" type="radio" ng-model="cB.typerecurrence"   value="3">
+			<span ng-bind="cB.melang.value.LANG_month.VALUE"></span> </p>
+			<p> <span ng-bind="cB.melang.value.LANG_duration.VALUE"></span>:
+			<input type="number" min="1" max="4" ng-model="cB.count">
+			(<span ng-bind="cB.melang.value.LANG_max.VALUE"></span>:4)
+			</p>
+		</div>
+		
 					
 					<p><button ng-click="cB.send(myForm)" ng-bind="cB.melang.value.LANG_send.VALUE"  class="btn btn-success">Отправить</button></p>
+			
+			
+			
+			<!--end form -->
 			</form>
 		</div>
 	

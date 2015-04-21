@@ -41,6 +41,10 @@
         <VALUE>no corect data or empry</VALUE>
     </ISTRING>
     <ISTRING>
+        <KEY>LANG_yes</KEY>
+        <VALUE>yes</VALUE>
+    </ISTRING>
+    <ISTRING>
         <KEY>LANG_langs</KEY>
         <VALUE>langs</VALUE>
     </ISTRING>
@@ -108,12 +112,40 @@
         <KEY>LANG_removeemployee</KEY>
         <VALUE>remove employee</VALUE>
     </ISTRING>
-     <ISTRING>
-        <KEY>LANG_yes</KEY>
-        <VALUE>yes</VALUE>
-    </ISTRING>
     <ISTRING>
         <KEY>LANG_goodremove</KEY>
         <VALUE>good remove</VALUE>
+    </ISTRING>
+      <ISTRING>
+        <KEY>LANG_selectuser</KEY>
+        <VALUE>select employe</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_no</KEY>
+        <VALUE>no</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_recurringevent</KEY>
+        <VALUE>Recurring Event</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_weekly</KEY>
+        <VALUE>weekly</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_beweekly</KEY>
+        <VALUE>be-weekly</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_month</KEY>
+        <VALUE>month</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_duration</KEY>
+        <VALUE>duration</VALUE>
+    </ISTRING>
+      <ISTRING>
+        <KEY>LANG_max</KEY>
+        <VALUE>max</VALUE>
     </ISTRING>
 </ISTRINGTABLE>

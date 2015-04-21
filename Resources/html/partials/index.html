@@ -1,5 +1,15 @@
 <!-- Example row of columns -->
 <div   >
+	
+	<div class="roomlist">
+		<ul><li ng-repeat="item in cI.rooms.items"  >
+			<button ng-bind="item.name" ng-click="cI.rooms.set(item.id)"></button>
+		</li>
+		
+			</ul>
+	</div>
+	<h3  ng-bind="cI.rooms.current"></h3>
+	<hr />
 	<div id='calendar'></div>
 	<div class="right-bar">
 		<span ng-bind="cI.melang.value.LANG_langs.VALUE"></span>:<br />

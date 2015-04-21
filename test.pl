@@ -86,7 +86,6 @@ sub funroom
     #    print "error add";
     #}
     
-
     my $t= time() + 500;
     #$t =1429257779 -1212;
     my $start =localtime($t);

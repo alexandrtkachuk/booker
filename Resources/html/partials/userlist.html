@@ -1,0 +1,6 @@
+<div>
+	<select  name="user" ng-model="cB.user">
+		<option  value="-1"  ng-bind="cA.melang.value.LANG_selectuser.VALUE"></option>
+		<option  ng-repeat="user in cA.users.items"   value="{{user.id}}"  ng-bind="user.name"></option>
+    </select>
+</div>

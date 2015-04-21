@@ -2,12 +2,12 @@ var App=angular.module('booker',['ui.router']);
 
 
 
-App.controller('cIndex',function( fLang ){
-	
+App.controller('cIndex',function( fLang , fRooms ){
+	 
 	
     this.melang=fLang;
     
-    
+    this.rooms = fRooms;
     
     langs = { value:null,
 			items:[

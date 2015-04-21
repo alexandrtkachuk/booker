@@ -115,4 +115,20 @@ sub userlist
     
     return   $self->getJSON($res);
 }
+
+
+sub rooms
+{
+    my($self)=@_;
+    my $res = $self->{'tools'}->getObject('Models::Performers::Rooms')->getRooms();
+    unless($res)
+    {
+        return $self->warings();
+    }
+    
+    return   $self->getJSON($res);
+
+
+}
+
 1;
