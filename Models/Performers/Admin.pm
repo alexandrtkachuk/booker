@@ -29,14 +29,11 @@ sub isAdmin
     return 1;
 }
 
-
 sub userList
 {
     my ($self)=@_;
-
     
     $self->{'sql'}->select(['name','id','email']);
-
     $self->{'sql'}->setTable($tabName);
     $self->{'sql'}->where('role',1);
 
@@ -49,11 +46,9 @@ sub userList
         return 0;
     }
 
-    
    my $r= $self->{'sql'}->getResult();
    return $r;
 }
-
 
 sub update
 {
