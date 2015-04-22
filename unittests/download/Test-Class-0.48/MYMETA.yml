@@ -1,0 +1,35 @@
+---
+abstract: ~
+author: []
+build_requires:
+  ExtUtils::MakeMaker: 0
+configure_requires:
+  ExtUtils::MakeMaker: 0
+distribution_type: module
+dynamic_config: 0
+generated_by: 'ExtUtils::MakeMaker version 6.57_05'
+license: unknown
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: Test-Class
+no_index:
+  directory:
+    - t
+    - inc
+requires:
+  Attribute::Handlers: 0.77
+  Carp: 0
+  File::Find: 0
+  File::Spec: 0
+  MRO::Compat: 0.11
+  Module::Runtime: 0
+  Storable: 2.04
+  Test::Builder: 0.78
+  Test::Builder::Tester: 1.02
+  Test::Simple: 1.001002
+  Try::Tiny: 0
+  constant: 0
+  strict: 0
+  warnings: 0
+version: 0.48
