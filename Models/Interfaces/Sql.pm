@@ -43,8 +43,6 @@ sub new
 
 }
 
-
-
 sub getError
 {   
     return 'error connrct to DB' unless($dbh);
@@ -69,9 +67,7 @@ sub connect
     
     return 1 if($dbh);
     return 0;
-
 }
-
 
 sub OrederBy
 {
@@ -90,8 +86,7 @@ sub OrederBy
 
     $self->{'ORDERBY'}=$val.' '.$param;
 
-    return 1;
- 
+    return 1; 
 }
 
 sub where
@@ -136,15 +131,10 @@ sub where
         {
             $self->{'where'}.=" $val1 ";
         }
-
-    
     }
     
     return 1;
-
-
 }
-
 
 sub select
 {
@@ -168,19 +158,12 @@ sub select
 
     $self->{'sql'}.=' FROM %tabname% ';
     return 1;
-    
-
 }
 
 sub update
 {
    return 0 unless($dbh);
     my($self,$hash) = @_;
-    
-
-    #print Dumper $hash;
-    #my %t=%$hash;
-    
 
     $self->{'sql'}='UPDATE %tabname% SET   ';
     my $left= keys %$hash; 
@@ -194,26 +177,14 @@ sub update
 
         }    
     }
-    
-    
-
 
     return 1;
 }
 
-
-
-
 sub insert
 {
-
     return 0 unless($dbh);
     my($self,$hash) = @_;
-    
-
-    #print Dumper $hash;
-    #my %t=%$hash;
-    
 
     $self->{'sql'}='INSERT INTO %tabname%  (';
     my $left= keys %$hash; 
@@ -243,15 +214,8 @@ sub insert
 
     $self->{'sql'}.=')   ';
 
-
-
-    #Models::Validators::Varibles->isNumeric();
-    
-    #print $self->{'sql'};
-    return 1;
-    
+    return 1;    
 }
-
 
 sub setTable
 {
@@ -267,19 +231,14 @@ sub setTable
     return 1;
 }
 
-
-
 sub setQuery
 {   
     return 0 unless($dbh);
     my($self,$str) = @_;
     return 0  unless($str);
     $self->{'sql'}=$str;
-    return 1;
-    
-    
+    return 1;    
 }
-
 
 sub getLastId
 {
@@ -287,11 +246,7 @@ sub getLastId
     return 0 unless($dbh);
 
     return $dbh->last_insert_id( undef, undef, undef, undef );
-
 }
-
-
-
 
 sub setDISTINCT
 {
@@ -316,18 +271,13 @@ sub GROUP_CONCAT
     my($self,$val1,$val2) = @_;
     
     $self->{'sql'}="SELECT GROUP_CONCAT( $val1 ) as  $val2"; 
-  
-    
     $self->{'sql'}.=' FROM %tabname% ';
     
     return 1;
-
 }
-
 
 sub getSql
 {
-
     my($self) = @_;
     unless($self->{'sql'})
     {
@@ -335,8 +285,6 @@ sub getSql
     }
     
     #$self->{'sql'}= $dbh->quote( $self->{'sql'});
-
-    
     unless($self->{'table'})
     {
         return 0;

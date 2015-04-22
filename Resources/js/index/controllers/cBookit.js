@@ -23,7 +23,10 @@ App.controller('cBookit',function(fLang , $http,fRooms){
                         $('#timepicker2').timepicker();
 
                     });
-
+		
+		
+		var mess ={val:null};
+		this.mess=mess;
        this.send = function(form)
        {
            console.log(form);
@@ -64,12 +67,14 @@ App.controller('cBookit',function(fLang , $http,fRooms){
            if(sdate.getTime()>=edate.getTime())
            { 
                 console.log('errr');
+                mess.val=fLang.value.LANG_warings2.VALUE;
                 return;
            }
 
             if(!this.info)
            { 
                 console.log('errr no info');
+                mess.val=fLang.value.LANG_warings2.VALUE;
                 return;
            }
 
@@ -81,12 +86,23 @@ App.controller('cBookit',function(fLang , $http,fRooms){
                +'&end='+parseInt(edate.getTime()/1000)
                +'&info='+this.info
                +'&iduser='+this.user;
-
+			
+			if(this.recurrence == 'block'){
+					url+='&recurrence='+this.typerecurrence
+					+'&count='+this.count;
+			}
+			
             console.log(url);
             
             $http.get(url).success(
 				function(data, status, headers, config) {
-
+					if(data.warings==5){
+						mess.val=fLang.value.LANG_goodadd.VALUE;
+					}
+					else
+					{
+						mess.val=fLang.value.LANG_warings2.VALUE;
+					}
 					console.log(data);
                 });	
 

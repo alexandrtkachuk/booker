@@ -129,8 +129,6 @@ sub rooms
     }
     
     return   $self->getJSON($res);
-
-
 }
 
 1;

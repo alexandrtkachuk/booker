@@ -1,0 +1,49 @@
+
+
+<div>
+<a ui-sref="index"  ng-bind="cB.melang.value.LANG_home.VALUE"  class="btn btn-primary"></a>
+		<hr />
+  
+  <h4 class="modal-title" id="gridSystemModalLabel"  ng-bind="cB.melang.value.LANG_updaetevent.VALUE"> </h4>
+          <p ng-bind="cB.mess.val"> </p>
+  
+   <form  name="myForm">
+				
+				<div userlist ></div>
+					<p>
+						<input  data-provide="datepicker"  class="datepicker" data-date-format="mm-dd-yyyy">
+					</p>
+		<div class="row">
+			 <div class="input-append bootstrap-timepicker  col-md-4">
+				<input id="timepicker1" type="text" class="input-small" data-minute-step="1"  
+				data-show-meridian="{{cB.meridian}}">
+				<span class="add-on"><i class="icon-time"></i></span>
+			</div>  
+        
+			<div class="input-append bootstrap-timepicker  col-md-4">
+				<input id="timepicker2" type="text" class="input-small" data-minute-step="1"  
+				data-show-meridian="{{cB.meridian}}">
+				<span class="add-on"><i class="icon-time"></i></span>
+			</div>  
+			
+        </div>
+ 
+		<textarea ng-model="cB.calendar.info" ></textarea>
+		<div style="display:{{cB.calendar.show}};">
+			<p><b ng-bind="cB.melang.value.LANG_recurringevent.VALUE"></b>?!</p>
+			<p><input name="recurrence" type="radio" ng-model="cB.recurrence"   value="no">
+			<span ng-bind="cB.melang.value.LANG_no.VALUE"></span> </p>
+			<p><input name="recurrence" type="radio" ng-model="cB.recurrence"  value="yes" >
+			<span ng-bind="cB.melang.value.LANG_yes.VALUE"></span> </p>
+		</div>
+		
+		
+					
+				<p><button ng-click="cB.send(myForm)" ng-bind="cB.melang.value.LANG_send.VALUE"  class="btn btn-success"></button></p>
+			
+			
+			
+			<!--end form -->
+			</form>
+  
+  </div>

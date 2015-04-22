@@ -2,7 +2,7 @@ var App=angular.module('booker',['ui.router']);
 
 
 
-App.controller('cIndex',function( fLang , fRooms ){
+App.controller('cIndex',function( fLang , fRooms ,fCalendar){
 	 
 	
     this.melang=fLang;
@@ -68,7 +68,7 @@ App.controller('cIndex',function( fLang , fRooms ){
 	function rendcalendar(lang)
 	{
 		$('#calendar').fullCalendar('destroy');
-					goCalendar(lang,getCookie('tai-ftime'),
+					fCalendar.goCalendar(lang,getCookie('tai-ftime'),
 					getCookie('tai-fday'));	
                     //console.log(this.mytime);
                     //console.log(this.day);
@@ -92,7 +92,7 @@ App.controller('cIndex',function( fLang , fRooms ){
 	{
 		console.log('switch format time='+this.mytime);
 		$('#calendar').fullCalendar('destroy');
-		goCalendar(this.mylang.value.name,this.mytime,this.day);
+		fCalendar.goCalendar(this.mylang.value.name,this.mytime,this.day);
 		document.cookie = "tai-ftime="+this.mytime;
 	}
 	//firsday
@@ -100,7 +100,7 @@ App.controller('cIndex',function( fLang , fRooms ){
 	this.switchday = function()
 	{
 		    $('#calendar').fullCalendar('destroy');
-			goCalendar(this.mylang.value.name,this.mytime,this.day);
+			fCalendar.goCalendar(this.mylang.value.name,this.mytime,this.day);
 			//console.log(this.day);
 			document.cookie = "tai-fday="+this.day;
 			

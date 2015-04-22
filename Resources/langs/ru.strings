@@ -149,4 +149,8 @@
         <KEY>LANG_max</KEY>
         <VALUE>максимум</VALUE>
     </ISTRING>
+    <ISTRING>
+        <KEY>LANG_updaetevent</KEY>
+        <VALUE>Редактировать событие</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>

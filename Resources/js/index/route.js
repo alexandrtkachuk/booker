@@ -29,6 +29,12 @@ App.config(function($stateProvider, $urlRouterProvider) {
 		  templateUrl: "Resources/html/partials/bookit.html"
 		})
 		
+		.state('update', {
+		  url: "/update/{start}/{end}",
+		  controller: "cUpdate as cB",
+		  templateUrl: "Resources/html/partials/update.html"
+		})
+		
 		
 		.state('admin', {
 		  url: "/admin",

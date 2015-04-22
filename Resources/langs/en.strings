@@ -148,4 +148,8 @@
         <KEY>LANG_max</KEY>
         <VALUE>max</VALUE>
     </ISTRING>
+    <ISTRING>
+        <KEY>LANG_updaetevent</KEY>
+        <VALUE>updaet event</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>

@@ -42,6 +42,7 @@ sub new
     return $self;
 }
 
+
 sub getToMounth
 {
     my($self,$idRoom,$timeStart,$timeEnd)=@_;
@@ -51,7 +52,12 @@ sub getToMounth
         return 0;
     }
     #my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($timeUnix);
-       
+    $self->{'sql'}->setTable($tabprefix.'orders');
+    $self->{'sql'}->select([
+            'count(id)']);
+    $self->{'sql'}->where('created = bo.created');
+    my $q = $self->{'sql'}->getSql();
+
     $self->{'sql'}->select([
             'id',
             'id_room',
@@ -59,13 +65,14 @@ sub getToMounth
             'info',
             'time_start',
             'time_end',
-            'created'
+            'created',
+            "($q) as count"
         ]);
     #print "time=$t \n mon=$mon \n";
     $self->{'sql'}->where('time_start',$timeStart,'>');  
     $self->{'sql'}->where('time_end',$timeEnd,'<');
     $self->{'sql'}->where('id_room',$idRoom);
-    $self->{'sql'}->setTable($tabprefix.'orders');
+    $self->{'sql'}->setTable($tabprefix.'orders bo');
     
     unless($self->{'sql'}->execute())
     { 
@@ -75,7 +82,7 @@ sub getToMounth
        );
        return 0;
     }
-
+    
     my $res = $self->{'sql'}->getResult();
     
     return $res;
@@ -85,9 +92,6 @@ sub getToMounth
 sub empryTime
 {
     my($self,$idRoom,$timeStart,$timeEnd)=@_;
-    # t1=>t<=t2
-    #
-    #
 
     my $start =localtime($timeStart);
     my $end=localtime($timeEnd);
@@ -107,24 +111,18 @@ sub empryTime
     {
         return 0;
     }
-
-       
+   
     $self->{'sql'}->select(['id']);
 
     $self->{'sql'}->where('(( time_start',$timeStart,'<=');  
     $self->{'sql'}->where('time_end',$timeStart,'>=');
-
     $self->{'sql'}->where(') OR  ( time_start',$timeEnd,'<=',' ');
     $self->{'sql'}->where('time_end',$timeEnd,'>=');
-    
     $self->{'sql'}->where(') OR ( time_start',$timeStart,'>=', ' ');  
     $self->{'sql'}->where('time_start',$timeEnd,'<=');
-
     $self->{'sql'}->where(') OR ( time_end',$timeStart,'>=',' ');
     $self->{'sql'}->where('time_end',$timeEnd,'<=');
-    
     $self->{'sql'}->where(')) AND id_room',$idRoom,'=',' ');
-    
     $self->{'sql'}->setTable($tabprefix.'orders');
     
     unless($self->{'sql'}->execute())
@@ -326,21 +324,5 @@ sub addRoom
 
     return 1;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 1;

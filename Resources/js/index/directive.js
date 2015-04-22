@@ -34,14 +34,32 @@ App.directive('modaluserdelete', function() {
   };
 });
 
-
-App.directive('userlist', function() {
+/*
+App.directive('update', function() {
   return {
       restrict: 'AE',
       replace: 'true',
-      controller: "cAdmin as cA",
-      templateUrl: "Resources/html/partials/userlist.html"
+      controller: "cUpdate as cB",
+      templateUrl: "Resources/html/partials/update.html"
   };
+});
+*/
+
+
+App.directive('userlist', function() {
+  if(getCookie('tai-userrole')==0){
+	  return {
+		  restrict: 'AE',
+		  replace: 'true',
+		  controller: "cAdmin as cA",
+		  templateUrl: "Resources/html/partials/userlist.html"
+	  };
+	}else{ return {
+		restrict: 'AE',
+		  replace: 'true',
+		  
+		  template: "<p class='username'>"+getCookie('tai-username')+"</p>"
+		}; }
 });
 
 App.directive('adminmenu', function() {
@@ -55,7 +73,7 @@ App.directive('adminmenu', function() {
 	}
 	else 
 	{
-		return {};
+		
 	}
 });
 

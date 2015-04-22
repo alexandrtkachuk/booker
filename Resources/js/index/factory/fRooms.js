@@ -1,4 +1,4 @@
-App.factory('fRooms', function($http, fLang) {
+App.factory('fRooms', function($http, fLang , fCalendar) {
   
   
   var rooms={
@@ -22,7 +22,7 @@ App.factory('fRooms', function($http, fLang) {
 	 
 	$('#calendar').fullCalendar('destroy');
 	
-				goCalendar(
+				fCalendar.goCalendar(
 					fLang.lang,
 					getCookie('tai-ftime'),
 					getCookie('tai-fday')

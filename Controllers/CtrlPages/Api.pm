@@ -33,10 +33,14 @@ sub go
         $self->{'tools'}->getCacheObject()->setCache('roomid',$in{'roomid'});
     }
 
-    if($in{'start'} &&  $in{'end'} )
+    if( $in{'end'} )
     {
-        $self->{'tools'}->getCacheObject()->setCache('start',$in{'start'});
-        $self->{'tools'}->getCacheObject()->setCache('end',$in{'end'});
+       $self->{'tools'}->getCacheObject()->setCache('end',$in{'end'});
+    }
+    
+    if( $in{'start'} )
+    {
+       $self->{'tools'}->getCacheObject()->setCache('start',$in{'start'});
     }
 
     
@@ -147,7 +151,6 @@ sub updateuser
     return 1;
 }
 
-
 sub deleteuser
 {
     
@@ -182,16 +185,20 @@ sub addorder
     #$idRoom,$timeStart,$timeEnd,$info,$idUser,$recurrence,$count
     my $room = $self->{'tools'}->getObject('Models::Performers::Rooms');
     my $id ;
-    if($in{'id'}==-1 || !$in{'id'} )
+    my $admin=$self->{'tools'}->getObject('Models::Performers::Admin');
+    $id=$in{'id'};
+    
+    if(!$admin->isAdmin()  ||  $in{'id'}==-1 || !$in{'id'}  )
     {
-        $id=$self->{'tools'}->getObject('Models::Performers::User')->getId();
+        $id=$admin->getId();
     }
+
 
     $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
 
     unless( 
         $room->addOrder($in{idroom},$in{start},$in{'end'},$in{'info'},
-            $in{'iduser'}, $in{'recurrence'},$in{'count'}))
+            $id, $in{'recurrence'},$in{'count'}))
     {
         $self->{'tools'}->getCacheObject()->setCache('warings',2);
         return 2;    
