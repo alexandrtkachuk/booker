@@ -1,4 +1,4 @@
-package faceSQL;
+package Fake::SQL;
 
 use warnings;
 use strict;
@@ -31,5 +31,5 @@ sub get
     return \$mockSQL;
 }
 
-
+1;
 #Test::Class->runtests;

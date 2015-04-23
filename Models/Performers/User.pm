@@ -28,6 +28,7 @@ sub new
             return 0;
         }
        $session = $tools->getObject('Models::Utilits::Sessionme');
+       #$tools->testFake();
     }
     
     my $class = ref($_[0])||$_[0];
