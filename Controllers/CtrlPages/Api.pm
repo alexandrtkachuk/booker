@@ -2,7 +2,7 @@ package Controllers::CtrlPages::Api;
 
 use warnings;
 use strict;
-
+use JSON;
 use vars qw(@ISA); 
 our @ISA = qw(Controllers::CtrlPages::Index);
 require Controllers::CtrlPages::Index;
@@ -10,7 +10,7 @@ require Controllers::CtrlPages::Index;
 use vars qw(%in);
 use Models::Utilits::Email::Valid;
 use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
-
+use Data::Dumper;
 ReadParse();
 
 
@@ -93,21 +93,36 @@ sub adduser
     return 1;
 }
 
-sub setlang
+sub addroom
 {
     my($self)=@_;
-
-    if($self->{'tools'}->getObject('Models::Utilits::Lang')->set($in{'set'}))
+    my $admin = $self->{'tools'}->getObject('Models::Performers::Admin');
+    $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
+    
+    unless($admin->isAdmin())
     {
-        $self->{'tools'}->getCacheObject()->setCache('warings',1);
-    }
-    else
-    {
-        $self->{'tools'}->getCacheObject()->setCache('warings',4);
+        return 0;
     }
 
+    $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
+    
+    unless($in{'name'})
+    { 
+        $self->{'tools'}->getCacheObject()->setCache('warings',2);
+        return 2;
+    }
+
+    my $room = $self->{'tools'}->getObject('Models::Performers::Rooms');
+    unless($room->addRoom($in{'name'}))
+    {
+        $self->{'tools'}->getCacheObject()->setCache('warings',2);
+        return 2;    
+    }
+    
+    $self->{'tools'}->getCacheObject()->setCache('warings',1);
     return 1;
 }
+
 
 
 sub userlist
@@ -131,18 +146,27 @@ sub updateuser
     {
         return 0;
     }
-
+    
     $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
+    
+    $self->{'tools'}->logIt(__LINE__,'?????'.Dumper(\%in) );
+    #return 2;
+    unless( $in{'POSTDATA'})
+    {
+        return 0;
+    }
 
-    unless($in{'email'} && $in{id} &&
-        ( Email::Valid->address($in{'email'})  ) &&
-        ($in{'name'}))
+    my $data =decode_json $in{'POSTDATA'};
+    $self->{'tools'}->logIt(__LINE__,'?????'.Dumper($data) );
+    unless($data->{'email'} && $data->{id} &&
+        ( Email::Valid->address($data->{'email'})  ) &&
+        ($data->{'name'}))
     { 
         $self->{'tools'}->getCacheObject()->setCache('warings',2);
         return 2;
     }
     
-    unless($admin->update($in{id},$in{'name'},$in{'email'}))
+    unless($admin->update($data->{id},$data->{'name'},$data->{'email'},$data->{'pass'}))
     {
         $self->{'tools'}->getCacheObject()->setCache('warings',2);
         return 3;
@@ -186,14 +210,13 @@ sub addorder
     my $room = $self->{'tools'}->getObject('Models::Performers::Rooms');
     my $id ;
     my $admin=$self->{'tools'}->getObject('Models::Performers::Admin');
-    $id=$in{'id'};
+    $id=$in{'iduser'};
     
-    if(!$admin->isAdmin()  ||  $in{'id'}==-1 || !$in{'id'}  )
+    if(!$admin->isAdmin()  ||  $in{'iduser'}==-1 || !$in{'iduser'})
     {
         $id=$admin->getId();
     }
-
-
+    
     $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
 
     unless( 
@@ -208,6 +231,37 @@ sub addorder
 
     return 1;
 }
+
+sub updateorder
+{
+    my($self)=@_;
+
+    my $room = $self->{'tools'}->getObject('Models::Performers::Rooms');
+    my $id ;
+    my $admin=$self->{'tools'}->getObject('Models::Performers::Admin');
+    $id=$in{'iduser'};
+    
+    if(!$admin->isAdmin()  ||  $in{'iduser'}==-1 || !$in{'iduser'})
+    {
+        $id=undef;
+    }
+
+    $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
+
+    unless( 
+        $room->updateOrder($in{id},$in{start},$in{'end'},$in{'info'},
+            $id, $in{'all'}))
+    {
+        $self->{'tools'}->getCacheObject()->setCache('warings',2);
+        return 2;    
+    }
+
+    $self->{'tools'}->getCacheObject()->setCache('warings',5);
+
+    return 1;
+}
+
+
 
 sub AUTOLOAD
 {

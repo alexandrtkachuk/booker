@@ -2,7 +2,6 @@ package Views::Palletts::Index;
 
 use warnings;
 use strict;
-
 use System::Tools::Toolchain;
 use Data::Dumper;
 
@@ -13,7 +12,7 @@ sub new
        'tools' => System::Tools::Toolchain->instance()
         },$class);
 }
-#запускаеться когад нужно мунять на хеши
+#chenge hash
 sub createHash
 {
 
@@ -21,7 +20,7 @@ sub createHash
     $self->{'page'}=$self->{'tools'}->getCacheObject()->getCache('nextpage');
     $self->{'title'}='<a href="index">Главня</a>';
 }
-#пример функции которая в запуститься если в шаюлоне встретит ##viewdubug##
+##viewdubug##
 sub viewdebug
 {    
     my($self)=@_;   

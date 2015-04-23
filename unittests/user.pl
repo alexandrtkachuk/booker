@@ -15,7 +15,7 @@ use base qw(Test::Class);
 use Test::More 'no_plan';
 
 use Test::MockObject;
-use faceSQL;
+use Fake::SQL;
 use Models::Performers::User;
 
 System::Tools::Toolchain->instance(TDIR);

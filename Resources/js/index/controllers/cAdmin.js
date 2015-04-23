@@ -1,10 +1,10 @@
-App.controller('cAdmin',function(fLang , $http){
+App.controller('cAdmin',function(fLang , $http , fRooms){
 	
 	this.melang=fLang;
 	this.test ='test';
 	var users = {items:null};
 	this.users=users;
-	
+	this.pass=null;
 	function getUserList(){
 	
 	$http.get('api/userlist').success(
@@ -70,9 +70,21 @@ App.controller('cAdmin',function(fLang , $http){
 				return ;
 			}
 			
-			var url = 'api/updateuser/?name='+this.name+'&email='+this.email+'&id='+this.iduser;
+			var temp = 
+			{
+				name:this.name,
+				email:this.email,
+				id: this.iduser
+			};
+			
+			var url = 'name='+this.name+'&email='+this.email+'&id='+this.iduser;
+			if(this.pass)
+			{
+				temp.pass = this.pass;
+			}
 			console.log(url);
-			$http.get(url).success(
+			console.log(temp);
+			$http.post('api/updateuser/',temp).success(
 				function(data, status, headers, config) {
 					if(data.warings==0)
 					{
@@ -88,7 +100,36 @@ App.controller('cAdmin',function(fLang , $http){
 				}
 			);	
 			}// end edit
+	
+	this.addroom = function()
+	{
+			if(!this.name )
+			{
+				this.error.mess= this.melang.value.LANG_warings2.VALUE;
+				return ;
+			}
+			var url = 'api/addroom/?name='+this.name;
 			
+			$http.get(url).success(
+				function(data, status, headers, config) {
+					if(data.warings==1)
+					{
+						res.mess = fLang.value.LANG_goodadd.VALUE+'!';
+						fRooms.update();
+					}
+					else
+					{
+						res.mess =fLang.value.LANG_warings2.VALUE;
+					}
+					
+					console.log(data);
+				
+				}
+			);	
+			
+			
+			
+	}	//end addroom
 			
 	this.deleteuser = function(id, name)
 	{
@@ -107,6 +148,7 @@ App.controller('cAdmin',function(fLang , $http){
 					if(data.warings==0)
 					{
 						res.mess = fLang.value.LANG_goodremove.VALUE+'!';
+						
 					}
 					else
 					{

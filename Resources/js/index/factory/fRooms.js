@@ -58,6 +58,17 @@ App.factory('fRooms', function($http, fLang , fCalendar) {
 				);	
   
 	}
+	
+	rooms.update = function()
+	{
+		$http.get('api/rooms').success(
+					function(data, status, headers, config) {
+						console.log(data);
+						rooms.items = data;		
+						//setcurrent();
+					}
+				);	
+	}
 
 	
   return rooms;

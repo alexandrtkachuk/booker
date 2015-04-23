@@ -2,10 +2,7 @@ package Models::Performers::Admin;
 
 use warnings;
 use strict;
-
-
-
-
+use Digest::MD5 qw(md5 md5_hex md5_base64) ;
 use vars qw(@ISA); 
 our @ISA = qw(Models::Performers::User);
 require Models::Performers::User;
@@ -52,18 +49,24 @@ sub userList
 
 sub update
 {
-    my ($self,$id,$name,$email)=@_;
+    my ($self,$id,$name,$email,$pass)=@_;
    
     unless($id && $name && $email)
     {
         return 0;
     } 
     
-    $self->{'sql'}->update(
-        {
+    my %hash = 
+    (
             'name'=>$name,
             'email'=>$email
-        });  
+    );
+    
+    if($pass)
+    {
+        $hash{'pass'}=md5_hex($pass);
+    }
+    $self->{'sql'}->update( \%hash);  
 
     $self->{'sql'}->setTable($tabName);
     $self->{'sql'}->where('role',1);

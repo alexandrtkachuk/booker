@@ -40,7 +40,7 @@ sub go
 
     if ($user->isLogin())
     {
-        #$self->{'tools'}->getCacheObject()->setCache('redirect','index');
+        $self->{'tools'}->getCacheObject()->setCache('redirect','index');
     }
 
     return 1;

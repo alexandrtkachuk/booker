@@ -153,4 +153,20 @@
         <KEY>LANG_updaetevent</KEY>
         <VALUE>Редактировать событие</VALUE>
     </ISTRING>
+     <ISTRING>
+        <KEY>LANG_pass</KEY>
+        <VALUE>Пароль</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_info2pass</KEY>
+        <VALUE>Если оставить пустым то пароль будет старый</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_addroom</KEY>
+        <VALUE>добвить комнату</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_add</KEY>
+        <VALUE>добавить</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>

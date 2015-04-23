@@ -34,16 +34,16 @@ App.directive('modaluserdelete', function() {
   };
 });
 
-/*
-App.directive('update', function() {
+
+App.directive('addroom', function() {
   return {
       restrict: 'AE',
       replace: 'true',
-      controller: "cUpdate as cB",
-      templateUrl: "Resources/html/partials/update.html"
+      controller: "cAdmin as cA",
+      templateUrl: "Resources/html/partials/addroom.html"
   };
 });
-*/
+
 
 
 App.directive('userlist', function() {
@@ -68,7 +68,7 @@ App.directive('adminmenu', function() {
 			  restrict: 'AE',
 			  replace: 'true',
 			  controller: "cIndex as cI",
-			  template: "<div><hr> <a ui-sref='admin'  ng-bind='cI.melang.value.LANG_employeelist.VALUE'  class='btn btn-primary'></a></div>"
+			  template: "<div><hr> <p><a ui-sref='admin'  ng-bind='cI.melang.value.LANG_employeelist.VALUE'  class='btn btn-primary'></a></p> <p><a data-toggle='modal' data-target='#myModalAddRoom' ng-bind='cI.melang.value.LANG_addroom.VALUE' class='btn btn-primary'></a></p></div>"
 		  };
 	}
 	else 

@@ -1,28 +1,13 @@
-App.factory('fData', function() {
-	data = {
-		info:null
-		,show:'none'
-		}
-		
-	data.setInfo =function(info)
-	{
-		data.info = info;
-	}	
-	
-	data.test = function(){
-		data.info = '324324';
-		}
-		
-	return data;
-});
 
 
-App.factory('fCalendar', function( fLang, $filter,fData ) {
+
+App.factory('fCalendar', function( fLang, $filter ) {
 	
 	var calendar = {
 			goCalendar:null,
 			info:null,
-			show:'none'
+			show:'none',
+			id:null
 		}; 
 	
 	calendar.test = function()
@@ -55,6 +40,8 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 					calendar.show ='block';
 				}
 				
+				calendar.id = result[0].id;
+				calendar.iduser = result[0].id_user;
 				var s =new Date();
 				s.setTime(result[0].time_start*1000);
 		
@@ -135,7 +122,22 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
     defaultDate: metoday,
     editable: true,
     timeFormat: ftime,
-   
+	  eventClick: function(calEvent, jsEvent, view) {
+		if(calEvent.url)
+		{	
+			var w=500;
+			var h=400;
+			 var left = (screen.width/2)-(w/2);
+			 var top = (screen.height/2)-(h/2);
+			var newWin = window.open(calEvent.meurl,
+					"test",
+					"width="+w+",height="+h+",resizable=yes,scrollbars=yes,status=yes,location=yes"
+					+"left="+left+",top= "+top
+				)
+
+			newWin.focus();
+		}
+    },
     displayEventEnd: true,
     eventLimit: true, // allow "more" link when too many events
     events: function(start, end, timezone, callback) {
@@ -183,7 +185,9 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 					
 					if(getCookie('tai-userid')==result[i].id_user || getCookie('tai-userid')==1)
 					{
-						el.url  = '#/update/'+result[i].time_start+'/'+result[i].time_end;
+						el.meurl  = '#/update/'+result[i].time_start+'/'+result[i].time_end;
+						el.url='#';
+						
 					}
                     events.push(el);
                 }

@@ -91,7 +91,7 @@ sub getToMounth
 
 sub empryTime
 {
-    my($self,$idRoom,$timeStart,$timeEnd)=@_;
+    my($self,$idRoom,$timeStart,$timeEnd,$id)=@_;
 
     my $start =localtime($timeStart);
     my $end=localtime($timeEnd);
@@ -107,13 +107,13 @@ sub empryTime
         return 0;
     }
 
-    unless($idRoom && $timeStart && $timeEnd)
+    unless( $idRoom && $timeStart && $timeEnd)
     {
         return 0;
     }
    
     $self->{'sql'}->select(['id']);
-
+    
     $self->{'sql'}->where('(( time_start',$timeStart,'<=');  
     $self->{'sql'}->where('time_end',$timeStart,'>=');
     $self->{'sql'}->where(') OR  ( time_start',$timeEnd,'<=',' ');
@@ -122,7 +122,21 @@ sub empryTime
     $self->{'sql'}->where('time_start',$timeEnd,'<=');
     $self->{'sql'}->where(') OR ( time_end',$timeStart,'>=',' ');
     $self->{'sql'}->where('time_end',$timeEnd,'<=');
-    $self->{'sql'}->where(')) AND id_room',$idRoom,'=',' ');
+
+    if($idRoom!=-1)
+    {
+        $self->{'sql'}->where(')) AND id_room',$idRoom,'=',' ');
+    }
+    else
+    {
+        $self->{'sql'}->where(')) AND id_room > 0 ','',' ',' ');
+    }
+
+    if($id && $id>0)
+    {
+        $self->{'sql'}->where('id',$id,'!=');
+    }
+
     $self->{'sql'}->setTable($tabprefix.'orders');
     
     unless($self->{'sql'}->execute())
@@ -134,6 +148,7 @@ sub empryTime
        return 0;
     }
     $self->{'tools'}->logIt('???! start='.$timeStart.'id room = '.$idRoom); 
+    $self->{'tools'}->logIt('??? sql ='.$self->{'sql'}->getSql()  );
     #print $self->{'sql'}->getSql();
     if($self->{'sql'}->getRows())
     {
@@ -281,6 +296,72 @@ sub createOrder
     $self->{'tools'}->logIt(__LINE__, "Order is add");
 
     return 1;
+}
+
+
+sub updateOrder
+{
+    my($self,$idOrder,$timeStart,$timeEnd,$info,$idUser,$all)=@_;
+
+    unless($idOrder && $timeStart && $timeEnd && $info)
+    {
+        return 0;
+    }
+
+
+
+    unless($all){ 
+        unless($self->empryTime(-1,$timeStart,$timeEnd,$idOrder))
+        {
+            $self->{'tools'}->logIt(__LINE__, "is time no empry");
+            return 0;
+        }
+
+    }
+    else
+    {
+        
+    
+    }
+    return 1;
+
+
+
+}
+
+sub getOrder4CreateTime
+{
+    my($self,$id)=@_;
+    
+    unless($id)
+    {
+        return 0;
+    }
+    $self->{'sql'}->select([
+            'id',
+            'id_room',
+            'id_user',
+            'info',
+            'time_start',
+            'time_end'
+        ]);   
+
+    #$self->{'sql'}->where('',);
+    $self->{'sql'}->setTable($tabprefix.'orders');
+    
+    unless($self->{'sql'}->execute())
+    { 
+       $self->{'tools'}->logIt(__LINE__, "error get   Oreder for time");
+       return 0;
+    }
+
+
+}
+
+sub deleteOrder
+{
+    my($self,$id,$all)=@_;
+
 }
 
 sub getRooms

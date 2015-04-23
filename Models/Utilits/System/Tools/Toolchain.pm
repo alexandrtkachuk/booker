@@ -105,11 +105,13 @@ sub getObject($$;$)
 {
     my ($self, $objType, $objParameters) = @_;
     my $temp = $self->getPoolObject()->getObjectFromPool($objType);
+    
     unless($temp)
     {
        $temp = $self->makeNewObject($objType, $objParameters);
     }
-    
+
+    $self->getPoolObject()->addObjectInPool($temp); 
     return $temp;
 }
 

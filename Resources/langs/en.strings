@@ -152,4 +152,20 @@
         <KEY>LANG_updaetevent</KEY>
         <VALUE>updaet event</VALUE>
     </ISTRING>
+    <ISTRING>
+        <KEY>LANG_pass</KEY>
+        <VALUE>Password</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_info2pass</KEY>
+        <VALUE>is empry , pass is old </VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_addroom</KEY>
+        <VALUE>add room</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_add</KEY>
+        <VALUE>add</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>
