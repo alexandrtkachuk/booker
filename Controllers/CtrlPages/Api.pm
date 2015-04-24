@@ -123,8 +123,6 @@ sub addroom
     return 1;
 }
 
-
-
 sub userlist
 {
     my($self)=@_;
@@ -149,7 +147,7 @@ sub updateuser
     
     $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
     
-    $self->{'tools'}->logIt(__LINE__,'?????'.Dumper(\%in) );
+    #$self->{'tools'}->logIt(__LINE__,'?????'.Dumper(\%in) );
     #return 2;
     unless( $in{'POSTDATA'})
     {
@@ -157,7 +155,7 @@ sub updateuser
     }
 
     my $data =decode_json $in{'POSTDATA'};
-    $self->{'tools'}->logIt(__LINE__,'?????'.Dumper($data) );
+    #$self->{'tools'}->logIt(__LINE__,'?????'.Dumper($data) );
     unless($data->{'email'} && $data->{id} &&
         ( Email::Valid->address($data->{'email'})  ) &&
         ($data->{'name'}))
@@ -243,14 +241,14 @@ sub updateorder
     
     if(!$admin->isAdmin()  ||  $in{'iduser'}==-1 || !$in{'iduser'})
     {
-        $id=undef;
+        $id=-1;
     }
 
     $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
 
     unless( 
         $room->updateOrder($in{id},$in{start},$in{'end'},$in{'info'},
-            $id, $in{'all'}))
+            $in{'idroom'}, $id, $in{'all'}))
     {
         $self->{'tools'}->getCacheObject()->setCache('warings',2);
         return 2;    
@@ -261,12 +259,27 @@ sub updateorder
     return 1;
 }
 
+sub deleteorders
+{
+    my($self)=@_;
+    my $room = $self->{'tools'}->getObject('Models::Performers::Rooms');
+    my $admin=$self->{'tools'}->getObject('Models::Performers::Admin');
+    $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
 
+    unless($room->deleteOrder($in{'id'},$in{'all'}))
+    {
+        $self->{'tools'}->getCacheObject()->setCache('warings',2);
+        return 2;    
+    }
+
+    $self->{'tools'}->getCacheObject()->setCache('warings',5);
+    
+    return 1;
+}
 
 sub AUTOLOAD
 {
     return 1;
 }
-
 
 1;

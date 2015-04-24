@@ -1,46 +1,63 @@
 <!-- Example row of columns -->
 <div   >
 	
-	<div class="roomlist">
-		<ul><li ng-repeat="item in cI.rooms.items"  >
-			<button ng-bind="item.name" ng-click="cI.rooms.set(item.id)"></button>
-		</li>
-		
-			</ul>
+	<div class="roomlist" >
+		<div class="masthead">
+			<nav>
+			<ul class="nav nav-justified">
+					<li  ng-repeat="item in cI.rooms.items"   class="{{item.active}}">
+						<a href="#" ng-bind="item.name" ng-click="cI.rooms.set(item.id)"></a>
+					</li>
+				</ul>
+				</nav>
+		</div>
 	</div>
-	<h3  ng-bind="cI.rooms.current"></h3>
+	<!--h3  ng-bind="cI.rooms.current"></h3-->
 	<hr />
-	<div id='calendar'></div>
-	<div class="right-bar">
-		<span ng-bind="cI.melang.value.LANG_langs.VALUE"></span>:<br />
-		<select 
-		ng-model="cI.mylang.value" 
-		ng-options="lang.name  for lang in cI.langs.items"
-		ng-change="cI.fun()">
-    </select>
-		<br />
-				<span ng-bind="cI.melang.value.LANG_timeformat.VALUE"></span>:<br />
-		<select 
-		ng-model="cI.mytime" 
-		ng-change="cI.fun2()">
-		<option  value="h(:mm)t">12</option>
-		<option  value="H(:mm)">24</option>
-    </select>
-		<br />
+	<div class="row">
+		<div class="col-md-10">
+			<div id='calendar' ></div>
+		</div>
 		
-		 <span ng-bind="cI.melang.value.LANG_firstday.VALUE"></span>:<br />
-		<select 
-		ng-model="cI.day" 
-		ng-change="cI.switchday()">
-		<option ng-bind="cI.melang.value.LANG_sunday.VALUE" value="0"></option>
-		<option ng-bind="cI.melang.value.LANG_monday.VALUE" value="1"></option>
+		<div class="right-bar col-md-2" >
+			
+			
+			
+				<label class="col-sm-2 control-label" ng-bind="cI.melang.value.LANG_langs.VALUE"></label>
+				
+				<select 
+					class="form-control"
+					ng-model="cI.mylang.value" 
+					ng-options="lang.name  for lang in cI.langs.items"
+					ng-change="cI.fun()">
+				</select>
+				<br />
+						<label class="control-label" ng-bind="cI.melang.value.LANG_timeformat.VALUE"></label>:<br />
+				<select 
+				class="form-control"
+				ng-model="cI.mytime" 
+				ng-change="cI.fun2()">
+				<option  value="h(:mm)t">12</option>
+				<option  value="H(:mm)">24</option>
+			</select>
+				<br />
+				
+				 <label class="control-label" ng-bind="cI.melang.value.LANG_firstday.VALUE"></label>:<br />
+				<select 
+				class="form-control"
+				ng-model="cI.day" 
+				ng-change="cI.switchday()">
+				<option ng-bind="cI.melang.value.LANG_sunday.VALUE" value="0"></option>
+				<option ng-bind="cI.melang.value.LANG_monday.VALUE" value="1"></option>
+				
+			</select>
+		   <br />
+		   <hr />
+		   <a ui-sref="bookit"  ng-bind="cI.melang.value.LANG_bookit.VALUE" class="btn btn-primary btn-lg btn-block"></a>
+			
+			<div  adminmenu  ></div>
+			<div addroom></div>
+		</div> <!-- end right bar-->
 		
-    </select>
-   <br />
-   <hr />
-   <a ui-sref="bookit"  ng-bind="cI.melang.value.LANG_bookit.VALUE" class="btn btn-primary"></a>
-	
-	<div  adminmenu  ></div>
-	</div>
-	<div addroom></div>
+	</div><!--end row-->
 </div>

@@ -1,8 +1,8 @@
-App.controller('cUpdate',function(fLang , $http ,$filter,  $stateParams, fCalendar){
+App.controller('cUpdate',function(fLang , $http ,$filter,  $stateParams, fCalendar ,fData){
 		 
 	var mess ={val:null};
 	this.mess=mess;
-	this.user = -1;
+	this.user = fData;
 	this.melang=fLang;
 	this.meridian = true;
 	this.open =false;
@@ -36,35 +36,26 @@ App.controller('cUpdate',function(fLang , $http ,$filter,  $stateParams, fCalend
 		
 		console.log(this.calendar.info);
 		
-		var time = $('#timepicker1').val(); 
+			var stime = $('#timepicker1').val(); 
 
            if(getCookie('tai-ftime')=='h(:mm)t' )
            {
-                time = am_pm_to_hours(time); 
+                stime = am_pm_to_hours(stime); 
            } 
 
-           var res = time.split(':');
-           var sdate = new Date($('.datepicker').datepicker('getDate'));
-           sdate.setHours(res[0],res[1]);
            
-           time = $('#timepicker2').val(); 
+          
+           
+           var etime = $('#timepicker2').val(); 
 
            if(getCookie('tai-ftime')=='h(:mm)t' )
            {
-                time = am_pm_to_hours(time); 
+                etime = am_pm_to_hours(etime); 
            } 
 
-           var res = time.split(':');
-           var edate = new Date($('.datepicker').datepicker('getDate'));
-           edate.setHours(res[0],res[1]);
+          
 
-            
-           if(sdate.getTime()>=edate.getTime())
-           { 
-                console.log('errr');
-                mess.val=fLang.value.LANG_warings2.VALUE;
-                return;
-           }
+      
 
             if(!this.calendar.info)
            { 
@@ -72,11 +63,22 @@ App.controller('cUpdate',function(fLang , $http ,$filter,  $stateParams, fCalend
                 mess.val=fLang.value.LANG_warings2.VALUE;
                 return;
            }
-
+				
+				var iduser;
+				if(!this.user.iduser.id)
+				{
+						iduser=this.user.temp;
+				}
+				else
+				{
+					iduser=this.user.iduser.id;
+				}
+				
 		
-		  var url='api/updateorder/?iduser='+this.user
-               +'&start='+parseInt(sdate.getTime()/1000)
-               +'&end='+parseInt(edate.getTime()/1000)
+		  var url='api/updateorder/?iduser='+iduser
+			   +'&idroom='+getCookie('tai-roomid')
+               +'&start='+stime
+               +'&end='+etime
                +'&info='+this.calendar.info
                +'&id='+this.calendar.id;
 			
@@ -86,11 +88,51 @@ App.controller('cUpdate',function(fLang , $http ,$filter,  $stateParams, fCalend
 			
             console.log(url);
 
-		
+			
+			$http.get(url).success(
+				function(data, status, headers, config) {
+					if(data.warings==5){
+						mess.val=fLang.value.LANG_goodadd.VALUE;
+					}
+					else
+					{
+						mess.val=fLang.value.LANG_warings2.VALUE;
+					}
+					console.log(data);
+                });	
 		
 	}
 	
-	
+	this.delete = function()
+	{
+		var is = confirm(fLang.value.LANG_dialogremoveevent.VALUE+"?");
+
+		if(!is){
+			return ;
+		}
+		
+		  var url='api/deleteorders/?id='+this.calendar.id;
+			
+			if(this.recurrence == 'yes'){
+					url+='&all=1';
+			}
+			
+            console.log(url);
+
+			
+			$http.get(url).success(
+				function(data, status, headers, config) {
+					if(data.warings==5){
+						mess.val=fLang.value.LANG_removeevent.VALUE;
+					}
+					else
+					{
+						mess.val=fLang.value.LANG_warings2.VALUE;
+					}
+					console.log(data);
+                });	
+		
+	}
 	
 	
 	

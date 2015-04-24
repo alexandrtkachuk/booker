@@ -3,7 +3,7 @@ App.controller('cBookit',function(fLang , $http,fRooms){
 		this.rooms = fRooms;
 		this.melang=fLang;
 		this.test = 'me!!';
-		this.user = -1;
+		this.user = {iduser:null};
 		this.info ; //info for rooms
 		this.recurrence='none';
 		this.typerecurrence=1;

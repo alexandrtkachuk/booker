@@ -1,6 +1,8 @@
 <div>
-	<select  name="user" ng-model="cB.user.iduser">
-		<option  value="-1"  ng-bind="cA.melang.value.LANG_selectuser.VALUE"></option>
-		<option  ng-repeat="user in cA.users.items"   value="{{user.id}}"  ng-bind="user.name"></option>
+	<select     ng-options="user.name for user in cA.users.items track by user.id"  ng-model="cB.user.iduser"  >
+		<option value=""  ng-bind="cA.melang.value.LANG_selectuser.VALUE">-- select --</option>
     </select>
+    
+    <!--option  value="-1"  ng-bind="cA.melang.value.LANG_selectuser.VALUE"></option>
+		<option  ng-repeat="" ng-value="{{user.id}}"  value="{{user.id}}"  ng-bind="user.name"></option-->
 </div>

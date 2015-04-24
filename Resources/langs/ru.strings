@@ -169,4 +169,16 @@
         <KEY>LANG_add</KEY>
         <VALUE>добавить</VALUE>
     </ISTRING>
+    <ISTRING>
+        <KEY>LANG_forallorders</KEY>
+        <VALUE>для всех событий</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_removeevent</KEY>
+        <VALUE>событие успешно удаленно</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_dialogremoveevent</KEY>
+        <VALUE>действительно кдалить событие</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>

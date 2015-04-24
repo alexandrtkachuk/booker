@@ -1,17 +1,20 @@
-App.controller('cAdmin',function(fLang , $http , fRooms){
+App.controller('cAdmin',function(fLang , $http , fRooms ,fData){
 	
 	this.melang=fLang;
-	this.test ='test';
+	//this.test =;
 	var users = {items:null};
 	this.users=users;
 	this.pass=null;
+	
 	function getUserList(){
 	
-	$http.get('api/userlist').success(
+			$http.get('api/userlist').success(
 				function(data, status, headers, config) {
-
+					fData.iduser=fData.temp;
 					console.log(data);
 					users.items=data;
+					console.log('get users');
+					fData.searchUser(data)
 				}
 			);	
 	}

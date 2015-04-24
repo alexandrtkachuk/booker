@@ -108,6 +108,8 @@ sub funroom
     }
 
       $t = localtime;
+
+      $t->mady(5);
         print "\nday:", $t->mday," month:",$t->mon, " year:", $t->year,  "\n";
         #$t->add_years(5); 
         my $t2=$t->add_months(10); 
@@ -118,7 +120,7 @@ sub funroom
 
     #print Dumper $rooms->getRooms();
     
-    print Dumper $rooms->getToMounth(1,1,14292577791);
+    #print Dumper $rooms->getToMounth(1,1,14292577791);
 
     $t = timelocal(0,0,0,1,3,115);
 

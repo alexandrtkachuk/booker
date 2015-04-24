@@ -1,13 +1,39 @@
+App.factory('fData', function( ) {
+	
+	var data=
+	{
+		iduser:-1,
+		temp:null
+	};
+	
+	
+	data.searchUser = function(users){
+		if(!data.temp) {
+			return;
+		}	
+		console.log('search user');
+		for(var i = 0; i < users.length; i++) {
+			if(data.temp==users[i].id)
+			{
+				data.iduser=users[i];
+				return;
+			}
+			 
+		}
+	
+	}
+	return data;
+});
 
 
-
-App.factory('fCalendar', function( fLang, $filter ) {
+App.factory('fCalendar', function( fLang, $filter,fData ) {
 	
 	var calendar = {
 			goCalendar:null,
 			info:null,
 			show:'none',
-			id:null
+			id:null,
+			iduser:-1
 		}; 
 	
 	calendar.test = function()
@@ -41,7 +67,9 @@ App.factory('fCalendar', function( fLang, $filter ) {
 				}
 				
 				calendar.id = result[0].id;
-				calendar.iduser = result[0].id_user;
+				fData.temp = (result[0].id_user*1);
+				console.log(fData.temp);
+				
 				var s =new Date();
 				s.setTime(result[0].time_start*1000);
 		

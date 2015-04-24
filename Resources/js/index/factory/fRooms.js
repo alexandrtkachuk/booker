@@ -4,8 +4,9 @@ App.factory('fRooms', function($http, fLang , fCalendar) {
   var rooms={
 			"items": 0,
 			"current":null
+			
 	  };
-  
+  var idactive=0;
   //this.temp=lang;
   
  
@@ -16,7 +17,9 @@ App.factory('fRooms', function($http, fLang , fCalendar) {
 		}
 	
 	document.cookie = "tai-date=";
-	 document.cookie = "tai-roomid="+id;
+	document.cookie = "tai-roomid="+id;
+	rooms.items[idactive].active='';
+	
 	 
 	 setcurrent();
 	 
@@ -40,6 +43,8 @@ App.factory('fRooms', function($http, fLang , fCalendar) {
 							if(rooms.items[i].id==getCookie('tai-roomid'))
 							{
 									rooms.current=rooms.items[i].name;
+									rooms.items[i].active='active';
+									idactive=i;
 									break;
 							}
 						}
@@ -65,7 +70,7 @@ App.factory('fRooms', function($http, fLang , fCalendar) {
 					function(data, status, headers, config) {
 						console.log(data);
 						rooms.items = data;		
-						//setcurrent();
+						setcurrent();
 					}
 				);	
 	}

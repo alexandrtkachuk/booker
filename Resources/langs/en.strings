@@ -29,6 +29,10 @@
         <VALUE>Please sing in</VALUE>
     </ISTRING>
     <ISTRING>
+        <KEY>LANG_forallorders</KEY>
+        <VALUE>for all events</VALUE>
+    </ISTRING>
+    <ISTRING>
         <KEY>LANG_addemployee</KEY>
         <VALUE>Add employee</VALUE>
     </ISTRING>
@@ -167,5 +171,13 @@
      <ISTRING>
         <KEY>LANG_add</KEY>
         <VALUE>add</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_removeevent</KEY>
+        <VALUE>good remove event</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_dialogremoveevent</KEY>
+        <VALUE>realy delete events</VALUE>
     </ISTRING>
 </ISTRINGTABLE>
