@@ -1,4 +1,4 @@
-App.controller('cBookit',function(fLang , $http,fRooms){
+App.controller('cBookit',function(fLang , $http, fRooms){
 		 
 		this.rooms = fRooms;
 		this.melang=fLang;
@@ -78,6 +78,15 @@ App.controller('cBookit',function(fLang , $http,fRooms){
                 return;
            }
 
+            var iduser;
+				if(true)
+				{
+						iduser=this.user.iduser;
+				}
+				else
+				{
+					//iduser=this.user.iduser.id;
+				}
 
 
         
@@ -85,7 +94,7 @@ App.controller('cBookit',function(fLang , $http,fRooms){
                +'&start='+parseInt(sdate.getTime()/1000)
                +'&end='+parseInt(edate.getTime()/1000)
                +'&info='+this.info
-               +'&iduser='+this.user;
+               +'&iduser='+iduser;
 			
 			if(this.recurrence == 'block'){
 					url+='&recurrence='+this.typerecurrence

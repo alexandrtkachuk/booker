@@ -109,8 +109,8 @@ sub funroom
 
       $t = localtime;
 
-      $t->mady(5);
-        print "\nday:", $t->mday," month:",$t->mon, " year:", $t->year,  "\n";
+      #$t->mady(5);
+        print "hour:",$t->hour, " \nday:", $t->mday," month:",$t->mon, " year:", $t->year,  "\n";
         #$t->add_years(5); 
         my $t2=$t->add_months(10); 
         $t2 += (ONE_DAY *10); 

@@ -93,6 +93,12 @@ sub empryTime
 
     my $start =localtime($timeStart);
     my $end=localtime($timeEnd);
+    
+    if($start<time)
+    {
+        $self->{'tools'}->logIt(__LINE__, 'old time event');
+        return 0;# old employ
+    }
 
     unless($start->year==$end->year && $start->mon==$end->mon &&
         $start->mday==$end->mday )
@@ -294,7 +300,7 @@ sub createOrder
 
 sub updateOrder
 {
-    my($self,$idOrder,$timeStart,$timeEnd,$info,$idRoom,$idUser,$all)=@_;
+    my($self,$idOrder,$timeStart,$timeEnd,$info,$idRoom,$idUser,$user,$all)=@_;
     #timeStart and timeEnd not unix format (they have the format 00:00)
     unless($idOrder && $timeStart && $timeEnd && $info && $idRoom)
     {
@@ -302,6 +308,12 @@ sub updateOrder
     }
     
     $self->{'sql'}->select(['time_start','created','time_end','id_user' ]);
+    
+    if($user>0)
+    {
+        $self->{'sql'}->where('id_user',$user);
+    }
+
     $self->{'sql'}->where('id',$idOrder); 
     $self->{'sql'}->setTable($tabprefix.'orders');
     
@@ -355,9 +367,16 @@ sub updateOrder
     {
         #nead all arderss for this time create             
         $self->{'sql'}->select(['id','time_start','created','time_end']);
+        $self->{'sql'}->where('time_start',$res->[0]{'time_start'},'>=');
+        
+        if($user>0)
+        {
+            $self->{'sql'}->where('id_user',$user);
+        }
+
         $self->{'sql'}->where('created',$res->[0]{'created'}); 
         $self->{'sql'}->setTable($tabprefix.'orders');
-
+        
         unless($self->{'sql'}->execute())
         { 
             $self->{'tools'}->logIt(__LINE__, 
@@ -460,18 +479,44 @@ sub update
     return 1;
 }
 
+sub deleteOrder4user
+{
+    my($self,$idUser)=@_;
+    
+    unless($idUser)
+    {
+        return 0;
+    }
+
+    $self->{'sql'}->delete();
+    $self->{'sql'}->where('id_user',$idUser);
+    $self->{'sql'}->where('time_start',time,'>');
+    $self->{'sql'}->setTable($tabprefix.'orders');
+
+    unless($self->{'sql'}->execute())
+    { 
+       $self->{'tools'}->logIt(__LINE__, 
+           "error to get Oredes".$self->{'sql'}->getError()
+           ."\n script=".$self->{'sql'}->getSql()
+       );
+       return 0;
+    }
+
+    return 1;
+}
 
 sub deleteOrder
 {
-    my($self,$id,$all)=@_;
+    my($self,$id,$user,$all)=@_;
 
     unless($id)
     {
         return 0;
     }
-
+      
     $self->{'sql'}->select(['time_start','created','time_end','id_user' ]);
     $self->{'sql'}->where('id',$id); 
+    $self->{'sql'}->where('time_start',time,'>');
     $self->{'sql'}->setTable($tabprefix.'orders');
     
     unless($self->{'sql'}->execute())
@@ -482,19 +527,22 @@ sub deleteOrder
        );
        return 0;
     }
-    $self->{'tools'}->logIt(__LINE__, 'QQqqqq');
+    
     unless($self->{'sql'}->getRows())
     {
         $self->{'tools'}->logIt(__LINE__, 
-           "No rows!!??".$self->{'sql'}->getError()
-           ."\n script=".$self->{'sql'}->getSql()
-       );
+            'no events or olds events');
         return 0;
     }
 
     my $res =$self->{'sql'}->getResult();    
     $self->{'sql'}->delete();
     
+    if($user>0)
+    {
+        $self->{'sql'}->where('id_user',$user);
+    }
+
     if($all)
     {
          $self->{'sql'}->where('created',$res->[0]{'created'});
@@ -503,6 +551,8 @@ sub deleteOrder
     {
         $self->{'sql'}->where('id',$id);
     }
+
+    $self->{'sql'}->where('time_start',$res->[0]{'time_start'},'>=');
 
     unless($self->{'sql'}->execute())
     { 

@@ -177,6 +177,7 @@ sub deleteuser
 {
     
     my($self)=@_;
+
     my $admin = $self->{'tools'}->getObject('Models::Performers::Admin');
     
     unless($admin->isAdmin())
@@ -197,7 +198,13 @@ sub deleteuser
         $self->{'tools'}->getCacheObject()->setCache('warings',2);
         return 3;
     }
-
+    my $room = $self->{'tools'}->getObject('Models::Performers::Rooms');
+    
+    unless($room->deleteOrder4user($in{id} ))
+    {
+        $self->{'tools'}->logIt(__LINE__, 'Error remove events foe user');
+    }
+    
     return 1;
 }
 
@@ -243,12 +250,19 @@ sub updateorder
     {
         $id=-1;
     }
+    
+    my $user = -1; 
+    
+    if(!$admin->isAdmin() )
+    {
+        $user = $admin->getId(); 
+    }
 
     $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
 
     unless( 
         $room->updateOrder($in{id},$in{start},$in{'end'},$in{'info'},
-            $in{'idroom'}, $id, $in{'all'}))
+            $in{'idroom'}, $id,$user,$in{'all'}))
     {
         $self->{'tools'}->getCacheObject()->setCache('warings',2);
         return 2;    
@@ -265,8 +279,17 @@ sub deleteorders
     my $room = $self->{'tools'}->getObject('Models::Performers::Rooms');
     my $admin=$self->{'tools'}->getObject('Models::Performers::Admin');
     $self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
+    
+    my $admin=$self->{'tools'}->getObject('Models::Performers::Admin');
+        
+    my $user = -1; 
+    
+    if(!$admin->isAdmin() )
+    {
+        $user = $admin->getId(); 
+    }
 
-    unless($room->deleteOrder($in{'id'},$in{'all'}))
+    unless($room->deleteOrder($in{'id'},$user,$in{'all'}))
     {
         $self->{'tools'}->getCacheObject()->setCache('warings',2);
         return 2;    
