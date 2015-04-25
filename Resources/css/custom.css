@@ -155,3 +155,77 @@ footer p
 {
 	text-align:center;
 }
+
+
+
+.icon-th
+{
+	margin-left: -25px;
+	cursor: pointer;
+}
+
+
+
+.icon-chevron-up {
+	 position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.icon-chevron-up:before
+{
+	
+	content: "\e113";
+}
+
+
+.icon-chevron-down
+{
+ position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'Glyphicons Halflings';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-chevron-down:before
+{
+	
+	content: "\e114";
+}
+
+
+.bookit , .admin
+{
+	background-color: #fff;
+	padding: 30px 20px;
+	border-radius: 15px;
+}
+
+.input-small
+{
+  width:100px;
+}
+
+
+.update{
+	max-width: 500px;
+	min-width: 250px;
+	margin-top: -30px;
+	border-radius: 15px;
+	background-color: #fff;
+	padding: 15px;
+	padding: 1px 20px;
+	margin: 0px auto;
+}

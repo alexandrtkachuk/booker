@@ -42,6 +42,10 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 			//console.log('cal test');
 	}
 	
+	
+	
+					
+	
 	 calendar.getevent = function(start,end)
 	{
 		
@@ -61,6 +65,7 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 				console.log(doc);
 				
 				calendar.info=result[0].info;
+				console.log('calendar info:'+result[0].info);
 				if(result[0].count>1)
 				{
 					calendar.show ='block';
@@ -103,6 +108,7 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 	
 	calendar.goCalendar = function(melang, ftime,fday) {
 	
+	console.log('goCalendar');	
 	var metoday = '';
 	var me2='2015-04-17';
     if(!melang)
@@ -141,8 +147,10 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 
     $('#calendar').fullCalendar({
         header: {
-            left: 'prev,next today',
-    center: 'title'
+			left: 'prevYear,  prev ',
+            right: 'next, nextYear, today',
+            
+		center: 'title'
         },
     lang: melang,
     firstDay:fday,
@@ -151,6 +159,10 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
     editable: true,
     timeFormat: ftime,
 	  eventClick: function(calEvent, jsEvent, view) {
+		  
+		  console.log(calEvent);
+		 
+		  
 		if(calEvent.url)
 		{	
 			var w=500;
@@ -162,10 +174,53 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 					"width="+w+",height="+h+",resizable=yes,scrollbars=yes,status=yes,location=yes"
 					+"left="+left+",top= "+top
 				)
+			
+			 newWin.focus();
+				
+				function WaitForClose() {				
+					if(!newWin.closed)
+					{					
+						setTimeout(WaitForClose, 300);
+					}
+					else
+					{								
 
-			newWin.focus();
-		}
+						$('#calendar').fullCalendar( 'refetchEvents' );	
+						console.log('close');		
+					}
+				}
+			
+				WaitForClose();
+			}
     },
+    eventDragStop:function( event, jsEvent, ui, view ) 
+    { 
+			console.log(event);
+			/*
+			$.ajax({
+            url: 'api/getorders/',
+            data: {
+				start:event.start.unix()  ,
+				roomid:getCookie('tai-roomid'),
+				end: event.end.unix()
+            },
+            success: function(doc) {
+				
+				
+				}
+			});
+			*/
+			
+			console.log(event.start.unix());
+			console.log(event.end.unix());
+			
+			
+			
+			console.log(jsEvent);
+			console.log(ui);
+			console.log(view);
+			
+	},
     displayEventEnd: true,
     eventLimit: true, // allow "more" link when too many events
     events: function(start, end, timezone, callback) {
@@ -190,7 +245,9 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
                 var events = [];
                 
                 var result = JSON.parse(doc);
-
+				
+				var date = new Date();
+				
                 for (var i = 0; i < result.length; i++) {
                 //console.log(calendar.moment(result[i].time_start *1000 ).format());
                     
@@ -211,11 +268,13 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 					}
 					
 					
-					if(getCookie('tai-userid')==result[i].id_user || getCookie('tai-userid')==1)
+					if(date.getTime()<(result[i].time_start *1000) && (getCookie('tai-userid')==result[i].id_user || getCookie('tai-userid')==1))
 					{
 						el.meurl  = '#/update/'+result[i].time_start+'/'+result[i].time_end;
 						el.url='#';
-						
+						el.startme = result[i].time_start;
+						el.endme =result[i].time_end;
+						el.editable = true;
 					}
                     events.push(el);
                 }

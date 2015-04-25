@@ -118,7 +118,7 @@ sub empryTime
         return 0;
     }
    
-    $self->{'sql'}->select(['id']);
+    $self->{'sql'}->select(['id','id_user']);
     
     $self->{'sql'}->where('(( time_start',$timeStart,'<=');  
     $self->{'sql'}->where('time_end',$timeStart,'>=');
@@ -142,21 +142,23 @@ sub empryTime
     }
 
     $self->{'sql'}->setTable($tabprefix.'orders');
-    
+
     unless($self->{'sql'}->execute())
     { 
-       $self->{'tools'}->logIt(__LINE__, 
-           "error to get Oredes".$self->{'sql'}->getError()
-           ."\n script=".$self->{'sql'}->getSql()
-       );
-       return 0;
+        $self->{'tools'}->logIt(__LINE__, 
+            "error to get Oredes".$self->{'sql'}->getError()
+            ."\n script=".$self->{'sql'}->getSql()
+        );
+
+        return 0;
     }
     $self->{'tools'}->logIt('???! start='.$timeStart.'id room = '.$idRoom); 
     $self->{'tools'}->logIt('??? sql ='.$self->{'sql'}->getSql()  );
     #print $self->{'sql'}->getSql();
     if($self->{'sql'}->getRows())
-    {
-        #return $self->{'sql'}->getResult();
+    { 
+        my $res = $self->{'sql'}->getResult();
+        $self->{'tools'}->getCacheObject()->setCache('staff',$res->[0]{'id_user'}); 
         return 0;
     }
     
@@ -169,9 +171,9 @@ sub addOrder
 {
     my($self,$idRoom,$timeStart,$timeEnd,$info,$idUser,$recurrence,$count)=@_;
     #recurrence:
-    #1 = weekly
+    #4 = weekly
     #2 = be-weekly 
-    #3 =mounthly
+    #1 =mounthly
     
     unless(!$recurrence || ( $count < 5 && $count > 0))
     {
@@ -202,18 +204,20 @@ sub addOrder
     my $start =localtime($timeStart);
     my $end=localtime($timeEnd);
 
-    if($count)
-    {
-        $count--;
-    }
-    else
+
+    unless($count)
     {
         $count =0;
     }
- 
+    if($count > $recurrence)
+    {
+        $self->{'tools'}->logIt(__LINE__, "many count");
+        return 0;
+    } 
+
     for(my $i=0;$i<$count;$i++)
     {
-        if(1==$recurrence)
+        if(4==$recurrence)
         {
             $start+=(ONE_DAY*7);
             $end+=(ONE_DAY*7);
@@ -223,13 +227,28 @@ sub addOrder
             $start+=(ONE_DAY*14);
             $end+=(ONE_DAY*14);
         }
-        elsif(3==$recurrence)
+        elsif(1==$recurrence)
         {
             $start= $start->add_months(1);
-            $end=$end->add_months(1); 
+            $end=$end->add_months(1);
+
+            if($start->_wday==0 || $start->_wday==6)
+            {
+                for(0..3)
+                {
+                    $start+=ONE_DAY;
+                    $end+=ONE_DAY;
+                   if($start->_wday!=0 && $start->_wday!=6)
+                    {
+                        last;
+                    }
+                }   
+            } #end if
+
         }
         else
         {
+            $self->{'tools'}->logIt(__LINE__, "no recurrence");
             return 0;
         }
         
@@ -250,7 +269,7 @@ sub addOrder
     for(my $i=0;$i<$count;$i++ )
     {
 
-        if(1==$recurrence)
+        if(4==$recurrence)
         {
             $start+=(ONE_DAY*7);
             $end+=(ONE_DAY*7);
@@ -260,10 +279,23 @@ sub addOrder
             $start+=(ONE_DAY*14);
             $end+=(ONE_DAY*14);
         }
-        elsif(3==$recurrence)
+        elsif(1==$recurrence)
         {
             $start= $start->add_months(1);
             $end=$end->add_months(1); 
+            
+            if($start->_wday==0 || $start->_wday==6)
+            {
+                for(0..3)
+                {
+                    $start+=ONE_DAY;
+                    $end+=ONE_DAY;
+                   if($start->_wday!=0 && $start->_wday!=6)
+                    {
+                        last;
+                    }
+                }   
+            } 
         }
         
         $hash{'time_start'}=$start->epoch;
@@ -569,17 +601,26 @@ sub deleteOrder
 
 sub getRooms
 {
-    my($self)=@_;
+    my($self,$limit)=@_;
 
     $self->{'sql'}->select(['id','name']);
     $self->{'sql'}->setTable($tabprefix.'rooms');
     
+    if($limit)
+    {
+        $self->{'sql'}->setLimit($limit);
+    }
+
     unless($self->{'sql'}->execute())
     { 
-       $self->{'tools'}->logIt(__LINE__, "error get name Rooms");
+       $self->{'tools'}->logIt(__LINE__, "error get name Rooms"
+        ."\n script=".$self->{'sql'}->getSql());
        return 0;
     }
-    
+   
+$self->{'tools'}->logIt(__LINE__, "good get name Rooms"
+        ."\n script=".$self->{'sql'}->getSql());
+
     my $res = $self->{'sql'}->getResult();
     
     return $res;

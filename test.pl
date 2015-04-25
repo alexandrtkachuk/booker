@@ -10,7 +10,7 @@ use File::Basename;;
 use constant TDIR=>dirname(__FILE__);
 
 use lib TDIR;
-use lib TDIR.'/Models/Utilits';
+use lib TDIR.'/Libs';
 use Digest::MD5 qw(md5 md5_hex md5_base64) ;
 use Time::Local;
 use System::Tools::Toolchain;
@@ -110,7 +110,7 @@ sub funroom
       $t = localtime;
 
       #$t->mady(5);
-        print "hour:",$t->hour, " \nday:", $t->mday," month:",$t->mon, " year:", $t->year,  "\n";
+        print "\n min",$t->min,"hour:",$t->hour, " \nday:", $t->mday," month:",$t->mon, " year:", $t->year,  "\n";
         #$t->add_years(5); 
         my $t2=$t->add_months(10); 
         $t2 += (ONE_DAY *10); 
@@ -118,7 +118,7 @@ sub funroom
       print $t2->epoch."\n"; 
        print "\nday:", $t2->mday," month:",$t2->mon, " year:", $t2->year,  "\n"; 
 
-    #print Dumper $rooms->getRooms();
+    print Dumper $rooms->getRooms(2);
     
     #print Dumper $rooms->getToMounth(1,1,14292577791);
 
@@ -171,13 +171,21 @@ sub funrand
 
 }
 
+sub funconfig
+{
+    my $temp = $tools->getConfigObject()->getSessionConfig();;
+    print Dumper $temp->countrooms;
+
+}
+
 sub main
 {
 
     
     #userfun();
     #funlang();
-    funroom();
+    #funroom();
+    funconfig();
     #funSendMail();
     #funrand();
     my $d=  $tools->getDebugObject()->getLog();

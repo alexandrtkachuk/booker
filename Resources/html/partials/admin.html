@@ -1,17 +1,31 @@
-<div>
+<div class="admin">
+			<div>
+				<p>	<a ui-sref="index"    class="btn btn-primary">
+					<span class="glyphicon glyphicon-arrow-left"></span>
+					<span ng-bind="cA.melang.value.LANG_home.VALUE"></span>
+				</a></p>
+			</div>
 	<div>
-		<a ui-sref="index"  ng-bind="cA.melang.value.LANG_home.VALUE"  class="btn btn-primary"></a>
-		<hr />
+		<table class="table table-striped" >
+			<caption ><span class="glyphicon glyphicon-user"></span>&nbsp;<span ng-bind="cA.melang.value.LANG_employeelist.VALUE"></span></caption>
+			<thead>
+				<tr>
+					<th>#</th>
+					<th ng-bind="cA.melang.value.LANG_name.VALUE"></th>
+					<th ng-bind="cA.melang.value.LANG_remove.VALUE"></th>
+					<th ng-bind="cA.melang.value.LANG_edit.VALUE"></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="user in cA.users.items">
+					<td>{{$index}}</td>
+					<td ><a href="mailto:{{user.email}}" ng-bind="user.name"></a></td>
+					<td ><button ng-click="cA.deleteuser(user.id,user.name)"  class="btn btn-danger" data-toggle="modal" data-target="#myModalDelete"><span class="glyphicon glyphicon-remove"></span></button></td>
+					<td ><button ng-click="cA.edit(user.id,user.name,user.email)"  data-toggle="modal" data-target="#myModalEdit" class="btn btn-success"><span class="glyphicon glyphicon-pencil"></span></button></td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	
-	<table>
-			<tr ng-repeat="user in cA.users.items">
-				<td ><a href="mailto:{{user.email}}" ng-bind="user.name"></a></td>
-				<td ><button ng-click="cA.deleteuser(user.id,user.name)" ng-bind="cA.melang.value.LANG_remove.VALUE" class="btn btn-danger" data-toggle="modal" data-target="#myModalDelete"></button></td>
-				<td ><button ng-click="cA.edit(user.id,user.name,user.email)"  data-toggle="modal" data-target="#myModalEdit" ng-bind="cA.melang.value.LANG_edit.VALUE" class="btn btn-success"></button></td>
-			</tr>
-	</table>
-	
 	
 	<div><button data-toggle="modal" data-target="#myModal" ng-bind="cA.melang.value.LANG_addemployee.VALUE"  class="btn btn-success"></button>  </div>
 	

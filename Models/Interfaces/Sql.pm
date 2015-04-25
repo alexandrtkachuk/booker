@@ -6,10 +6,6 @@ use strict;
 use DBI; 
 use Data::Dumper;
 
-
-
-
-
 my($database, $host,$user, $pass,$dbh,$sth,$testmode );
 
 #setQuery
@@ -19,7 +15,6 @@ my($database, $host,$user, $pass,$dbh,$sth,$testmode );
 #конструктор
 sub new
 {
-
     $database=$_[1]; 
     $host=$_[2];
     $user=$_[3];
@@ -38,9 +33,9 @@ sub new
             'where'=>undef,
             'DISTINCT'=>' ',
             'ORDERBY'=>undef,
+            'LIMIT'=>undef,
             'GROUP_CONCAT'=>undef
         },$class);
-
 }
 
 sub getError
@@ -63,7 +58,6 @@ sub connect
     $dbh = DBI->connect($data_source, $user, $pass, 
         {PrintError=>0, RaiseError=>0} #отключаем принт ошибок
     );
-    
     
     return 1 if($dbh);
     return 0;
@@ -156,7 +150,7 @@ sub select
 
     }
 
-    $self->{'sql'}.=' FROM %tabname% ';
+    $self->{'sql'}.=' FROM %tabname%  %LIMIT% ';
     return 1;
 }
 
@@ -276,6 +270,21 @@ sub GROUP_CONCAT
     return 1;
 }
 
+sub setLimit
+{
+    return 0 unless($dbh);
+
+    my($self,$count) = @_;
+    
+    unless($count)
+    {
+        return 0;
+    }
+
+    $self->{'LIMIT'}= ' LIMIT '.int($count);
+    return 1;
+}
+
 sub getSql
 {
     my($self) = @_;
@@ -291,8 +300,9 @@ sub getSql
     }    
     
     $self->{'sql'} =~s/%tabname%/$self->{'table'}/;
-    
     $self->{'sql'} =~s/%DISTINCT%/$self->{'DISTINCT'}/;
+    $self->{'sql'} =~s/%LIMIT%/$self->{'LIMIT'}/;
+
 
 
     if($self->{'where'} )
@@ -309,7 +319,6 @@ sub getSql
     #print $self->{'sql'};
     #$debug->setMsg( $self->{'sql'}); 
     return  $self->{'sql'};
-
 }
 
 
@@ -363,7 +372,6 @@ sub getResult
 
 }
 
-
 sub delete
 {
     return 0 unless($dbh);
@@ -373,10 +381,7 @@ sub delete
 
     $self->{'sql'}.=' FROM %tabname% ';
     return 1;
-
-
 }
-
 
 sub DESTROY 
 {
@@ -384,7 +389,6 @@ sub DESTROY
     if($dbh ){
         $dbh->disconnect();
     }
-
 }
 
 1;

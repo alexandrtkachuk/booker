@@ -27,8 +27,7 @@ sub new
             $tools->getDebugObject()->logIt($self->{'sql'}->getError());
             return 0;
         }
-       $session = $tools->getObject('Models::Utilits::Sessionme');
-       #$tools->testFake();
+       $session = $tools->getObject('Models::Utilits::Sessionme'); 
     }
     
     my $class = ref($_[0])||$_[0];
@@ -191,6 +190,34 @@ sub getRole
 {
     my ($self)=@_;
     return $self->{'role'};
+}
+
+sub getName4Id
+{
+    my ($self,$id)=@_;
+    
+    unless($id)
+    {
+        return 0;
+    }
+
+    $self->{'sql'}->select(['name']);
+    $self->{'sql'}->setTable($tabName);
+    $self->{'sql'}->where('id',$id);
+    
+    unless($self->{'sql'}->execute())
+    { 
+        $tools->getDebugObject()->logIt($self->{'sql'}->getError() );
+        return 0;
+    }
+
+    unless($self->{'sql'}->getRows())
+    {
+        return 0;
+    }
+    
+    my $res = $self->{'sql'}->getResult();
+    return  $res->[0]{'name'};
 }
 
 1;

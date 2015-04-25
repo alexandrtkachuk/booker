@@ -6,7 +6,7 @@ App.controller('cUpdate',function(fLang , $http ,$filter,  $stateParams, fCalend
 	this.melang=fLang;
 	this.meridian = true;
 	this.open =false;
-	var info = {val:null};
+	//var info = {val:null};
 	//this.i=info;
 	this.calendar=fCalendar;
 	
@@ -57,7 +57,7 @@ App.controller('cUpdate',function(fLang , $http ,$filter,  $stateParams, fCalend
 
       
 
-            if(!this.calendar.info)
+           if(!this.calendar.info)
            { 
                 console.log('errr no info');
                 mess.val=fLang.value.LANG_warings2.VALUE;
@@ -65,7 +65,7 @@ App.controller('cUpdate',function(fLang , $http ,$filter,  $stateParams, fCalend
            }
 				
 				var iduser;
-				if(!this.user.iduser.id)
+				if( typeof(this.user.iduser) == "undefined"  ||  this.user.iduser == -1 )
 				{
 						iduser=this.user.temp;
 				}
@@ -92,11 +92,15 @@ App.controller('cUpdate',function(fLang , $http ,$filter,  $stateParams, fCalend
 			$http.get(url).success(
 				function(data, status, headers, config) {
 					if(data.warings==5){
-						mess.val=fLang.value.LANG_goodadd.VALUE;
+						mess.val=fLang.value.LANG_goodupdate.VALUE;
 					}
 					else
 					{
-						mess.val=fLang.value.LANG_warings2.VALUE;
+						if(typeof(data.staffuser) == "undefined" ){
+							mess.val=fLang.value.LANG_eventonaday.VALUE;
+						}else {
+							mess.val=fLang.value.LANG_staffmeeting.VALUE+data.staffuser;
+						}
 					}
 					console.log(data);
                 });	

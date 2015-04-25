@@ -22,14 +22,9 @@ sub go()
 {   
     my ($self)=@_;
     my $html;
-    my $cgi = CGI->new;
-    
+    my $cgi = CGI->new;   
     my $session =$self->{'tools'}->getObject('Models::Utilits::Sessionme');
         
-    #$self->{'tools'}->logIt(__LINE__, "test");
-    
-    #$self->{'tools'}->getDebugObject()->logIt(__LINE__,'lang2='.$cgi->param('tai-lang'));
-    #$cgi->cookie(userid => '99');
     my @cookies; 
     push(@cookies, $cgi->cookie(CGISESSID => $session->getId()));
    
@@ -47,10 +42,7 @@ sub go()
         push(@cookies, $cgi->cookie(
                 -name =>'tai-userrole',
                 -value=>$user->getRole()));
-        
     }
-   
-    
     
     if( $self->{'tools'}->getCacheObject()->getCache('redirect'))
     {
@@ -58,7 +50,9 @@ sub go()
             ->getCache('redirect'));
     } 
 
-    my $templete='Resources/html/'.
+    #load template path 
+    my $dirs = $self->{'tools'}->getConfigObject()->getDirsConfig();
+    my $templete=$dirs->templates.
     $self->{'tools'}->getCacheObject()->getCache('nextpage').
     '.html';
 

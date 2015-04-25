@@ -15,10 +15,9 @@ sub new
 #chenge hash
 sub createHash
 {
-
     my ($self)=@_;
-    $self->{'page'}=$self->{'tools'}->getCacheObject()->getCache('nextpage');
-    $self->{'title'}='<a href="index">Главня</a>';
+    $self->{'page'}=$self->{'tools'}->getCacheObject()->getCache('nextpage'); 
+    return 1;
 }
 ##viewdubug##
 sub viewdebug

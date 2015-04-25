@@ -13,11 +13,8 @@ require Views::Palletts::Index;
 
 sub createHash
 {
-    
     my ($self)=@_;
-
-    $self->{'title'}='Api';
-    #print $data->{'pageparam'};
+    $self->{'title'}='Api'; 
 }
 
 
@@ -30,8 +27,6 @@ sub  getOut
         
        return $res;
 }
-
-
 
 sub lang
 {
@@ -55,33 +50,34 @@ sub getJSON
     return  decode('utf8',$res);
 }
 
-
 sub warings
 {
     my ($self)=@_;
-
-    my  $w =$self->{'tools'}->getCacheObject()->getCache('warings');
+    my %hash = ();
+    my $w=$self->{'tools'}->getCacheObject()->getCache('warings');
 
     unless($w)
     {
         $w='0';
     }
 
-    my $d=$self->{'tools'}->getDebugObject()->getLog();
-    #return $self->getJSON  ( {'warings'=>  $w });
-    return $self->getJSON  ( {'warings'=>  $w , 'debug'=>$d});
+    $hash{'warings'}=$w;
+    $hash{'debug'}=$self->{'tools'}->getDebugObject()->getLog();
+    my $userid = $self->{'tools'}->getCacheObject()->getCache('staff');
+
+    if($userid)
+    {
+        my $res = $self->{'tools'}->getObject('Models::Performers::Admin')
+            ->getName4Id($userid);   
+        if($res)
+        {
+            $hash{'staffuser'} = $res;
+        }
+    }
+    
+    return $self->getJSON  ( \%hash);
 
 }
-
-sub test
-{
-    #$ENV{'SCRIPT_NAME'};
-    my ($self)=@_;
-    #return $self->getJSON(/$ENV{'HTTP_COOKIE'});
-    print $ENV{'HTTP_COOKIE'};
-    return ''; 
-}
-
 
 sub getorders
 {
@@ -93,7 +89,6 @@ sub getorders
     my $res = $rooms->getToMounth($roomid,$start,$end);
     return   $self->getJSON($res);
 }
-
 
 sub adduser
 {
@@ -118,11 +113,12 @@ sub userlist
     return   $self->getJSON($res);
 }
 
-
 sub rooms
 {
     my($self)=@_;
-    my $res = $self->{'tools'}->getObject('Models::Performers::Rooms')->getRooms();
+    my $temp = $self->{'tools'}->getConfigObject()->getSessionConfig();
+    my $res = $self->{'tools'}->getObject('Models::Performers::Rooms')
+        ->getRooms($temp->countrooms);
     unless($res)
     {
         return $self->warings();

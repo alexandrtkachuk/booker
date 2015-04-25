@@ -84,7 +84,14 @@ sub getValue($$)
 sub load
 {
     my ($self)=@_;
-    my $fullpath= 'Resources/langs/'.$self->{'lang'}.'.strings';
+    
+    if($self->{'value'})
+    {
+        return 1;
+    }
+    
+    my $dirs = $self->{'tools'}->getConfigObject()->getDirsConfig();
+    my $fullpath= $dirs->langs.$self->{'lang'}.'.strings';
     my $xml = $self->{'tools'}->getDiskObject()->loadFileAsString($fullpath );
 
     if($xml)

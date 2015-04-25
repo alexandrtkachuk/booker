@@ -8,6 +8,13 @@
 
     <directory status="system" >
         <coderoot>user7 </coderoot>
+        <langs>Resources/langs/</langs>
+        <templates>Resources/html/</templates>
         <library>.</library>
     </directory>
+
+    <session status="default" >
+        <countrooms>5</countrooms>
+    </session>
+
 </xml>

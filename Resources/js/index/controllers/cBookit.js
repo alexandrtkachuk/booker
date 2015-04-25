@@ -1,9 +1,9 @@
-App.controller('cBookit',function(fLang , $http, fRooms){
-		 
+App.controller('cBookit',function(fLang , $http, fRooms,fData){
+		this.errcolor=null;
 		this.rooms = fRooms;
 		this.melang=fLang;
 		this.test = 'me!!';
-		this.user = {iduser:null};
+		this.user = fData;
 		this.info ; //info for rooms
 		this.recurrence='none';
 		this.typerecurrence=1;
@@ -27,9 +27,17 @@ App.controller('cBookit',function(fLang , $http, fRooms){
 		
 		var mess ={val:null};
 		this.mess=mess;
+		
+	this.setcount = function()
+	{
+			console.log(this.count);
+			this.count = 1;
+	}	
+		
        this.send = function(form)
        {
-           console.log(form);
+           //console.log(form);
+           this.errcolor=null;
            /*idroom
             * start
             * end
@@ -78,15 +86,24 @@ App.controller('cBookit',function(fLang , $http, fRooms){
                 return;
            }
 
-            var iduser;
-				if(true)
+			if(this.count>this.typerecurrence)
+			{
+					 console.log('errr count');
+					 this.errcolor="red";
+					 mess.val=fLang.value.LANG_warings2.VALUE;
+					 return;
+			}
+           var iduser;
+           
+				if( typeof(this.user.iduser) == "undefined"  ||  this.user.iduser == -1)
 				{
-						iduser=this.user.iduser;
+						iduser=-1;
 				}
 				else
 				{
-					//iduser=this.user.iduser.id;
+					iduser=this.user.iduser.id;
 				}
+				
 
 
         
@@ -96,7 +113,8 @@ App.controller('cBookit',function(fLang , $http, fRooms){
                +'&info='+this.info
                +'&iduser='+iduser;
 			
-			if(this.recurrence == 'block'){
+			if(this.recurrence == 'block')
+			{
 					url+='&recurrence='+this.typerecurrence
 					+'&count='+this.count;
 			}
@@ -110,7 +128,13 @@ App.controller('cBookit',function(fLang , $http, fRooms){
 					}
 					else
 					{
-						mess.val=fLang.value.LANG_warings2.VALUE;
+						if(typeof(data.staffuser) == "undefined" ){
+							mess.val=fLang.value.LANG_eventonaday.VALUE;
+						}else {
+							mess.val=fLang.value.LANG_staffmeeting.VALUE+data.staffuser;
+						}
+						
+						
 					}
 					console.log(data);
                 });	

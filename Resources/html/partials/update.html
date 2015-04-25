@@ -1,48 +1,72 @@
-
-<div>
-
+<div >
+	<div class ="update">
   
-  <h4 class="modal-title" id="gridSystemModalLabel"  ng-bind="cB.melang.value.LANG_updaetevent.VALUE"> </h4>
-          <p ng-bind="cB.mess.val"> </p>
-  
-   <form  name="myForm">
+	  <h1 id="forms" class="page-header"  ng-bind="cB.melang.value.LANG_updaetevent.VALUE"> </h1>
+	  
+		<div class="container-fluid">
+			<p ng-bind="cB.mess.val"> </p>
+	  
+	    <form  name="myForm">
+					
+					<div class="form-group">
+						<label  ng-bind="cB.melang.value.LANG_bookerfor.VALUE"></label>
+						<div  userlist ></div>
+					</div>
+						
+			<div class="form-group">
+				 <label  ng-bind="cB.melang.value.LANG_timemeeting.VALUE"></label>
+				 <div class="row"> 
+					 <div class="input-append bootstrap-timepicker col-md-4" >
+						<input id="timepicker1" type="text" class="input-small" data-minute-step="1"  
+						data-show-meridian="{{cB.meridian}}">
+						<span class="add-on"><i class="icon-time glyphicon glyphicon-time"></i></span>
+					</div>  
 				
-				<div userlist ></div>
-					
-		<div class="row">
-			 <div class="input-append bootstrap-timepicker  col-md-4">
-				<input id="timepicker1" type="text" class="input-small" data-minute-step="1"  
-				data-show-meridian="{{cB.meridian}}">
-				<span class="add-on"><i class="icon-time"></i></span>
-			</div>  
-        
-			<div class="input-append bootstrap-timepicker  col-md-4">
-				<input id="timepicker2" type="text" class="input-small" data-minute-step="1"  
-				data-show-meridian="{{cB.meridian}}">
-				<span class="add-on"><i class="icon-time"></i></span>
-			</div>  
+					<div class="input-append bootstrap-timepicker  col-md-4">
+						<input id="timepicker2" type="text" class="input-small" data-minute-step="1"  
+						data-show-meridian="{{cB.meridian}}">
+						<span class="add-on"><i class="icon-time glyphicon glyphicon-time"></i></span>
+					</div>  
+				</div>
+	 
+			<div class="form-group">
+				<label  ng-bind="cB.melang.value.LANG_infomeeting.VALUE"></label>
+				</br>
+				<textarea ng-model="cB.calendar.info" ></textarea>
+			</div>
 			
-        </div>
- 
-		<textarea ng-model="cB.calendar.info" ></textarea>
-		<div style="display:{{cB.calendar.show}};">
-			<p><b ng-bind="cB.melang.value.LANG_forallorders.VALUE"></b>?!</p>
-			<p><input name="recurrence" type="radio" ng-model="cB.recurrence"   value="no">
-			<span ng-bind="cB.melang.value.LANG_no.VALUE"></span> </p>
-			<p><input name="recurrence" type="radio" ng-model="cB.recurrence"  value="yes" >
-			<span ng-bind="cB.melang.value.LANG_yes.VALUE"></span> </p>
-		</div>
-		
-		
-					
-				<p>
-					<button ng-click="cB.send(myForm)" ng-bind="cB.melang.value.LANG_send.VALUE"  class="btn btn-success"></button>
-					<button ng-click="cB.delete()" ng-bind="cB.melang.value.LANG_remove.VALUE"  class="btn btn-danger"></button>
-				</p>
+			<div style="display:{{cB.calendar.show}};"  class="form-group">
+				
+				
+				<label ng-bind="cB.melang.value.LANG_forallorders.VALUE"></label>
+				
+				<div class="radio">
+					<label>
+						<input name="recurrence" type="radio" ng-model="cB.recurrence"   value="no">
+						<span ng-bind="cB.melang.value.LANG_no.VALUE">
+					</label>
+				</div>
+				
+				<div class="radio">
+					<label>
+						<input name="recurrence" type="radio" ng-model="cB.recurrence"  value="yes" >
+						<span ng-bind="cB.melang.value.LANG_yes.VALUE">
+					</label>
+				</div>
+				
+			</div>
 			
 			
-			
-			<!--end form -->
+						
+					<p>
+						<button ng-click="cB.send(myForm)" ng-bind="cB.melang.value.LANG_send.VALUE"  class="btn btn-success"></button>
+						<button ng-click="cB.delete()" ng-bind="cB.melang.value.LANG_remove.VALUE"  class="btn btn-danger"></button>
+					</p>
+				
+				
+				
+				<!--end form -->
 			</form>
-  
+			</div>
+	</div>
   </div>

@@ -130,7 +130,7 @@
     </ISTRING>
     <ISTRING>
         <KEY>LANG_recurringevent</KEY>
-        <VALUE>Recurring Event</VALUE>
+        <VALUE>Recurring Event ?</VALUE>
     </ISTRING>
      <ISTRING>
         <KEY>LANG_weekly</KEY>
@@ -179,5 +179,41 @@
      <ISTRING>
         <KEY>LANG_dialogremoveevent</KEY>
         <VALUE>realy delete events</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_password</KEY>
+        <VALUE>password</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_warings5</KEY>
+        <VALUE>wrong login or password</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_bookerfor</KEY>
+        <VALUE>booker for</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_wouldlikemeeting</KEY>
+        <VALUE>я хотел бы забронировать встречу</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_timemeeting</KEY>
+        <VALUE>specify what the time and end of the meeting </VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_infomeeting</KEY>
+        <VALUE>info meeting</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_staffmeeting</KEY>
+        <VALUE>The event overlaps with the event an employee:</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_eventonaday</KEY>
+        <VALUE>event falls on a day</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_goodupdate</KEY>
+        <VALUE>good update event</VALUE>
     </ISTRING>
 </ISTRINGTABLE>

@@ -33,12 +33,28 @@
         <VALUE>Не все поля заполнены верно</VALUE>
     </ISTRING>
     <ISTRING>
+        <KEY>LANG_warings5</KEY>
+        <VALUE>неверный логин или пароль</VALUE>
+    </ISTRING>
+    <ISTRING>
         <KEY>LANG_langs</KEY>
         <VALUE>Язык</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_firstday</KEY>
         <VALUE>первый день недели</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_bookerfor</KEY>
+        <VALUE>Комната для</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_wouldlikemeeting</KEY>
+        <VALUE>я хотел бы забронировать встречу</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_timemeeting</KEY>
+        <VALUE>укажите начало и конец встречи</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_sunday</KEY>
@@ -127,7 +143,7 @@
     </ISTRING>
     <ISTRING>
         <KEY>LANG_recurringevent</KEY>
-        <VALUE>повторять событие</VALUE>
+        <VALUE>повторять событие ?</VALUE>
     </ISTRING>
      <ISTRING>
         <KEY>LANG_weekly</KEY>
@@ -179,6 +195,26 @@
     </ISTRING>
     <ISTRING>
         <KEY>LANG_dialogremoveevent</KEY>
-        <VALUE>действительно кдалить событие</VALUE>
+        <VALUE>действительно удалить событие</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_password</KEY>
+        <VALUE>пароль</VALUE>
+    </ISTRING>
+     <ISTRING>
+        <KEY>LANG_infomeeting</KEY>
+        <VALUE>описание встречи</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_staffmeeting</KEY>
+        <VALUE>Событие пересекается с событием сотрудником:</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_eventonaday</KEY>
+        <VALUE>событие выпадает на выходной день</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_goodupdate</KEY>
+        <VALUE>событие успешно обновленно</VALUE>
     </ISTRING>
 </ISTRINGTABLE>

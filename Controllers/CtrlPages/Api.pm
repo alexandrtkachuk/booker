@@ -8,7 +8,7 @@ our @ISA = qw(Controllers::CtrlPages::Index);
 require Controllers::CtrlPages::Index;
 
 use vars qw(%in);
-use Models::Utilits::Email::Valid;
+use Email::Valid;
 use CGI qw(:cgi-lib :escapeHTML :unescapeHTML);
 use Data::Dumper;
 ReadParse();
