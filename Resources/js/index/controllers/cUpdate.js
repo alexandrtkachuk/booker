@@ -13,9 +13,10 @@ App.controller('cUpdate',function(fLang , $http ,$filter,  $stateParams, fCalend
 	this.recurrence ='no';
 	
 	//
-	
-	fCalendar.getevent($stateParams.start, $stateParams.end);
-	
+	if(getCookie('tai-userrole')!=0)
+	{
+		fCalendar.getevent($stateParams.start, $stateParams.end);
+	}
 	
 	
 	
@@ -24,7 +25,14 @@ App.controller('cUpdate',function(fLang , $http ,$filter,  $stateParams, fCalend
 		this.meridian = false;	
 	}
 	
-	
+	var no =0;
+	this.updateno = function()
+	{
+		if(no == 1) { return ;}
+		no =1;
+		fCalendar.getevent($stateParams.start, $stateParams.end);
+				//console.log('11111111111111111');
+	}
 	
 	
 	
@@ -65,7 +73,7 @@ App.controller('cUpdate',function(fLang , $http ,$filter,  $stateParams, fCalend
            }
 				
 				var iduser;
-				if( typeof(this.user.iduser) == "undefined"  ||  this.user.iduser == -1 )
+				if( !this.user.iduser || this.user.iduser == -1 ||  !this.user.iduser.id  || this.user.iduser.id == -1 )
 				{
 						iduser=this.user.temp;
 				}

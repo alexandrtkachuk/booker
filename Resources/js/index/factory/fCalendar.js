@@ -3,7 +3,7 @@ App.factory('fData', function( ) {
 	var data=
 	{
 		iduser:-1,
-		iduser: {id:-1},
+		name:null,
 		temp:null
 	};
 	
@@ -27,7 +27,7 @@ App.factory('fData', function( ) {
 });
 
 
-App.factory('fCalendar', function( fLang, $filter,fData ) {
+App.factory('fCalendar', function( fLang, $filter,fData, $http ) {
 	
 	var calendar = {
 			goCalendar:null,
@@ -47,24 +47,19 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 	
 					
 	
-	 calendar.getevent = function(start,end)
-	{
+	calendar.getevent = function(start,end) {
 		
 		start--;
 		end++;
-			$.ajax({
-            url: 'api/getorders/',
-            data: {
-				start:start  ,
-				roomid:getCookie('tai-roomid'),
-				end: end
-            },
-            success: function(doc) {
-			
-				
-				var result = JSON.parse(doc);
-				console.log(doc);
-				
+		var url = 'api/getorders/?start='+start 
+		+'&roomid='+getCookie('tai-roomid')
+		+'&end='+end;
+		
+		console.log(url);
+		$http.get(url).success(
+				function(data, status, headers, config) {
+				console.log(data);
+				var result = data;
 				calendar.info=result[0].info;
 				console.log('calendar info:'+result[0].info);
 				if(result[0].count>1)
@@ -74,6 +69,7 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 				
 				calendar.id = result[0].id;
 				fData.temp = (result[0].id_user*1);
+				fData.name = result[0].user_name;
 				console.log(fData.temp);
 				
 				var s =new Date();
@@ -100,11 +96,8 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 						{
 							godatapicker(s);
 						}
-			}
-				
-			});	
+			});
 			
-			//$scope.myValue = true;
 	}
 	
 	calendar.goCalendar = function(melang, ftime,fday) {
@@ -190,8 +183,10 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 						console.log('close');		
 					}
 				}
-			
-				WaitForClose();
+				
+				if(!calEvent.noupdate){
+					WaitForClose();
+				}
 			}
     },
     eventDragStop:function( event, jsEvent, ui, view ) 
@@ -268,6 +263,9 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 						el.color ="green";
 					}
 					
+					if(date.getTime()>(result[i].time_start *1000)){
+						el.color ="#6CA5C2";
+					}
 					
 					if(date.getTime()<(result[i].time_start *1000) && (getCookie('tai-userid')==result[i].id_user || getCookie('tai-userid')==1))
 					{
@@ -279,10 +277,11 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 					}
                     else
                     {
-                        //el.meurl  = '#/updateno/'+result[i].time_start+'/'+result[i].time_end;
-						//el.url='#';
-						//el.startme = result[i].time_start;
-						//el.endme =result[i].time_end;
+                        el.meurl  = '#/updateno/'+result[i].time_start+'/'+result[i].time_end;
+						el.url='#';
+						el.startme = result[i].time_start;
+						el.endme =result[i].time_end;
+						el.noupdate =1;
 
                     }
                     events.push(el);

@@ -98,7 +98,7 @@
     </ISTRING>
     <ISTRING>
         <KEY>LANG_goodadd</KEY>
-        <VALUE>Add employee</VALUE>
+        <VALUE>Add event</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_passemployee</KEY>
@@ -215,5 +215,13 @@
     <ISTRING>
         <KEY>LANG_goodupdate</KEY>
         <VALUE>good update event</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_timeevent</KEY>
+        <VALUE>start and end event:</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_event</KEY>
+        <VALUE>Event</VALUE>
     </ISTRING>
 </ISTRINGTABLE>

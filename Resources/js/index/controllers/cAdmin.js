@@ -1,4 +1,4 @@
-App.controller('cAdmin',function(fLang , $http , fRooms ,fData){
+App.controller('cAdmin',function(fCalendar, fLang , $http , fRooms ,fData, $stateParams, $filter){
 	
 	this.melang=fLang;
 	//this.test =;
@@ -7,16 +7,82 @@ App.controller('cAdmin',function(fLang , $http , fRooms ,fData){
 	this.pass=null;
 	
 	function getUserList(){
-	
+		if(!$stateParams.start)
+		{
 			$http.get('api/userlist').success(
 				function(data, status, headers, config) {
 					fData.iduser=fData.temp;
 					console.log(data);
 					users.items=data;
 					console.log('get users');
-					fData.searchUser(data)
 				}
-			);	
+			);
+		}
+		else
+		{
+		var start = $stateParams.start;
+		var end = $stateParams.end;
+		start--;
+		end++;
+		var url = 'api/getorders/?start='+start 
+		+'&roomid='+getCookie('tai-roomid')
+		+'&end='+end;
+		
+		console.log(url);
+		$http.get(url).success(
+				function(data, status, headers, config) {
+				console.log(data);
+				var result = data;
+				fCalendar.info=result[0].info;
+				console.log('calendar info:'+result[0].info);
+				if(result[0].count>1)
+				{
+					fCalendar.show ='block';
+				}
+				
+				fCalendar.id = result[0].id;
+				fData.temp = (result[0].id_user*1);
+				console.log(fData.temp);
+				
+				var s =new Date();
+				s.setTime(result[0].time_start*1000);
+		
+				var e =new Date();
+				e.setTime(result[0].time_end*1000);
+				
+				
+				
+				var str =$filter('date')(s.getTime(), 'h:mm a');
+				
+				//
+				$('#timepicker1').timepicker('setTime', str);
+                $('#timepicker2').timepicker('setTime',$filter('date')(e.getTime(), 'h:mm a'));
+                
+                
+                //////////////
+						if(fLang.lang=='ru')
+						{
+							datapickerRu(s);
+						}
+						else
+						{
+							godatapicker(s);
+						}
+					//run to get current user
+					$http.get('api/userlist').success(
+						function(data, status, headers, config) {
+							fData.iduser=fData.temp;
+							console.log(data);
+							users.items=data;
+							console.log('get users for update');
+							fData.searchUser(data)
+						}
+					);
+						
+			});
+
+				 
+		}	
 	}
 	this.name=null;
 	this.email=null;

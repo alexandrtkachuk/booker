@@ -9,7 +9,6 @@ use Time::Piece;
 use Models::Validators::Varibles;
 my ($self) ;
 my $tabprefix = 'booker_';
-
 sub new
 {   my $tools = System::Tools::Toolchain->instance();
     my $db = $tools->getConfigObject()->getDataBaseConfig();
@@ -60,7 +59,11 @@ sub getToMounth
     {
         return 0;
     }
-    
+    $self->{'sql'}->select(['name']);
+    $self->{'sql'}->setTable($tabprefix.'users bu');
+    $self->{'sql'}->where('bu.id = id_user');
+    my $q1 = $self->{'sql'}->getSql();
+
     $self->{'sql'}->setTable($tabprefix.'orders');
     $self->{'sql'}->select([
             'count(id)']);
@@ -75,7 +78,8 @@ sub getToMounth
             'time_start',
             'time_end',
             'created',
-            "($q) as count"
+            "($q) as count",
+            "($q1) as user_name"
         ]);
     
     $self->{'sql'}->where('time_start',$timeStart,'>');  

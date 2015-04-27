@@ -217,4 +217,12 @@
         <KEY>LANG_goodupdate</KEY>
         <VALUE>событие успешно обновленно</VALUE>
     </ISTRING>
+    <ISTRING>
+        <KEY>LANG_timeevent</KEY>
+        <VALUE>начало и конец события:</VALUE>
+    </ISTRING>
+    <ISTRING>
+        <KEY>LANG_event</KEY>
+        <VALUE>Событие</VALUE>
+    </ISTRING>
 </ISTRINGTABLE>
