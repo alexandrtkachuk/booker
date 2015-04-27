@@ -95,7 +95,7 @@ App.controller('cBookit',function(fLang , $http, fRooms,fData){
 			}
            var iduser;
            
-				if( typeof(this.user.iduser) == "undefined"  ||  this.user.iduser == -1)
+				if( !this.user.iduser  ||  this.user.iduser.id == -1)
 				{
 						iduser=-1;
 				}

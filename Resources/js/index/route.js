@@ -35,6 +35,12 @@ App.config(function($stateProvider, $urlRouterProvider) {
 		  templateUrl: "Resources/html/partials/update.html"
 		})
 		
+        .state('updateno', {
+		  url: "/updateno/{start}/{end}",
+		  controller: "cUpdate as cB",
+		  templateUrl: "Resources/html/partials/updateno.html"
+		})
+
 		
 		.state('admin', {
 		  url: "/admin",

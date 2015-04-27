@@ -19,6 +19,7 @@ $mockObj->mock( 'getCacheObject', sub {return $mockObj; } );
 $mockObj->mock( 'setCache', sub {1} );
 $mockObj->mock( 'getDebugObject', sub {1} );
 $mockObj->mock( 'getConfigObject', sub {return $mockObj; } );
+$mockObj->mock( 'logIt', sub {1} );
 
 $mockObj->mock( 'getDataBaseConfig', sub {return $mockObj;} );
 $mockObj->mock( 'dbuser', sub {1} );

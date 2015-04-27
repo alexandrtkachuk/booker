@@ -27,7 +27,7 @@ sub startup : Test(startup => 2)
 {
     $rooms =Models::Performers::Rooms->new();
     $mockObj = Test::MockObject->new();
-    ok($rooms,'Create class USER');
+    ok($rooms,'Create class Rooms');
     isa_ok($rooms, 'Models::Performers::Rooms');
 }
 
@@ -56,6 +56,66 @@ sub rooms_getToMounth : Test(13)
     is($rooms->getToMounth(-1,time,time+1),0,'nead id > 0');
     is($rooms->getToMounth(1,0,time+1),0,'nead timeStart > 0');
     is($rooms->getToMounth(1,-100,time+1),0,'nead timeStart > 0');
+}
+
+sub rooms_empryTime : Test
+{
+    can_ok($rooms,'empryTime');
+    $$mockSQL->mock( 'getResult',sub{1});
+    $$mockSQL->mock( 'getRows',sub{0});
+    $mockObj->fake_module(
+        'Models::Validators::Varibles'=>( 'isNumeric' => sub{1})  
+    );
+
+    is($rooms->empryTime(1,time,time+1),1,'good params');
+    is($rooms->empryTime(1,time,time),0,'need timeEnd > timeStart ');
+    is($rooms->empryTime(),0,'no param');
+    
+}
+
+sub room_addOrder : Test
+{
+    can_ok($rooms,'addOrder');
+}
+
+sub room_createOrder : Test
+{
+   can_ok($rooms,'createOrder');
+}
+
+sub room_updateOrder : Test
+{
+   can_ok($rooms,'updateOrder');
+}
+
+sub room_setTime2order : Test
+{
+    can_ok($rooms,'setTime2order');
+}
+
+sub room_update : Test
+{
+    can_ok($rooms,'update');
+}
+
+sub room_deleteOrder4user : Test
+{
+    can_ok($rooms,'deleteOrder4user');
+}
+
+sub room_deleteOrder : Test
+{
+    can_ok($rooms,'deleteOrder');
+}
+
+sub room_getRooms : Test
+{
+    can_ok($rooms, 'getRooms');
+}
+
+sub room_addRoom : Test
+{
+    can_ok($rooms,'addRoom');
 }
 
 Test::Class->runtests;

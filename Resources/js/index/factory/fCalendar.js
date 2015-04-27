@@ -277,6 +277,14 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 						el.endme =result[i].time_end;
 						//el.editable = true;
 					}
+                    else
+                    {
+                        //el.meurl  = '#/updateno/'+result[i].time_start+'/'+result[i].time_end;
+						//el.url='#';
+						//el.startme = result[i].time_start;
+						//el.endme =result[i].time_end;
+
+                    }
                     events.push(el);
                 }
                 

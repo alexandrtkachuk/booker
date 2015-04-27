@@ -2,7 +2,6 @@ package Models::Performers::Rooms;
 
 use warnings;
 use strict;
-
 use System::Tools::Toolchain;
 use Time::Local;
 use Time::Seconds;
@@ -78,7 +77,7 @@ sub getToMounth
             'created',
             "($q) as count"
         ]);
-    #print "time=$t \n mon=$mon \n";
+    
     $self->{'sql'}->where('time_start',$timeStart,'>');  
     $self->{'sql'}->where('time_end',$timeEnd,'<');
     $self->{'sql'}->where('id_room',$idRoom);
@@ -94,14 +93,28 @@ sub getToMounth
     }
     
     my $res = $self->{'sql'}->getResult();
-    
     return $res;
 }
-
 
 sub empryTime
 {
     my($self,$idRoom,$timeStart,$timeEnd,$id,$timeCreated)=@_;
+    
+    unless( 
+        $idRoom 
+        && $timeStart 
+        && $timeEnd
+        && Models::Validators::Varibles->isNumeric($idRoom)
+        && Models::Validators::Varibles->isNumeric($timeStart)
+        && Models::Validators::Varibles->isNumeric($timeEnd)
+        && ($idRoom>0)
+        && ($timeStart>0)
+        && ($timeEnd>0)
+        && ($timeEnd>$timeStart)
+    )
+    {
+        return 0;
+    }
 
     my $start =localtime($timeStart);
     my $end=localtime($timeEnd);
@@ -125,11 +138,7 @@ sub empryTime
         return 0;
     }
 
-    unless( $idRoom && $timeStart && $timeEnd)
-    {
-        return 0;
-    }
-   
+       
     $self->{'sql'}->select(['id','id_user']);
     
     $self->{'sql'}->where('(( time_start',$timeStart,'<=');  
@@ -166,7 +175,7 @@ sub empryTime
     }
     $self->{'tools'}->logIt('???! start='.$timeStart.'id room = '.$idRoom); 
     $self->{'tools'}->logIt('??? sql ='.$self->{'sql'}->getSql()  );
-    #print $self->{'sql'}->getSql();
+    
     if($self->{'sql'}->getRows())
     { 
         my $res = $self->{'sql'}->getResult();
@@ -175,8 +184,6 @@ sub empryTime
     }
     
     return 1;
-
-
 }
 
 sub addOrder
@@ -256,7 +263,6 @@ sub addOrder
                     }
                 }   
             } #end if
-
         }
         else
         {
@@ -275,6 +281,7 @@ sub addOrder
     {
         return 0;
     }
+
     $start =localtime($timeStart);
     $end=localtime($timeEnd);
 
@@ -340,7 +347,6 @@ sub createOrder
 
     return 1;
 }
-
 
 sub updateOrder
 {
@@ -601,7 +607,6 @@ sub deleteOrder
     }
     
     return 1;
-
 }
 
 sub getRooms
@@ -610,7 +615,7 @@ sub getRooms
 
     $self->{'sql'}->select(['id','name']);
     $self->{'sql'}->setTable($tabprefix.'rooms');
-    
+
     if($limit)
     {
         $self->{'sql'}->setLimit($limit);
@@ -618,18 +623,16 @@ sub getRooms
 
     unless($self->{'sql'}->execute())
     { 
-       $self->{'tools'}->logIt(__LINE__, "error get name Rooms"
-        ."\n script=".$self->{'sql'}->getSql());
-       return 0;
+        $self->{'tools'}->logIt(__LINE__, "error get name Rooms"
+            ."\n script=".$self->{'sql'}->getSql());
+        return 0;
     }
-   
-$self->{'tools'}->logIt(__LINE__, "good get name Rooms"
+
+    $self->{'tools'}->logIt(__LINE__, "good get name Rooms"
         ."\n script=".$self->{'sql'}->getSql());
 
     my $res = $self->{'sql'}->getResult();
-    
     return $res;
-
 }
 
 sub addRoom

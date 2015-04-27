@@ -1,0 +1,42 @@
+<div >
+	<div class ="update">
+  
+	  <h1 id="forms" class="page-header"  ng-bind="cB.melang.value.LANG_updaetevent.VALUE"> </h1>
+	  
+		<div class="container-fluid">
+			<p ng-bind="cB.mess.val"> </p>
+	  
+	    <form  name="myForm">
+					
+											
+			<div class="form-group">
+				 <label  ng-bind="cB.melang.value.LANG_timemeeting.VALUE"></label>
+				 <div class="row"> 
+					 <div class="input-append bootstrap-timepicker col-md-4" >
+						<input id="timepicker1" type="text" class="input-small" data-minute-step="1"  
+						data-show-meridian="{{cB.meridian}}">
+						<span class="add-on"><i class="icon-time glyphicon glyphicon-time"></i></span>
+					</div>  
+				
+					<div class="input-append bootstrap-timepicker  col-md-4">
+						<input id="timepicker2" type="text" class="input-small" data-minute-step="1"  
+						data-show-meridian="{{cB.meridian}}">
+						<span class="add-on"><i class="icon-time glyphicon glyphicon-time"></i></span>
+					</div>  
+				</div>
+	 
+			<div class="form-group">
+				<label  ng-bind="cB.melang.value.LANG_infomeeting.VALUE"></label>
+				</br>
+				<textarea ng-model="cB.calendar.info" ></textarea>
+			</div>
+			
+			
+			
+							
+				
+				<!--end form -->
+			</form>
+			</div>
+	</div>
+  </div>

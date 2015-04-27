@@ -2,7 +2,6 @@ package Models::Performers::User;
 
 use warnings;
 use strict;
-
 use Data::Dumper;
 use Models::Interfaces::Sql;
 use System::Tools::Toolchain;
@@ -123,7 +122,6 @@ sub login
 
     return 1;
 }
-
 
 sub isLogin
 {
