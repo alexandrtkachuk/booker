@@ -7,6 +7,7 @@ use vars qw(@ISA);
 our @ISA = qw(Models::Performers::User);
 require Models::Performers::User;
 
+use Models::Validators::Varibles;
 my $tabName='booker_users';
 
 sub isAdmin
@@ -51,7 +52,10 @@ sub update
 {
     my ($self,$id,$name,$email,$pass)=@_;
    
-    unless($id && $name && $email)
+    unless($id && $name && $email 
+        && Models::Validators::Varibles->isNumeric($id)
+        && ($id > 0)
+        && Email::Valid->address($email))
     {
         return 0;
     } 
@@ -87,7 +91,11 @@ sub delete
 {
     my ($self,$id)=@_;
 
-    unless($id)
+    unless
+    (   $id 
+        && Models::Validators::Varibles->isNumeric($id)
+        && ($id > 0)
+    )
     {
         return 0;
     }

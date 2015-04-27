@@ -210,7 +210,7 @@
     </ISTRING>
     <ISTRING>
         <KEY>LANG_eventonaday</KEY>
-        <VALUE>event falls on a day</VALUE>
+        <VALUE>event falls on a day or time is old</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_goodupdate</KEY>

@@ -20,7 +20,7 @@ $mockSQL->mock( 'setTable', sub {1} );
 $mockSQL->mock( 'where', sub {1} );
 $mockSQL->mock( 'execute', sub {1} );
 $mockSQL->mock( 'insert', sub {1} );
-
+$mockSQL->mock( 'getSql', sub {1} );
 
 $mockSQL->mock( 'test', sub {print "good";} );
 my $sql = Models::Interfaces::Sql->new();

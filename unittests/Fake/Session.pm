@@ -14,6 +14,7 @@ $mockObj->mock( 'setParam', sub {
         
         return 1;
     } );
+
 $mockObj->mock( 'testFake', sub {print "goodSession";} );
 sub get
 {

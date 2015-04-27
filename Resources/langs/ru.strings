@@ -211,7 +211,7 @@
     </ISTRING>
     <ISTRING>
         <KEY>LANG_eventonaday</KEY>
-        <VALUE>событие выпадает на выходной день</VALUE>
+        <VALUE>событие выпадает на выходной день или это прошлое время</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_goodupdate</KEY>

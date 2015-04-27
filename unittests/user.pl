@@ -1,38 +1,28 @@
 #!/usr/bin/perl 
 
+#test  Models::Performers::User
 use warnings;
 use strict;
 use Data::Dumper;
 use File::Basename;
 use constant TDIR=>dirname(__FILE__);
-use lib  './Models/Utilits';
+use lib  './Libs';
 use lib  '../';
-use lib  '../Models/Utilits/';
 use lib TDIR;
 use lib '.';
-#use System::Tools::Toolchain;
 use base qw(Test::Class);
 use Test::More 'no_plan';
-
 use Test::MockObject;
 use Fake::SQL;
 use Fake::Session;
 use Fake::Toolchain;
-
 use Models::Performers::User;
 
-#System::Tools::Toolchain->instance(TDIR);
-
 my ($user);
-
 my $mockSQL = Fake::SQL->get(); 
 my $mockSession = Fake::Session->get();
 my $mockT = Fake::Toolchain->get();
 
-#my $test = System::Tools::Toolchain->instance();
-#$test->testFake();
-#my $temp = $test->getConfigObject()->getDataBaseConfig();
-#print Dumper($temp->dbuser);
 
 sub startup : Test(startup)
 {
@@ -99,12 +89,18 @@ sub user_login : Test
             }];
            
         } );
-
-    is($user->login('name','pass','email@mail.ru'),
+    
+    is($user->login('email@mail.ru'), 0, 'no pass');
+    is($user->login(), 0, 'no params');
+    is($user->login('email2m!ail.ru','pass'), 0, 'bead email');
+    is($user->login('email@mail.ru','pass'),
         1,
         'user is login');
 
 
 }
+
+
+
 
 Test::Class->runtests;

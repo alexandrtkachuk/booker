@@ -1,0 +1,6 @@
+RewriteEngine On
+Options +FollowSymlinks
+RewriteBase  /booker/
+DirectoryIndex index.cgi
+
+RewriteRule !\.(js|jpeg|css|html|jpg|woff|woff2|ttf|eot|svg)$ index.cgi [L]

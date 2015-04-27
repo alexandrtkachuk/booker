@@ -43,10 +43,8 @@ sub go
        $self->{'tools'}->getCacheObject()->setCache('start',$in{'start'});
     }
 
-    
-
     my $fun=$self->{'tools'}->getCacheObject()->getCache('pageparam');
-    #$self->{'tools'}->getCacheObject()->setCache('pageparam','warings');
+    
     
     unless($self->$fun())
     {

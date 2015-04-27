@@ -3,6 +3,7 @@ App.factory('fData', function( ) {
 	var data=
 	{
 		iduser:-1,
+		iduser: {id:-1},
 		temp:null
 	};
 	
@@ -194,9 +195,9 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 			}
     },
     eventDragStop:function( event, jsEvent, ui, view ) 
-    { 
+    { /*
 			console.log(event);
-			/*
+			
 			$.ajax({
             url: 'api/getorders/',
             data: {
@@ -209,7 +210,7 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 				
 				}
 			});
-			*/
+			
 			
 			console.log(event.start.unix());
 			console.log(event.end.unix());
@@ -219,8 +220,8 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 			console.log(jsEvent);
 			console.log(ui);
 			console.log(view);
-			
-	},
+			*/
+		},
     displayEventEnd: true,
     eventLimit: true, // allow "more" link when too many events
     events: function(start, end, timezone, callback) {
@@ -274,7 +275,7 @@ App.factory('fCalendar', function( fLang, $filter,fData ) {
 						el.url='#';
 						el.startme = result[i].time_start;
 						el.endme =result[i].time_end;
-						el.editable = true;
+						//el.editable = true;
 					}
                     events.push(el);
                 }

@@ -7,7 +7,7 @@ use System::Tools::Toolchain;
 use Time::Local;
 use Time::Seconds;
 use Time::Piece;
-
+use Models::Validators::Varibles;
 my ($self) ;
 my $tabprefix = 'booker_';
 
@@ -45,11 +45,23 @@ sub getToMounth
 {
     my($self,$idRoom,$timeStart,$timeEnd)=@_;
     
-    unless($idRoom && $timeStart && $timeEnd)
+    unless
+    (
+        $idRoom 
+        && $timeStart 
+        && $timeEnd
+        && Models::Validators::Varibles->isNumeric($idRoom)
+        && Models::Validators::Varibles->isNumeric($timeStart)
+        && Models::Validators::Varibles->isNumeric($timeEnd)
+        && ($idRoom>0)
+        && ($timeStart>0)
+        && ($timeEnd>0)
+        && ($timeEnd>$timeStart)
+    )
     {
         return 0;
     }
-    #my ($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($timeUnix);
+    
     $self->{'sql'}->setTable($tabprefix.'orders');
     $self->{'sql'}->select([
             'count(id)']);
@@ -467,27 +479,20 @@ sub setTime2order
         return 0;
     }
 
-    my $start = timelocal(0,$time[1],$time[0],$start->mday,$start->_mon,
+     $start = timelocal(0,$time[1],$time[0],$start->mday,$start->_mon,
         $start->year-1900);
     my $end = localtime($unixEnd);
     @time = split /:/,$timeEnd;
-    my $count = @time;
+     $count = @time;
     
     if($count <2)
     {
         return 0;
-    }
-    #$self->{'tools'}->logIt(__LINE__,$time[1]);
+    } 
 
-    my $end = timelocal(0,$time[1],$time[0],$end->mday,$end->_mon,
+     $end = timelocal(0,$time[1],$time[0],$end->mday,$end->_mon,
         $end->year-1900);
-    #my $t = localtime($end);
-
-    #$self->{'tools'}->logIt(__LINE__, 
-    #    "??? mih:".$t->min."  hour:".$t->hour."  \n  day:".
-    #    $t->mday." month:".$t->mon." year:".$t->year."\n"
-    #);
-
+    
     return ($start,$end);
 }
 

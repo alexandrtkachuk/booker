@@ -6,6 +6,7 @@ use strict;
 use Data::Dumper;
 use Models::Interfaces::Sql;
 use System::Tools::Toolchain;
+use Email::Valid;
 use Digest::MD5 qw(md5 md5_hex md5_base64) ;
 
 my ($session,$tools, $self) ;
@@ -45,19 +46,13 @@ sub new
     return $self;
 }
 
-#add user
 sub add
 {
-
-    my ($self,$name,$pass,$email)=@_;
-    
-    ########################
+    my ($self,$name,$pass,$email)=@_;   
     my @arr= ( 'name' );
     $self->{'sql'}->select(\@arr);
-
     $self->{'sql'}->setTable($tabName);
     $self->{'sql'}->where('email',$email);
-
 
     unless($self->{'sql'}->execute())
     {
@@ -73,7 +68,6 @@ sub add
         return 0; #record exists 
     }
 
-    ##########################################
     my %hash=('name'=>$name, 
         'pass'=>md5_hex($pass),
         'email'=>$email,
@@ -82,7 +76,7 @@ sub add
     
     $self->{'sql'}->insert(\%hash);
     $self->{'sql'}->setTable($tabName);
-    
+
     unless($self->{'sql'}->execute())
     { 
        return 0;
@@ -91,15 +85,16 @@ sub add
     return 1;
 }
 
-
 sub login
 {
 
     my ($self,$email,$pass)=@_;
-
+    unless($email  && $pass && Email::Valid->address($email))
+    {
+        return 0;
+    }
     my @arr= ( 'name', 'id' ,'role', 'email' );
     $self->{'sql'}->select(\@arr);
-
     $self->{'sql'}->setTable($tabName);
     $self->{'sql'}->where('email',$email);
     $self->{'sql'}->where('pass',md5_hex($pass));
@@ -121,14 +116,10 @@ sub login
     $self->{'id'} = $res->[0]{'id'};
     $self->{'role'} = $res->[0]{'role'};
 
-##save to sessin
     $session->setParam('email',$self->{'email'});
     $session->setParam('name',$self->{'name'});
     $session->setParam('id',$self->{'id'});
     $session->setParam('role',$self->{'role'});
-
-#print Dumper $self ;
-
 
     return 1;
 }
@@ -137,8 +128,6 @@ sub login
 sub isLogin
 {
     my ($self)=@_;
-
-    #print 'mail='.$session->getParam('email').' id='.$session->getId();
     
     if($self->{'name'})
     {

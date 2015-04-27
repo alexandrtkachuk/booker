@@ -6,7 +6,7 @@ use strict;
 use DBI; 
 use Data::Dumper;
 
-my($database, $host,$user, $pass,$dbh,$sth,$testmode );
+my($self,$database, $host,$user, $pass,$dbh,$sth,$testmode );
 
 #setQuery
 
@@ -15,6 +15,11 @@ my($database, $host,$user, $pass,$dbh,$sth,$testmode );
 #конструктор
 sub new
 {
+    if($self)
+    {
+        return $self; 
+    }
+
     $database=$_[1]; 
     $host=$_[2];
     $user=$_[3];
@@ -26,7 +31,7 @@ sub new
     }
 
     my $class = ref($_[0])||$_[0];
-    return bless(
+    $self||= bless(
         {
             'sql'=>undef, #string quvery
             'table'=>undef, #имя таблици 
@@ -36,6 +41,7 @@ sub new
             'LIMIT'=>undef,
             'GROUP_CONCAT'=>undef
         },$class);
+    return $self;
 }
 
 sub getError
@@ -48,13 +54,14 @@ sub getError
 
 sub connect
 {
+   
     unless($database &&  $host )
     {
         return 0;
     }
 
+    return 1 if($dbh);
     my $data_source= "DBI:mysql:database=$database;host=$host";
-
     $dbh = DBI->connect($data_source, $user, $pass, 
         {PrintError=>0, RaiseError=>0} #отключаем принт ошибок
     );
@@ -332,6 +339,7 @@ sub execute
     {
         return 0;
     }
+
     ########################### 
     unless($sth = $dbh->prepare($self->{'sql'} ))
     {

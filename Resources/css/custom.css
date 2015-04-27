@@ -53,10 +53,7 @@ body {
     font-size:16px;
 }
 
-.disabled
-{
-	color:red;
-}
+
 
 pre 
 {
@@ -218,6 +215,27 @@ footer p
   width:100px;
 }
 
+.datapicker
+{
+	cursor: pointer;
+}
+
+.table-condensed .day 
+{
+	cursor: pointer;
+}
+
+.input-append input
+{
+	cursor: pointer;
+}
+
+
+.table-condensed .disabled
+{
+	color:red;
+	cursor: not-allowed;
+}
 
 .update{
 	max-width: 500px;
