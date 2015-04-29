@@ -49,14 +49,22 @@ App.controller('cAdmin',function(fCalendar, fLang , $http , fRooms ,fData, $stat
 		
 				var e =new Date();
 				e.setTime(result[0].time_end*1000);
-				
-				
-				
-				var str =$filter('date')(s.getTime(), 'h:mm a');
+
+                var str;
+                var str2;    
+                if(getCookie('tai-ftime')=='h(:mm)t' ){
+                    str =$filter('date')(s.getTime(), 'h:mm a');
+                    str2 =$filter('date')(e.getTime(), 'h:mm a');
+                } else {
+
+                    str =$filter('date')(s.getTime(), 'H:mm');
+                    str2 =$filter('date')(e.getTime(), 'H:mm');
+                }
+
 				
 				//
 				$('#timepicker1').timepicker('setTime', str);
-                $('#timepicker2').timepicker('setTime',$filter('date')(e.getTime(), 'h:mm a'));
+                $('#timepicker2').timepicker('setTime',str2);
                 
                 
                 //////////////

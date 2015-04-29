@@ -56,49 +56,58 @@ App.factory('fCalendar', function( fLang, $filter,fData, $http ) {
 		+'&end='+end;
 		
 		console.log(url);
-		$http.get(url).success(
-				function(data, status, headers, config) {
-				console.log(data);
-				var result = data;
-				calendar.info=result[0].info;
-				console.log('calendar info:'+result[0].info);
-				if(result[0].count>1)
-				{
-					calendar.show ='block';
-				}
-				
-				calendar.id = result[0].id;
-				fData.temp = (result[0].id_user*1);
-				fData.name = result[0].user_name;
-				console.log(fData.temp);
-				
-				var s =new Date();
-				s.setTime(result[0].time_start*1000);
-		
-				var e =new Date();
-				e.setTime(result[0].time_end*1000);
-				
-				
-				
-				var str =$filter('date')(s.getTime(), 'h:mm a');
-				
-				//
-				$('#timepicker1').timepicker('setTime', str);
-                $('#timepicker2').timepicker('setTime',$filter('date')(e.getTime(), 'h:mm a'));
-                
-                
-                //////////////
-                if(fLang.lang=='ru')
-						{
-							datapickerRu(s);
-						}
-						else
-						{
-							godatapicker(s);
-						}
-			});
-			
-	}
+        $http.get(url).success(
+                function(data, status, headers, config) {
+                    console.log(data);
+                    var result = data;
+                    calendar.info=result[0].info;
+                    console.log('calendar info:'+result[0].info);
+                    if(result[0].count>1)
+        {
+            calendar.show ='block';
+        }
+
+        calendar.id = result[0].id;
+        fData.temp = (result[0].id_user*1);
+        fData.name = result[0].user_name;
+        console.log(fData.temp);
+
+        var s =new Date();
+        s.setTime(result[0].time_start*1000);
+
+        var e =new Date();
+        e.setTime(result[0].time_end*1000);
+
+        var str;
+        var str2;    
+        if(getCookie('tai-ftime')=='h(:mm)t' ){
+            str =$filter('date')(s.getTime(), 'h:mm a');
+            str2 =$filter('date')(e.getTime(), 'h:mm a');
+        } else {
+
+            str =$filter('date')(s.getTime(), 'H:mm');
+            str2 =$filter('date')(e.getTime(), 'H:mm');
+        }
+
+        console.log(str);
+        console.log(str2);
+        //
+        $('#timepicker1').timepicker('setTime', str);
+        $('#timepicker2').timepicker('setTime',str2);
+
+
+        //////////////
+        if(fLang.lang=='ru')
+        {
+            datapickerRu(s);
+        }
+        else
+        {
+            godatapicker(s);
+        }
+                });
+
+    }
 	
 	calendar.goCalendar = function(melang, ftime,fday) {
 	
