@@ -66,7 +66,7 @@
     </ISTRING>
     <ISTRING>
         <KEY>LANG_timeformat</KEY>
-        <VALUE>фодмат времени</VALUE>
+        <VALUE>формат времени</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_bookit</KEY>
@@ -147,7 +147,7 @@
     </ISTRING>
      <ISTRING>
         <KEY>LANG_weekly</KEY>
-        <VALUE>неденя</VALUE>
+        <VALUE>неделя</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_beweekly</KEY>
@@ -159,7 +159,7 @@
     </ISTRING>
     <ISTRING>
         <KEY>LANG_duration</KEY>
-        <VALUE>повторения</VALUE>
+        <VALUE>повторений</VALUE>
     </ISTRING>
       <ISTRING>
         <KEY>LANG_max</KEY>
@@ -175,11 +175,11 @@
     </ISTRING>
     <ISTRING>
         <KEY>LANG_info2pass</KEY>
-        <VALUE>Если оставить пустым то пароль будет старый</VALUE>
+        <VALUE>Если оставить пустым, то пароль будет старый</VALUE>
     </ISTRING>
      <ISTRING>
         <KEY>LANG_addroom</KEY>
-        <VALUE>добвить комнату</VALUE>
+        <VALUE>добавить комнату</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_add</KEY>
@@ -191,7 +191,7 @@
     </ISTRING>
     <ISTRING>
         <KEY>LANG_removeevent</KEY>
-        <VALUE>событие успешно удаленно</VALUE>
+        <VALUE>событие успешно удалено</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_dialogremoveevent</KEY>
@@ -207,15 +207,15 @@
     </ISTRING>
     <ISTRING>
         <KEY>LANG_staffmeeting</KEY>
-        <VALUE>Событие пересекается с событием сотрудником:</VALUE>
+        <VALUE>Событие пересекается с событием сотрудника:</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_eventonaday</KEY>
-        <VALUE>событие выпадает на выходной день или это прошлое время</VALUE>
+        <VALUE>событие выпадает на выходной день, или это прошлое время</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_goodupdate</KEY>
-        <VALUE>событие успешно обновленно</VALUE>
+        <VALUE>событие успешно обновлено</VALUE>
     </ISTRING>
     <ISTRING>
         <KEY>LANG_timeevent</KEY>
